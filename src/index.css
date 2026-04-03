@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-accent: #0052ff;
+  --color-accent-hover: #0047e0;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
