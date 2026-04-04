@@ -52,7 +52,6 @@ export function initialForm() {
     currency: 'SGD',
     items: [newLineItem()],
     notes: '',
-    selectedBankId: BANK_ACCOUNTS[0].id,
     bankDetailsText: bankDetailsFor(BANK_ACCOUNTS[0].id),
     paymentTerms: '30',
     companyName: 'COMPANY NAME PTE. LTD.',

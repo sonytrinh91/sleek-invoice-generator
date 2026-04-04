@@ -12,9 +12,9 @@ import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.js
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
 import { PaymentTermsSection } from './components/invoice/PaymentTermsSection.jsx'
+import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { isEmailFieldValid } from './invoice/validation.js'
 import {
-  bankDetailsFor,
   computeDueDate,
   initialForm,
   lineAmount,
@@ -82,19 +82,12 @@ export default function App() {
     })
   }
 
-  const onBankChange = (e) => {
-    const id = e.target.value
-    setForm((f) => ({
-      ...f,
-      selectedBankId: id,
-      bankDetailsText: bankDetailsFor(id),
-    }))
-  }
-
   const issueDisplay = isValid(issueDateParsed)
-    ? format(issueDateParsed, 'dd-MM-yyyy')
+    ? format(issueDateParsed, DISPLAY_DATE_FORMAT)
     : '—'
-  const dueDisplay = dueDate ? format(dueDate, 'dd-MM-yyyy') : '—'
+  const dueDisplay = dueDate
+    ? format(dueDate, DISPLAY_DATE_FORMAT)
+    : '—'
 
   const billTo =
     [form.customerName, form.customerEmail].filter(Boolean).join(', ') ||
@@ -149,9 +142,7 @@ export default function App() {
             />
             <NotesSection notes={form.notes} onChange={setPatch} />
             <BankDetailsSection
-              selectedBankId={form.selectedBankId}
               bankDetailsText={form.bankDetailsText}
-              onBankChange={onBankChange}
               onChange={setPatch}
             />
             <PaymentTermsSection

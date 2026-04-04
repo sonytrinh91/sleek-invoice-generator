@@ -234,10 +234,7 @@ export function OutlinedSelect({
           {label}
         </label>
         <SelectChevron
-          className={clsx(
-            'bottom-2.5 right-3 top-auto !translate-y-0',
-            hasError ? 'text-red-300' : 'text-gray-400',
-          )}
+          className={hasError ? 'text-red-300' : undefined}
         />
       </div>
       {hasError ? (

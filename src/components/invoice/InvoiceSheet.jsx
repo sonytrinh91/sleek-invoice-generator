@@ -1,9 +1,9 @@
 import { User } from 'lucide-react'
 import { formatInvoiceAddress, formatMoney } from '../../invoice/utils.js'
 
-const labelClass = 'text-[13px] font-normal leading-tight text-[#888888]'
+const labelClass = 'text-[13px] font-normal leading-tight text-fg-muted'
 const valueClass =
-  'mt-1.5 text-[15px] font-normal leading-snug text-[#1a1a1a]'
+  'mt-1.5 text-[15px] font-normal leading-snug text-fg'
 
 function MetaBlock({ label, children }) {
   return (
@@ -25,8 +25,8 @@ export function InvoiceSheet({
   const addressBlock = formatInvoiceAddress(form)
 
   return (
-    <div className="text-[15px] leading-relaxed text-[#1a1a1a] antialiased">
-      <h3 className="mb-10 text-[28px] font-bold leading-tight tracking-tight text-[#111111]">
+    <div className="text-[15px] leading-relaxed text-fg antialiased">
+      <h3 className="mb-10 text-[28px] font-bold leading-tight tracking-tight text-fg-strong">
         Invoice
       </h3>
 
@@ -47,7 +47,7 @@ export function InvoiceSheet({
           {addressBlock ? (
             <div>
               <div className={labelClass}>Address</div>
-              <div className={`${valueClass} whitespace-pre-line text-[#333333]`}>
+              <div className={`${valueClass} whitespace-pre-line text-fg-secondary`}>
                 {addressBlock}
               </div>
             </div>
@@ -67,16 +67,16 @@ export function InvoiceSheet({
           <table className="w-full border-collapse text-[14px]">
             <thead>
               <tr className="bg-neutral-100">
-                <th className="border-b border-neutral-200/90 px-4 py-3 text-left text-[13px] font-bold text-[#111111]">
+                <th className="border-b border-neutral-200/90 px-4 py-3 text-left text-[13px] font-bold text-fg-strong">
                   Description
                 </th>
-                <th className="w-[4.5rem] border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-[#111111]">
+                <th className="w-[4.5rem] border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
                   Qty
                 </th>
-                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-[#111111]">
+                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
                   Unit price
                 </th>
-                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-[#111111]">
+                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
                   Amount
                 </th>
               </tr>
@@ -84,16 +84,16 @@ export function InvoiceSheet({
             <tbody>
               {form.items.map((item, i) => (
                 <tr key={item.id}>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-[#222222]">
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-fg-body">
                     {item.description.trim() || 'Item description'}
                   </td>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-[#222222]">
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
                     {item.qty || '0'}
                   </td>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-[#222222]">
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
                     {formatMoney(parseFloat(item.unitPrice) || 0, form.currency)}
                   </td>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-[#222222]">
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
                     {formatMoney(lineAmounts[i], form.currency)}
                   </td>
                 </tr>
@@ -102,8 +102,8 @@ export function InvoiceSheet({
           </table>
         </div>
         <div className="flex items-center justify-end gap-6 border-t border-neutral-200 bg-white px-4 py-3.5">
-          <span className="text-[15px] font-bold text-[#111111]">Total</span>
-          <span className="text-[15px] font-bold tabular-nums text-[#111111]">
+          <span className="text-[15px] font-bold text-fg-strong">Total</span>
+          <span className="text-[15px] font-bold tabular-nums text-fg-strong">
             {formatMoney(subtotal, form.currency)}
           </span>
         </div>
@@ -111,8 +111,8 @@ export function InvoiceSheet({
 
       {form.notes.trim() ? (
         <div className="mb-10">
-          <h4 className="mb-3 text-[15px] font-bold text-[#111111]">Notes</h4>
-          <p className="whitespace-pre-line text-[14px] leading-relaxed text-[#333333]">
+          <h4 className="mb-3 text-[15px] font-bold text-fg-strong">Notes</h4>
+          <p className="whitespace-pre-line text-[14px] leading-relaxed text-fg-secondary">
             {form.notes}
           </p>
         </div>
@@ -120,10 +120,10 @@ export function InvoiceSheet({
 
       {form.bankDetailsText.trim() ? (
         <div className="mt-2">
-          <h4 className="mb-3 text-[15px] font-bold text-[#111111]">
+          <h4 className="mb-3 text-[15px] font-bold text-fg-strong">
             Bank details
           </h4>
-          <div className="space-y-1.5 text-[14px] leading-relaxed text-[#333333]">
+          <div className="space-y-1.5 text-[14px] leading-relaxed text-fg-secondary">
             {form.bankDetailsText.split('\n').map((line, idx) => (
               <p key={idx}>{line || '\u00a0'}</p>
             ))}

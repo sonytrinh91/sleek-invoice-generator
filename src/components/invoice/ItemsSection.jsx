@@ -1,5 +1,6 @@
-import { Plus, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { formatMoney } from '../../invoice/utils.js'
+import { AddOutlineButton } from './AddOutlineButton.jsx'
 import { OutlinedInput, OutlinedTextarea } from './FormPrimitives.jsx'
 
 export function ItemsSection({
@@ -71,7 +72,7 @@ export function ItemsSection({
                 <button
                   type="button"
                   onClick={() => onRemoveItem(item.id)}
-                  className="flex size-9 items-center justify-center rounded text-red-500 transition hover:bg-red-50"
+                  className="flex size-9 items-center justify-center cursor-pointer rounded text-red-500 transition hover:bg-red-50"
                   aria-label="Remove line item"
                 >
                   <X className="size-4" />
@@ -81,14 +82,7 @@ export function ItemsSection({
           </div>
         ))}
 
-        <button
-          type="button"
-          onClick={onAddItem}
-          className="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
-        >
-          <Plus className="size-4" />
-          Add line item
-        </button>
+        <AddOutlineButton onClick={onAddItem}>Add line item</AddOutlineButton>
 
         <div className="border-t border-gray-200 pt-4 text-sm">
           <div className="flex items-center justify-between text-gray-600">

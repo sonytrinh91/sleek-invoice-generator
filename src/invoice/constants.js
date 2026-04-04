@@ -1,10 +1,7 @@
 export const ACCENT = '#0F6DFA'
 
-export const CURRENCIES = [
-  { code: 'SGD', label: 'SGD - Singapore Dollar' },
-  { code: 'USD', label: 'USD - US Dollar' },
-  { code: 'EUR', label: 'EUR - Euro' },
-]
+/** date-fns pattern for issue/due dates on the invoice preview */
+export const DISPLAY_DATE_FORMAT = 'dd-MM-yyyy'
 
 export const PAYMENT_OPTIONS = [
   { value: '30', label: 'Due in 30 days' },
@@ -37,7 +34,7 @@ export const BANK_ACCOUNTS = [
     id: 'wise',
     label: 'Wise - 1231231231122 Multi currency',
     details:
-      'Pay via bank transfer\nBank Name: Wise\nAccount Number: 1231231231122',
+      'Pay via bank transfer - \nBank Name: Wise - \nAccount Number: 1231231231122',
   },
   {
     id: 'dbs',

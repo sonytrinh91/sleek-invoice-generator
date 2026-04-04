@@ -1,9 +1,6 @@
-import { Plus } from 'lucide-react'
-import { ACCENT, COUNTRIES } from '../../invoice/constants.js'
+import { COUNTRIES } from '../../invoice/constants.js'
+import { AddOutlineButton } from './AddOutlineButton.jsx'
 import { Card, FloatingField, FloatingSelect } from './FormPrimitives.jsx'
-
-const addButtonClass =
-  'inline-flex items-center gap-1.5 rounded-sm cursor-pointer border border-1 px-4 py-3 text-sm font-medium text-accent transition hover:bg-blue-50'
 
 export function AddressSection({
   addressVisible,
@@ -63,15 +60,9 @@ export function AddressSection({
           </div>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={() => onChange({ addressVisible: true })}
-          className={addButtonClass}
-          style={{ borderColor: ACCENT }}
-        >
-          <Plus className="size-4" />
+        <AddOutlineButton onClick={() => onChange({ addressVisible: true })}>
           Add address
-        </button>
+        </AddOutlineButton>
       )}
     </Card>
   )

@@ -2,12 +2,24 @@
 
 :root {
   --input-value-text: #363636;
+  /* Default / invoice preview copy */
+  --text-fg: #1a1a1a;
+  --text-fg-strong: #111111;
+  --text-fg-body: #222222;
+  --text-fg-muted: #888888;
+  --text-fg-secondary: #333333;
 }
 
 @theme {
-  --color-accent: #0F6DFA;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --color-accent: #0f6dfa;
   --color-accent-hover: #0047e0;
   --color-input-value: var(--input-value-text);
+  --color-fg: var(--text-fg);
+  --color-fg-strong: var(--text-fg-strong);
+  --color-fg-body: var(--text-fg-body);
+  --color-fg-muted: var(--text-fg-muted);
+  --color-fg-secondary: var(--text-fg-secondary);
 }
 
 body {
