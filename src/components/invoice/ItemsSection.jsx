@@ -1,10 +1,6 @@
 import { Plus, X } from 'lucide-react'
-import { ACCENT } from '../../invoice/constants.js'
 import { formatMoney } from '../../invoice/utils.js'
-import { Card, FieldLabel } from './FormPrimitives.jsx'
-
-const rowInputClass =
-  'w-full rounded-md border border-neutral-200 bg-white px-2 py-2 text-sm outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
+import { OutlinedInput, OutlinedTextarea } from './FormPrimitives.jsx'
 
 export function ItemsSection({
   items,
@@ -16,88 +12,92 @@ export function ItemsSection({
   onRemoveItem,
 }) {
   return (
-    <Card>
-      <FieldLabel>Items</FieldLabel>
+    <section className="rounded-lg border border-gray-200 bg-white p-6">
+      <h2 className="mb-4 text-base font-semibold text-gray-900">Items</h2>
+
       <div className="space-y-4">
         {items.map((item, index) => (
-          <div
-            key={item.id}
-            className="relative rounded-md border border-neutral-100 bg-neutral-50/50 p-4 pr-10"
-          >
-            <textarea
+          <div key={item.id} className="space-y-3">
+            <OutlinedTextarea
+              id={`item-desc-${item.id}`}
+              label="Product or service name"
               rows={2}
-              placeholder="Product or service name"
               value={item.description}
               onChange={(e) =>
                 onUpdateItem(item.id, { description: e.target.value })
               }
-              className="mb-3 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
+              textareaClassName="min-h-[4.5rem]"
             />
-            <div className="flex flex-wrap items-end gap-3">
-              <div className="w-24">
-                <span className="mb-1 block text-xs text-neutral-500">Qty</span>
-                <input
+            <div className="flex flex-wrap items-end gap-4">
+              <div className="w-24 shrink-0">
+                <OutlinedInput
+                  id={`item-qty-${item.id}`}
+                  label="Qty"
                   type="number"
-                  min="0"
+                  min={0}
                   step="any"
                   value={item.qty}
                   onChange={(e) =>
                     onUpdateItem(item.id, { qty: e.target.value })
                   }
-                  className={rowInputClass}
                 />
               </div>
-              <div className="min-w-[120px] flex-1">
-                <span className="mb-1 block text-xs text-neutral-500">
-                  Unit price
-                </span>
-                <input
+              <div className="min-w-[120px] max-w-[200px] shrink-0 flex-1">
+                <OutlinedInput
+                  id={`item-price-${item.id}`}
+                  label="Unit price"
                   type="number"
-                  min="0"
+                  min={0}
                   step="0.01"
                   value={item.unitPrice}
                   onChange={(e) =>
                     onUpdateItem(item.id, { unitPrice: e.target.value })
                   }
-                  className={rowInputClass}
                 />
               </div>
-              <div className="min-w-[100px] text-right text-sm text-neutral-700">
-                <span className="mb-1 block text-xs text-neutral-500">
-                  Amount
-                </span>
-                <span className="font-medium tabular-nums">
+              <div className="ml-auto min-w-[100px] text-right">
+                <span className="mb-1 block text-xs text-gray-500">Amount</span>
+                <span className="flex h-9 items-center justify-end text-sm font-medium tabular-nums text-gray-900">
                   {formatMoney(lineAmounts[index], currency)}
                 </span>
               </div>
+              <div className="flex shrink-0 flex-col">
+                <span
+                  className="mb-1 block h-4 text-xs text-transparent select-none"
+                  aria-hidden
+                >
+                  .
+                </span>
+                <button
+                  type="button"
+                  onClick={() => onRemoveItem(item.id)}
+                  className="flex size-9 items-center justify-center rounded text-red-500 transition hover:bg-red-50"
+                  aria-label="Remove line item"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
             </div>
-            <button
-              type="button"
-              onClick={() => onRemoveItem(item.id)}
-              className="absolute right-2 top-2 rounded p-1 text-red-500 transition hover:bg-red-50"
-              aria-label="Remove line item"
-            >
-              <X className="size-4" />
-            </button>
           </div>
         ))}
+
         <button
           type="button"
           onClick={onAddItem}
-          className="inline-flex items-center gap-1.5 rounded-md border px-4 py-2 text-sm font-medium text-accent transition hover:bg-blue-50"
-          style={{ borderColor: ACCENT }}
+          className="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50"
         >
           <Plus className="size-4" />
           Add line item
         </button>
-        <div className="mt-4 space-y-2 border-t border-neutral-100 pt-4 text-sm">
-          <div className="flex justify-between text-neutral-600">
+
+        <div className="border-t border-gray-200 pt-4 text-sm">
+          <div className="flex items-center justify-between text-gray-600">
             <span>Subtotal</span>
             <span className="tabular-nums">
               {formatMoney(subtotal, currency)}
             </span>
           </div>
-          <div className="flex justify-between font-semibold text-neutral-900">
+          <div className="mt-2 flex items-center justify-between font-semibold text-gray-900">
             <span>Total</span>
             <span className="tabular-nums">
               {formatMoney(subtotal, currency)}
@@ -105,6 +105,6 @@ export function ItemsSection({
           </div>
         </div>
       </div>
-    </Card>
+    </section>
   )
 }

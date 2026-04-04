@@ -1,5 +1,5 @@
 import { addDays, format, isValid, parse } from 'date-fns'
-import { BANK_ACCOUNTS } from './constants.js'
+import { BANK_ACCOUNTS, COUNTRIES } from './constants.js'
 
 export function bankDetailsFor(id) {
   return BANK_ACCOUNTS.find((b) => b.id === id)?.details ?? ''
@@ -43,7 +43,10 @@ export function initialForm() {
     customerName: '',
     customerEmail: '',
     addressVisible: false,
-    address: '',
+    addressLine1: '',
+    addressLine2: '',
+    postalCode: '',
+    country: '',
     invoiceNumber: 'US-115',
     issueDate: format(new Date(), 'yyyy-MM-dd'),
     currency: 'SGD',
@@ -60,4 +63,20 @@ export function lineAmount(qtyStr, priceStr) {
   const q = parseFloat(qtyStr) || 0
   const p = parseFloat(priceStr) || 0
   return q * p
+}
+
+export function countryNameFor(code) {
+  if (!code) return ''
+  return COUNTRIES.find((c) => c.code === code)?.name ?? code
+}
+
+/** Multi-line block for invoice preview (Bill to) */
+export function formatInvoiceAddress(form) {
+  if (!form.addressVisible) return ''
+  const line1 = form.addressLine1?.trim() ?? ''
+  const line2 = form.addressLine2?.trim() ?? ''
+  const postal = form.postalCode?.trim() ?? ''
+  const country = countryNameFor(form.country)
+  const cityLine = [postal, country].filter(Boolean).join(' ')
+  return [line1, line2, cityLine].filter(Boolean).join('\n')
 }

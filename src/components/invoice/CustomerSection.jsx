@@ -1,23 +1,43 @@
-import { Card, FieldLabel, inputClass } from './FormPrimitives.jsx'
+import { useState } from 'react'
+import { isValidEmailFormat } from '../../invoice/validation.js'
+import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
 
-export function CustomerSection({ customerName, customerEmail, onChange }) {
+export function CustomerSection({
+  customerName,
+  customerEmail,
+  onChange,
+  showCustomerErrors,
+}) {
+  const [emailBlurred, setEmailBlurred] = useState(false)
+  const shouldValidateEmail = emailBlurred || showCustomerErrors
+  const emailError =
+    shouldValidateEmail &&
+    (customerEmail.trim() === '' || !isValidEmailFormat(customerEmail))
+      ? 'Please provide a valid email address.'
+      : null
+
   return (
     <Card>
       <FieldLabel>Customer name and email</FieldLabel>
       <div className="space-y-3">
-        <input
+        <OutlinedInput
+          id="customer-name"
+          label="Customer name"
           type="text"
-          placeholder="Customer name"
+          autoComplete="name"
           value={customerName}
           onChange={(e) => onChange({ customerName: e.target.value })}
-          className={inputClass}
         />
-        <input
+        <OutlinedInput
+          id="customer-email"
+          label="Email"
           type="email"
-          placeholder="Email"
+          autoComplete="email"
+          inputMode="email"
           value={customerEmail}
           onChange={(e) => onChange({ customerEmail: e.target.value })}
-          className={inputClass}
+          onBlur={() => setEmailBlurred(true)}
+          error={emailError}
         />
       </div>
     </Card>

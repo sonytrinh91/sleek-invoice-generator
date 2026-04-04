@@ -12,6 +12,7 @@ import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.js
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
 import { PaymentTermsSection } from './components/invoice/PaymentTermsSection.jsx'
+import { isEmailFieldValid } from './invoice/validation.js'
 import {
   bankDetailsFor,
   computeDueDate,
@@ -23,6 +24,7 @@ import {
 
 export default function App() {
   const [form, setForm] = useState(initialForm)
+  const [showCustomerErrors, setShowCustomerErrors] = useState(false)
   const printRef = useRef(null)
 
   const setPatch = useCallback((patch) => {
@@ -99,15 +101,15 @@ export default function App() {
     'Customer Name, customer@email.com'
 
   const handleSend = () => {
-    if (form.customerEmail.trim()) {
-      window.alert(`Invoice would be sent to ${form.customerEmail}`)
-    } else {
-      window.alert('Please enter a customer email first.')
+    if (!isEmailFieldValid(form.customerEmail)) {
+      setShowCustomerErrors(true)
+      return
     }
+    window.alert(`Invoice would be sent to ${form.customerEmail}`)
   }
 
   return (
-    <div className="min-h-screen bg-neutral-100 pb-28 font-sans text-neutral-800">
+    <div className="min-h-screen bg-white pb-28 font-sans text-neutral-800">
       <CreateInvoiceHeader />
 
       <div className="mx-auto flex max-w-[1400px] flex-col gap-8 px-6 py-8 lg:flex-row">
@@ -116,10 +118,14 @@ export default function App() {
             customerName={form.customerName}
             customerEmail={form.customerEmail}
             onChange={setPatch}
+            showCustomerErrors={showCustomerErrors}
           />
           <AddressSection
             addressVisible={form.addressVisible}
-            address={form.address}
+            addressLine1={form.addressLine1}
+            addressLine2={form.addressLine2}
+            postalCode={form.postalCode}
+            country={form.country}
             onChange={setPatch}
           />
           <InvoiceDetailsSection

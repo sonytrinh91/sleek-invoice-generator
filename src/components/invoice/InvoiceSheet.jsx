@@ -1,4 +1,4 @@
-import { formatMoney } from '../../invoice/utils.js'
+import { formatInvoiceAddress, formatMoney } from '../../invoice/utils.js'
 
 export function InvoiceSheet({
   form,
@@ -8,6 +8,8 @@ export function InvoiceSheet({
   lineAmounts,
   subtotal,
 }) {
+  const addressBlock = formatInvoiceAddress(form)
+
   return (
     <>
       <h3 className="mb-8 text-2xl font-bold text-neutral-900">Invoice</h3>
@@ -35,9 +37,9 @@ export function InvoiceSheet({
             <span className="font-medium text-neutral-800">From: </span>
             {form.companyName}
           </p>
-          {form.addressVisible && form.address.trim() ? (
+          {addressBlock ? (
             <p className="whitespace-pre-line text-neutral-500">
-              {form.address}
+              {addressBlock}
             </p>
           ) : null}
         </div>

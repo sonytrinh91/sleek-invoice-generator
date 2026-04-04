@@ -1,16 +1,34 @@
-import { Card, FieldLabel, inputClass } from './FormPrimitives.jsx'
+import { Bot } from 'lucide-react'
+import { Card } from './FormPrimitives.jsx'
 
 export function NotesSection({ notes, onChange }) {
   return (
     <Card>
-      <FieldLabel>Notes</FieldLabel>
-      <textarea
-        rows={4}
-        placeholder="Enter a note for the customer."
-        value={notes}
-        onChange={(e) => onChange({ notes: e.target.value })}
-        className={inputClass}
-      />
+      <h2 className="mb-3 text-sm font-semibold text-gray-900">Notes</h2>
+      <div className="relative rounded-lg border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25">
+        <label
+          htmlFor="invoice-notes"
+          className="pointer-events-none absolute left-3 top-3 z-[1] text-xs font-normal text-gray-500"
+        >
+          Note to customer
+        </label>
+        <textarea
+          id="invoice-notes"
+          rows={5}
+          value={notes}
+          onChange={(e) => onChange({ notes: e.target.value })}
+          placeholder="Enter a note for the customer"
+          className="min-h-[148px] w-full resize-y rounded-lg border-0 bg-transparent px-3 pb-14 pr-14 pt-8 text-base leading-relaxed text-gray-900 outline-none ring-0 placeholder:text-gray-400 focus:ring-0"
+        />
+        <button
+          type="button"
+          title="AI writing assistant"
+          aria-label="AI writing assistant"
+          className="absolute bottom-4 right-10 flex size-9 items-center justify-center rounded-full bg-emerald-500 text-white shadow-sm transition hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        >
+          <Bot className="size-[18px]" strokeWidth={2} aria-hidden />
+        </button>
+      </div>
     </Card>
   )
 }

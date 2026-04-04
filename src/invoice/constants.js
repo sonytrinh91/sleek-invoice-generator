@@ -13,6 +13,25 @@ export const PAYMENT_OPTIONS = [
   { value: 'receipt', label: 'Due on receipt' },
 ]
 
+/** ISO-style codes for the address country select */
+export const COUNTRIES = [
+  { code: 'SG', name: 'Singapore' },
+  { code: 'MY', name: 'Malaysia' },
+  { code: 'ID', name: 'Indonesia' },
+  { code: 'TH', name: 'Thailand' },
+  { code: 'VN', name: 'Vietnam' },
+  { code: 'PH', name: 'Philippines' },
+  { code: 'US', name: 'United States' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'HK', name: 'Hong Kong' },
+  { code: 'IN', name: 'India' },
+  { code: 'CN', name: 'China' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
+]
+
 export const BANK_ACCOUNTS = [
   {
     id: 'wise',

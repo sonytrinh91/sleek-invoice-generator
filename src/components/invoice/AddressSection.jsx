@@ -1,33 +1,77 @@
 import { Plus } from 'lucide-react'
-import { ACCENT } from '../../invoice/constants.js'
-import { Card, FieldLabel, inputClass } from './FormPrimitives.jsx'
+import { ACCENT, COUNTRIES } from '../../invoice/constants.js'
+import { Card, FloatingField, FloatingSelect } from './FormPrimitives.jsx'
+
+const addButtonClass =
+  'inline-flex items-center gap-1.5 rounded-md border px-4 py-2 text-sm font-medium text-accent transition hover:bg-blue-50'
 
 export function AddressSection({
   addressVisible,
-  address,
+  addressLine1,
+  addressLine2,
+  postalCode,
+  country,
   onChange,
 }) {
   return (
     <Card>
-      <FieldLabel>Address (optional)</FieldLabel>
-      {!addressVisible ? (
+      <h2 className="mb-3 text-sm font-semibold text-gray-900">
+        Address (optional)
+      </h2>
+
+      {addressVisible ? (
+        <div className="space-y-3">
+          <FloatingField
+            id="address-line-1"
+            label="Address line 1"
+            autoComplete="address-line1"
+            value={addressLine1}
+            onChange={(e) => onChange({ addressLine1: e.target.value })}
+          />
+          <FloatingField
+            id="address-line-2"
+            label="Address line 2"
+            autoComplete="address-line2"
+            value={addressLine2}
+            onChange={(e) => onChange({ addressLine2: e.target.value })}
+          />
+          <div className="flex gap-2 sm:gap-3">
+            <FloatingField
+              id="address-postal"
+              label="Postal code"
+              autoComplete="postal-code"
+              title="Postal / ZIP code"
+              value={postalCode}
+              onChange={(e) => onChange({ postalCode: e.target.value })}
+              narrow
+            />
+            <FloatingSelect
+              id="address-country"
+              label="Country"
+              value={country}
+              onChange={(e) => onChange({ country: e.target.value })}
+            >
+              <option value="" disabled>
+                {'\u00a0'}
+              </option>
+              {COUNTRIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </FloatingSelect>
+          </div>
+        </div>
+      ) : (
         <button
           type="button"
           onClick={() => onChange({ addressVisible: true })}
-          className="inline-flex items-center gap-1.5 rounded-md border px-4 py-2 text-sm font-medium text-accent transition hover:bg-blue-50"
+          className={addButtonClass}
           style={{ borderColor: ACCENT }}
         >
           <Plus className="size-4" />
           Add address
         </button>
-      ) : (
-        <textarea
-          rows={3}
-          placeholder="Street, city, postal code"
-          value={address}
-          onChange={(e) => onChange({ address: e.target.value })}
-          className={inputClass}
-        />
       )}
     </Card>
   )

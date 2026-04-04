@@ -1,4 +1,4 @@
-import { Card, FieldLabel, inputClass } from './FormPrimitives.jsx'
+import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
 
 export function InvoiceDetailsSection({
   invoiceNumber,
@@ -9,18 +9,19 @@ export function InvoiceDetailsSection({
     <Card>
       <FieldLabel>Invoice details</FieldLabel>
       <div className="space-y-3">
-        <input
+        <OutlinedInput
+          id="invoice-number"
+          label="Invoice number"
           type="text"
-          placeholder="Invoice number"
           value={invoiceNumber}
           onChange={(e) => onChange({ invoiceNumber: e.target.value })}
-          className={inputClass}
         />
-        <input
+        <OutlinedInput
+          id="issue-date"
+          label="Issue date"
           type="date"
           value={issueDate}
           onChange={(e) => onChange({ issueDate: e.target.value })}
-          className={inputClass}
         />
       </div>
     </Card>
