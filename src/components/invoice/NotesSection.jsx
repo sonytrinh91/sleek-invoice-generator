@@ -4,8 +4,8 @@ import { Card } from './FormPrimitives.jsx'
 export function NotesSection({ notes, onChange }) {
   return (
     <Card>
-      <h2 className="mb-3 text-sm font-semibold text-gray-900">Notes</h2>
-      <div className="relative rounded-lg border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25">
+      <h2 className="mb-3 text-base font-semibold text-gray-900">Notes</h2>
+      <div className="relative rounded border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25">
         <label
           htmlFor="invoice-notes"
           className="pointer-events-none absolute left-3 top-3 z-[1] text-xs font-normal text-gray-500"
@@ -18,7 +18,7 @@ export function NotesSection({ notes, onChange }) {
           value={notes}
           onChange={(e) => onChange({ notes: e.target.value })}
           placeholder="Enter a note for the customer"
-          className="min-h-[148px] w-full resize-y rounded-lg border-0 bg-transparent px-3 pb-14 pr-14 pt-8 text-base leading-relaxed text-gray-900 outline-none ring-0 placeholder:text-gray-400 focus:ring-0"
+          className="min-h-[148px] w-full resize-y rounded border-0 bg-transparent px-3 pb-14 pr-14 pt-8 text-base leading-relaxed text-input-value outline-none ring-0 placeholder:text-gray-400 focus:ring-0"
         />
         <button
           type="button"

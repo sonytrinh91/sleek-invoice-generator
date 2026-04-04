@@ -1,8 +1,13 @@
 @import 'tailwindcss';
 
+:root {
+  --input-value-text: #363636;
+}
+
 @theme {
-  --color-accent: #0052ff;
+  --color-accent: #0F6DFA;
   --color-accent-hover: #0047e0;
+  --color-input-value: var(--input-value-text);
 }
 
 body {
@@ -11,5 +16,6 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
 }

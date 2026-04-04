@@ -1,4 +1,18 @@
+import { User } from 'lucide-react'
 import { formatInvoiceAddress, formatMoney } from '../../invoice/utils.js'
+
+const labelClass = 'text-[13px] font-normal leading-tight text-[#888888]'
+const valueClass =
+  'mt-1.5 text-[15px] font-normal leading-snug text-[#1a1a1a]'
+
+function MetaBlock({ label, children }) {
+  return (
+    <div>
+      <div className={labelClass}>{label}</div>
+      <div className={valueClass}>{children}</div>
+    </div>
+  )
+}
 
 export function InvoiceSheet({
   form,
@@ -11,101 +25,111 @@ export function InvoiceSheet({
   const addressBlock = formatInvoiceAddress(form)
 
   return (
-    <>
-      <h3 className="mb-8 text-2xl font-bold text-neutral-900">Invoice</h3>
-      <div className="mb-8 grid gap-6 text-sm sm:grid-cols-[1fr_1fr_auto]">
-        <div className="space-y-1 text-neutral-600">
-          <p>
-            <span className="text-neutral-500">Invoice number: </span>
+    <div className="text-[15px] leading-relaxed text-[#1a1a1a] antialiased">
+      <h3 className="mb-10 text-[28px] font-bold leading-tight tracking-tight text-[#111111]">
+        Invoice
+      </h3>
+
+      <div className="mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_auto] sm:gap-x-10 sm:gap-y-0">
+        <div className="flex flex-col gap-7">
+          <MetaBlock label="Invoice number">
             {form.invoiceNumber || '—'}
-          </p>
-          <p>
-            <span className="text-neutral-500">Issue date: </span>
-            {issueDisplay}
-          </p>
-          <p>
-            <span className="text-neutral-500">Due date: </span>
-            {dueDisplay}
-          </p>
+          </MetaBlock>
+          <MetaBlock label="Issue date">{issueDisplay}</MetaBlock>
+          <MetaBlock label="Due date">{dueDisplay}</MetaBlock>
         </div>
-        <div className="space-y-2 text-neutral-600">
-          <p>
-            <span className="font-medium text-neutral-800">Bill to: </span>
-            {billTo}
-          </p>
-          <p>
-            <span className="font-medium text-neutral-800">From: </span>
-            {form.companyName}
-          </p>
+
+        <div className="flex flex-col gap-7">
+          <MetaBlock label="Bill to">
+            <span className="whitespace-pre-line">{billTo}</span>
+          </MetaBlock>
+          <MetaBlock label="From">{form.companyName}</MetaBlock>
           {addressBlock ? (
-            <p className="whitespace-pre-line text-neutral-500">
-              {addressBlock}
-            </p>
+            <div>
+              <div className={labelClass}>Address</div>
+              <div className={`${valueClass} whitespace-pre-line text-[#333333]`}>
+                {addressBlock}
+              </div>
+            </div>
           ) : null}
         </div>
+
         <div
-          className="flex size-16 shrink-0 items-center justify-center rounded border border-dashed border-neutral-300 bg-neutral-50 text-[10px] text-neutral-400"
+          className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500 sm:justify-self-end"
           aria-hidden
         >
-          Logo
+          <User className="size-9 stroke-[1.25]" aria-hidden />
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-sm">
-          <thead>
-            <tr className="bg-neutral-100 text-left text-neutral-700">
-              <th className="border-b border-neutral-200 px-3 py-2 font-medium">
-                Description
-              </th>
-              <th className="w-16 border-b border-neutral-200 px-3 py-2 font-medium">
-                Qty
-              </th>
-              <th className="border-b border-neutral-200 px-3 py-2 font-medium">
-                Unit price
-              </th>
-              <th className="border-b border-neutral-200 px-3 py-2 text-right font-medium">
-                Amount
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {form.items.map((item, i) => (
-              <tr key={item.id} className="text-neutral-700">
-                <td className="border-b border-neutral-100 px-3 py-3">
-                  {item.description.trim() || 'Item description'}
-                </td>
-                <td className="border-b border-neutral-100 px-3 py-3 tabular-nums">
-                  {item.qty || '0'}
-                </td>
-                <td className="border-b border-neutral-100 px-3 py-3 tabular-nums">
-                  {formatMoney(parseFloat(item.unitPrice) || 0, form.currency)}
-                </td>
-                <td className="border-b border-neutral-100 px-3 py-3 text-right tabular-nums">
-                  {formatMoney(lineAmounts[i], form.currency)}
-                </td>
+      <div className="mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-[14px]">
+            <thead>
+              <tr className="bg-neutral-100">
+                <th className="border-b border-neutral-200/90 px-4 py-3 text-left text-[13px] font-bold text-[#111111]">
+                  Description
+                </th>
+                <th className="w-[4.5rem] border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-[#111111]">
+                  Qty
+                </th>
+                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-[#111111]">
+                  Unit price
+                </th>
+                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-[#111111]">
+                  Amount
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {form.items.map((item, i) => (
+                <tr key={item.id}>
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-[#222222]">
+                    {item.description.trim() || 'Item description'}
+                  </td>
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-[#222222]">
+                    {item.qty || '0'}
+                  </td>
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-[#222222]">
+                    {formatMoney(parseFloat(item.unitPrice) || 0, form.currency)}
+                  </td>
+                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-[#222222]">
+                    {formatMoney(lineAmounts[i], form.currency)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-end gap-6 border-t border-neutral-200 bg-white px-4 py-3.5">
+          <span className="text-[15px] font-bold text-[#111111]">Total</span>
+          <span className="text-[15px] font-bold tabular-nums text-[#111111]">
+            {formatMoney(subtotal, form.currency)}
+          </span>
+        </div>
       </div>
-      <p className="mt-4 text-right text-sm font-semibold text-neutral-900">
-        Total: {formatMoney(subtotal, form.currency)}
-      </p>
 
       {form.notes.trim() ? (
-        <div className="mt-8 text-sm text-neutral-600">
-          <p className="mb-1 font-medium text-neutral-800">Notes</p>
-          <p className="whitespace-pre-line">{form.notes}</p>
+        <div className="mb-10">
+          <h4 className="mb-3 text-[15px] font-bold text-[#111111]">Notes</h4>
+          <p className="whitespace-pre-line text-[14px] leading-relaxed text-[#333333]">
+            {form.notes}
+          </p>
         </div>
       ) : null}
 
       {form.bankDetailsText.trim() ? (
-        <div className="mt-8 text-sm text-neutral-600">
-          <p className="mb-2 font-medium text-neutral-800">Bank details</p>
-          <p className="whitespace-pre-line">{form.bankDetailsText}</p>
+        <div className="mt-2">
+          <h4 className="mb-3 text-[15px] font-bold text-[#111111]">
+            Bank details
+          </h4>
+          <div className="space-y-1.5 text-[14px] leading-relaxed text-[#333333]">
+            {form.bankDetailsText.split('\n').map((line, idx) => (
+              <p key={idx}>{line || '\u00a0'}</p>
+            ))}
+          </div>
         </div>
       ) : null}
-    </>
+    </div>
   )
 }

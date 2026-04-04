@@ -4,9 +4,10 @@ import { Card, OutlinedSelect } from './FormPrimitives.jsx'
 export function CurrencySection({ currency, onChange }) {
   return (
     <Card>
+      <h2 className="mb-3 text-base font-semibold text-gray-900">Currency</h2>
       <OutlinedSelect
         id="currency"
-        label="Currency"
+        label="Invoice currency"
         value={currency}
         onChange={(e) => onChange({ currency: e.target.value })}
       >

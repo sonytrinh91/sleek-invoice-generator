@@ -109,52 +109,57 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white pb-28 font-sans text-neutral-800">
+    <div className="flex h-dvh flex-col overflow-hidden bg-white font-sans text-neutral-800">
       <CreateInvoiceHeader />
 
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-8 px-6 py-8 lg:flex-row">
-        <div className="min-w-0 flex-1 space-y-5">
-          <CustomerSection
-            customerName={form.customerName}
-            customerEmail={form.customerEmail}
-            onChange={setPatch}
-            showCustomerErrors={showCustomerErrors}
-          />
-          <AddressSection
-            addressVisible={form.addressVisible}
-            addressLine1={form.addressLine1}
-            addressLine2={form.addressLine2}
-            postalCode={form.postalCode}
-            country={form.country}
-            onChange={setPatch}
-          />
-          <InvoiceDetailsSection
-            invoiceNumber={form.invoiceNumber}
-            issueDate={form.issueDate}
-            onChange={setPatch}
-          />
-          <CurrencySection currency={form.currency} onChange={setPatch} />
-          <ItemsSection
-            items={form.items}
-            currency={form.currency}
-            lineAmounts={lineAmounts}
-            subtotal={subtotal}
-            onUpdateItem={updateItem}
-            onAddItem={addLineItem}
-            onRemoveItem={removeLineItem}
-          />
-          <NotesSection notes={form.notes} onChange={setPatch} />
-          <BankDetailsSection
-            selectedBankId={form.selectedBankId}
-            bankDetailsText={form.bankDetailsText}
-            onBankChange={onBankChange}
-            onChange={setPatch}
-          />
-          <PaymentTermsSection
-            paymentTerms={form.paymentTerms}
-            onChange={setPatch}
-          />
-        </div>
+      <div className="flex min-h-0 flex-1 flex-row">
+        <section
+          aria-label="Invoice form"
+          className="w-1/2 min-w-0 overflow-y-auto border-r border-gray-200 px-6 py-6"
+        >
+          <div className="mx-auto max-w-2xl space-y-5">
+            <CustomerSection
+              customerName={form.customerName}
+              customerEmail={form.customerEmail}
+              onChange={setPatch}
+              showCustomerErrors={showCustomerErrors}
+            />
+            <AddressSection
+              addressVisible={form.addressVisible}
+              addressLine1={form.addressLine1}
+              addressLine2={form.addressLine2}
+              postalCode={form.postalCode}
+              country={form.country}
+              onChange={setPatch}
+            />
+            <InvoiceDetailsSection
+              invoiceNumber={form.invoiceNumber}
+              issueDate={form.issueDate}
+              onChange={setPatch}
+            />
+            <CurrencySection currency={form.currency} onChange={setPatch} />
+            <ItemsSection
+              items={form.items}
+              currency={form.currency}
+              lineAmounts={lineAmounts}
+              subtotal={subtotal}
+              onUpdateItem={updateItem}
+              onAddItem={addLineItem}
+              onRemoveItem={removeLineItem}
+            />
+            <NotesSection notes={form.notes} onChange={setPatch} />
+            <BankDetailsSection
+              selectedBankId={form.selectedBankId}
+              bankDetailsText={form.bankDetailsText}
+              onBankChange={onBankChange}
+              onChange={setPatch}
+            />
+            <PaymentTermsSection
+              paymentTerms={form.paymentTerms}
+              onChange={setPatch}
+            />
+          </div>
+        </section>
 
         <InvoicePreviewPanel
           ref={printRef}

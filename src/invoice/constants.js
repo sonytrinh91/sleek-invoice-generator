@@ -1,4 +1,4 @@
-export const ACCENT = '#0052FF'
+export const ACCENT = '#0F6DFA'
 
 export const CURRENCIES = [
   { code: 'SGD', label: 'SGD - Singapore Dollar' },

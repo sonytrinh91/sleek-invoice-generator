@@ -3,7 +3,7 @@ import { ACCENT, COUNTRIES } from '../../invoice/constants.js'
 import { Card, FloatingField, FloatingSelect } from './FormPrimitives.jsx'
 
 const addButtonClass =
-  'inline-flex items-center gap-1.5 rounded-md border px-4 py-2 text-sm font-medium text-accent transition hover:bg-blue-50'
+  'inline-flex items-center gap-1.5 rounded-sm cursor-pointer border border-1 px-4 py-3 text-sm font-medium text-accent transition hover:bg-blue-50'
 
 export function AddressSection({
   addressVisible,
@@ -15,7 +15,7 @@ export function AddressSection({
 }) {
   return (
     <Card>
-      <h2 className="mb-3 text-sm font-semibold text-gray-900">
+      <h2 className="mb-3 text-base font-semibold text-gray-900">
         Address (optional)
       </h2>
 

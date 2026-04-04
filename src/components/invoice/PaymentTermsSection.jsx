@@ -4,9 +4,12 @@ import { Card, OutlinedSelect } from './FormPrimitives.jsx'
 export function PaymentTermsSection({ paymentTerms, onChange }) {
   return (
     <Card>
+      <h2 className="mb-3 text-base font-semibold text-gray-900">
+        Payment details
+      </h2>
       <OutlinedSelect
         id="payment-terms"
-        label="Payment details"
+        label="Payment terms"
         value={paymentTerms}
         onChange={(e) => onChange({ paymentTerms: e.target.value })}
       >

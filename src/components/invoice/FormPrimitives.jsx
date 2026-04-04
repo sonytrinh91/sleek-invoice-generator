@@ -4,14 +4,14 @@ import { ChevronDown } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 export const inputClass =
-  'w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
+  'w-full rounded border border-gray-300 px-3 py-2.5 text-sm text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
 
 export const selectClass =
-  'w-full appearance-none rounded-md border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
+  'w-full appearance-none rounded border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-sm text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
 
 const shellBorder = (hasError) =>
   clsx(
-    'overflow-hidden rounded-md border bg-white transition-colors',
+    'overflow-hidden rounded border bg-white transition-colors',
     hasError
       ? 'border-red-700 focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
       : 'border-gray-300 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
@@ -38,10 +38,10 @@ const floatingLabelState = (hasError, floated) =>
   )
 
 const peerInputClass =
-  'peer w-full border-0 bg-transparent px-3 pb-2.5 pt-5 text-base font-medium text-gray-900 outline-none ring-0 placeholder:text-transparent focus:ring-0'
+  'peer w-full border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 placeholder:text-transparent focus:ring-0'
 
 const dateInputClass =
-  'w-full border-0 bg-transparent px-3 pb-2.5 pt-5 text-base font-medium text-gray-900 outline-none ring-0 focus:ring-0'
+  'w-full border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
 
 export function OutlinedInput({
   id,
@@ -156,9 +156,9 @@ export function OutlinedTextarea({
           aria-describedby={errId}
           placeholder=" "
           {...restTextareaProps}
-          className={clsx(
+          className={twMerge(
             peerInputClass,
-            'min-h-[5.5rem] resize-y pb-3 pt-6 align-top',
+            'min-h-[5.5rem] resize-y pb-3 pt-7 align-top',
             textareaClassName,
             textareaInnerClass,
           )}
@@ -224,7 +224,7 @@ export function OutlinedSelect({
             selectOnBlur?.(e)
           }}
           className={clsx(
-            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2.5 pt-5 text-base font-medium text-gray-900 outline-none ring-0 focus:ring-0',
+            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
             selectInnerClass,
           )}
         >
@@ -272,7 +272,7 @@ export function FloatingField({
   return (
     <div
       className={clsx(
-        'relative overflow-hidden rounded-md border bg-white transition-colors',
+        'relative overflow-hidden rounded border bg-white transition-colors',
         hasError
           ? 'border-red-700 focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
           : 'border-gray-200 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
@@ -346,7 +346,7 @@ export function FloatingSelect({
   return (
     <div
       className={clsx(
-        'flex min-w-0 flex-1 rounded-md border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
+        'flex min-w-0 flex-1 rounded border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
         className,
       )}
     >
@@ -363,7 +363,7 @@ export function FloatingSelect({
             setFocused(false)
             onBlur?.(e)
           }}
-          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2.5 pt-5 pr-2 text-sm font-medium text-gray-900 outline-none ring-0 focus:ring-0"
+          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2.5 pt-6 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
         >
           {children}
         </select>
@@ -386,9 +386,7 @@ export function FloatingSelect({
 
 export function FieldLabel({ children }) {
   return (
-    <label className="mb-2 block text-sm font-medium text-gray-700">
-      {children}
-    </label>
+    <h2 className="mb-3 text-base font-semibold text-gray-900">{children}</h2>
   )
 }
 
