@@ -1,65 +1,87 @@
+import { useMemo } from 'react'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { X } from 'lucide-react'
-import { formatMoney } from '../../invoice/utils.js'
+import { formatMoney, lineAmount, newLineItem } from '../../invoice/utils.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
 import { OutlinedInput, OutlinedTextarea } from './FormPrimitives.jsx'
 
-export function ItemsSection({
-  items,
-  currency,
-  lineAmounts,
-  subtotal,
-  onUpdateItem,
-  onAddItem,
-  onRemoveItem,
-}) {
+export function ItemsSection() {
+  const {
+    control,
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+    keyName: '_key',
+  })
+
+  const currency = watch('currency')
+  const items = watch('items')
+
+  const { lineAmounts, subtotal } = useMemo(() => {
+    const amounts = (items ?? []).map((it) =>
+      lineAmount(it.qty, it.unitPrice),
+    )
+    return {
+      lineAmounts: amounts,
+      subtotal: amounts.reduce((a, b) => a + b, 0),
+    }
+  }, [items])
+
+  const itemErrors = (i) => errors.items?.[i]
+
   return (
     <section className="border border-gray-200 bg-white p-6">
       <h2 className="mb-3 text-base font-semibold text-gray-900">Items</h2>
 
       <div className="space-y-4">
-        {items.map((item, index) => (
-          <div key={item.id} className="space-y-3">
+        {fields.map((field, index) => (
+          <div key={field._key} className="space-y-3">
             <OutlinedInput
-              id={`item-desc-${item.id}`}
+              id={`item-desc-${field.id}`}
               label="Product or service name"
-              rows={2}
-              value={item.description}
-              onChange={(e) =>
-                onUpdateItem(item.id, { description: e.target.value })
-              }
-              textareaClassName="min-h-[4.5rem]"
+              error={itemErrors(index)?.description?.message}
+              {...register(`items.${index}.description`)}
             />
             <div className="flex flex-wrap items-end gap-4">
               <div className="w-24 shrink-0">
                 <OutlinedInput
-                  id={`item-qty-${item.id}`}
+                  id={`item-qty-${field.id}`}
                   label="Qty"
                   type="number"
+                  inputMode="decimal"
                   min={0}
                   step="any"
-                  value={item.qty}
-                  onChange={(e) =>
-                    onUpdateItem(item.id, { qty: e.target.value })
-                  }
+                  required
+                  aria-required="true"
+                  className="input-number-no-spin"
+                  error={itemErrors(index)?.qty?.message}
+                  {...register(`items.${index}.qty`)}
                 />
               </div>
               <div className="min-w-[120px] max-w-[200px] shrink-0 flex-1">
                 <OutlinedInput
-                  id={`item-price-${item.id}`}
+                  id={`item-price-${field.id}`}
                   label="Unit price"
                   type="number"
+                  inputMode="decimal"
                   min={0}
                   step="0.01"
-                  value={item.unitPrice}
-                  onChange={(e) =>
-                    onUpdateItem(item.id, { unitPrice: e.target.value })
-                  }
+                  required
+                  aria-required="true"
+                  className="input-number-no-spin"
+                  error={itemErrors(index)?.unitPrice?.message}
+                  {...register(`items.${index}.unitPrice`)}
                 />
               </div>
               <div className="ml-auto min-w-[100px] text-right">
                 <span className="mb-1 block text-xs text-gray-500">Amount</span>
                 <span className="flex h-9 items-center justify-end text-sm font-medium tabular-nums text-gray-900">
-                  {formatMoney(lineAmounts[index], currency)}
+                  {formatMoney(lineAmounts[index] ?? 0, currency)}
                 </span>
               </div>
               <div className="flex shrink-0 flex-col">
@@ -71,8 +93,11 @@ export function ItemsSection({
                 </span>
                 <button
                   type="button"
-                  onClick={() => onRemoveItem(item.id)}
-                  className="flex size-9 items-center justify-center cursor-pointer rounded text-red-500 transition hover:bg-red-50"
+                  onClick={() => {
+                    if (fields.length <= 1) return
+                    remove(index)
+                  }}
+                  className="flex size-9 cursor-pointer items-center justify-center rounded text-red-500 transition hover:bg-red-50"
                   aria-label="Remove line item"
                 >
                   <X className="size-4" />
@@ -82,7 +107,18 @@ export function ItemsSection({
           </div>
         ))}
 
-        <AddOutlineButton onClick={onAddItem}>Add line item</AddOutlineButton>
+        <AddOutlineButton
+          type="button"
+          onClick={() => append(newLineItem(), { shouldFocus: false })}
+        >
+          Add line item
+        </AddOutlineButton>
+
+        {typeof errors.items?.message === 'string' ? (
+          <p className="text-xs text-red-800" role="alert">
+            {errors.items.message}
+          </p>
+        ) : null}
 
         <div className="border-t border-gray-200 pt-4 text-sm">
           <div className="flex items-center justify-between text-gray-600">

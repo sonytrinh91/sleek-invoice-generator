@@ -1,15 +1,13 @@
+import { useFormContext } from 'react-hook-form'
 import { COUNTRIES } from '../../invoice/constants.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
 import { Card, FloatingField, FloatingSelect } from './FormPrimitives.jsx'
 
-export function AddressSection({
-  addressVisible,
-  addressLine1,
-  addressLine2,
-  postalCode,
-  country,
-  onChange,
-}) {
+export function AddressSection() {
+  const { register, watch, setValue } = useFormContext()
+  const addressVisible = watch('addressVisible')
+  const country = watch('country')
+
   return (
     <Card>
       <h2 className="mb-3 text-base font-semibold text-gray-900">
@@ -22,15 +20,13 @@ export function AddressSection({
             id="address-line-1"
             label="Address line 1"
             autoComplete="address-line1"
-            value={addressLine1}
-            onChange={(e) => onChange({ addressLine1: e.target.value })}
+            {...register('addressLine1')}
           />
           <FloatingField
             id="address-line-2"
             label="Address line 2"
             autoComplete="address-line2"
-            value={addressLine2}
-            onChange={(e) => onChange({ addressLine2: e.target.value })}
+            {...register('addressLine2')}
           />
           <div className="flex gap-2 sm:gap-3">
             <FloatingField
@@ -38,15 +34,14 @@ export function AddressSection({
               label="Postal code"
               autoComplete="postal-code"
               title="Postal / ZIP code"
-              value={postalCode}
-              onChange={(e) => onChange({ postalCode: e.target.value })}
               narrow
+              {...register('postalCode')}
             />
             <FloatingSelect
               id="address-country"
               label="Country"
               value={country}
-              onChange={(e) => onChange({ country: e.target.value })}
+              {...register('country')}
             >
               <option value="" disabled>
                 {'\u00a0'}
@@ -60,7 +55,10 @@ export function AddressSection({
           </div>
         </div>
       ) : (
-        <AddOutlineButton onClick={() => onChange({ addressVisible: true })}>
+        <AddOutlineButton
+          type="button"
+          onClick={() => setValue('addressVisible', true, { shouldValidate: true })}
+        >
           Add address
         </AddOutlineButton>
       )}

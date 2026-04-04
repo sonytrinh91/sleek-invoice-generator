@@ -1,5 +1,5 @@
 import { clsx } from 'clsx'
-import { useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
@@ -43,15 +43,16 @@ const peerInputClass =
 const dateInputClass =
   'date-field-floating relative w-full border-0 bg-transparent px-3 pb-2 pt-6 pr-10 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
 
-export function OutlinedInput({
-  id,
-  label,
-  error,
-  className,
-  descriptionId,
-  type,
-  ...inputProps
-}) {
+function assignRef(ref, node) {
+  if (!ref) return
+  if (typeof ref === 'function') ref(node)
+  else ref.current = node
+}
+
+export const OutlinedInput = forwardRef(function OutlinedInput(
+  { id, label, error, className, descriptionId, type, ...inputProps },
+  forwardedRef,
+) {
   const hasError = Boolean(error)
   const errId = descriptionId ?? (hasError ? `${id}-error` : undefined)
   const isDate = type === 'date'
@@ -61,11 +62,20 @@ export function OutlinedInput({
     onFocus: inputOnFocus,
     onBlur: inputOnBlur,
     value: inputValue,
+    ref: registerRef,
     ...restInputProps
   } = inputProps
   const val = inputValue
-  const stateFloated =
-    isDate && (Boolean(val) || focused)
+  const stateFloated = isDate && (Boolean(val) || focused)
+  const controlled = inputValue !== undefined
+
+  const setInputRef = useCallback(
+    (node) => {
+      assignRef(registerRef, node)
+      assignRef(forwardedRef, node)
+    },
+    [registerRef, forwardedRef],
+  )
 
   return (
     <div className={clsx(shellBorder(hasError), className)}>
@@ -74,11 +84,12 @@ export function OutlinedInput({
           <>
             <input
               id={id}
+              ref={setInputRef}
               type="date"
               aria-invalid={hasError}
               aria-describedby={errId}
               {...restInputProps}
-              value={inputValue}
+              {...(controlled ? { value: inputValue } : {})}
               onFocus={(e) => {
                 setFocused(true)
                 inputOnFocus?.(e)
@@ -100,12 +111,13 @@ export function OutlinedInput({
           <>
             <input
               id={id}
+              ref={setInputRef}
               type={type ?? 'text'}
               aria-invalid={hasError}
               aria-describedby={errId}
               placeholder=" "
               {...restInputProps}
-              value={inputValue}
+              {...(controlled ? { value: inputValue } : {})}
               onFocus={inputOnFocus}
               onBlur={inputOnBlur}
               className={clsx(peerInputClass, inputInnerClass)}
@@ -127,35 +139,51 @@ export function OutlinedInput({
       ) : null}
     </div>
   )
-}
+})
 
-export function OutlinedTextarea({
-  id,
-  label,
-  error,
-  className,
-  rows = 3,
-  descriptionId,
-  textareaClassName,
-  ...textareaProps
-}) {
+export const OutlinedTextarea = forwardRef(function OutlinedTextarea(
+  {
+    id,
+    label,
+    error,
+    className,
+    rows = 3,
+    descriptionId,
+    textareaClassName,
+    ...textareaProps
+  },
+  forwardedRef,
+) {
   const hasError = Boolean(error)
   const errId = descriptionId ?? (hasError ? `${id}-error` : undefined)
   const {
     className: textareaInnerClass,
+    value: textareaValue,
+    ref: registerRef,
     ...restTextareaProps
   } = textareaProps
+  const controlled = textareaValue !== undefined
+
+  const setTextareaRef = useCallback(
+    (node) => {
+      assignRef(registerRef, node)
+      assignRef(forwardedRef, node)
+    },
+    [registerRef, forwardedRef],
+  )
 
   return (
     <div className={clsx(shellBorder(hasError), className)}>
       <div className="relative">
         <textarea
           id={id}
+          ref={setTextareaRef}
           rows={rows}
           aria-invalid={hasError}
           aria-describedby={errId}
           placeholder=" "
           {...restTextareaProps}
+          {...(controlled ? { value: textareaValue } : {})}
           className={twMerge(
             peerInputClass,
             'min-h-[5.5rem] resize-y pb-3 pt-7 align-top',
@@ -178,7 +206,7 @@ export function OutlinedTextarea({
       ) : null}
     </div>
   )
-}
+})
 
 export function OutlinedSelect({
   id,
@@ -251,20 +279,31 @@ export function OutlinedSelect({
 }
 
 /** Plain bordered floating field for address row (border-gray-200) */
-export function FloatingField({
-  id,
-  label,
-  error,
-  className,
-  type = 'text',
-  narrow,
-  ...inputProps
-}) {
+export const FloatingField = forwardRef(function FloatingField(
+  { id, label, error, className, type = 'text', narrow, ...inputProps },
+  forwardedRef,
+) {
   const hasError = Boolean(error)
   const isDate = type === 'date'
   const [focused, setFocused] = useState(false)
-  const val = inputProps.value
+  const {
+    value: inputValue,
+    ref: registerRef,
+    onFocus: inputOnFocus,
+    onBlur: inputOnBlur,
+    ...restInputProps
+  } = inputProps
+  const val = inputValue
   const stateFloated = isDate && (Boolean(val) || focused)
+  const controlled = inputValue !== undefined
+
+  const setInputRef = useCallback(
+    (node) => {
+      assignRef(registerRef, node)
+      assignRef(forwardedRef, node)
+    },
+    [registerRef, forwardedRef],
+  )
 
   return (
     <div
@@ -281,15 +320,17 @@ export function FloatingField({
         <>
           <input
             id={id}
+            ref={setInputRef}
             type="date"
-            {...inputProps}
+            {...restInputProps}
+            {...(controlled ? { value: inputValue } : {})}
             onFocus={(e) => {
               setFocused(true)
-              inputProps.onFocus?.(e)
+              inputOnFocus?.(e)
             }}
             onBlur={(e) => {
               setFocused(false)
-              inputProps.onBlur?.(e)
+              inputOnBlur?.(e)
             }}
             className={dateInputClass}
           />
@@ -304,9 +345,13 @@ export function FloatingField({
         <>
           <input
             id={id}
+            ref={setInputRef}
             type={type}
             placeholder=" "
-            {...inputProps}
+            {...restInputProps}
+            {...(controlled ? { value: inputValue } : {})}
+            onFocus={inputOnFocus}
+            onBlur={inputOnBlur}
             className={peerInputClass}
           />
           <label htmlFor={id} className={floatingLabelPeer(hasError)}>
@@ -324,19 +369,30 @@ export function FloatingField({
       ) : null}
     </div>
   )
-}
+})
 
-export function FloatingSelect({
-  id,
-  label,
-  value,
-  onChange,
-  onFocus,
-  onBlur,
-  className,
-  children,
-}) {
+export const FloatingSelect = forwardRef(function FloatingSelect(
+  { id, label, value, className, children, ...rest },
+  forwardedRef,
+) {
   const [focused, setFocused] = useState(false)
+  const {
+    ref: registerRef,
+    onChange,
+    onBlur,
+    onFocus: regOnFocus,
+    name,
+    ...selectRest
+  } = rest
+
+  const setRef = useCallback(
+    (node) => {
+      assignRef(registerRef, node)
+      assignRef(forwardedRef, node)
+    },
+    [registerRef, forwardedRef],
+  )
+
   const floated =
     focused || (value !== undefined && value !== null && String(value) !== '')
 
@@ -350,17 +406,20 @@ export function FloatingSelect({
       <div className="relative min-w-0 flex-1">
         <select
           id={id}
+          ref={setRef}
+          name={name}
           value={value}
           onChange={onChange}
           onFocus={(e) => {
             setFocused(true)
-            onFocus?.(e)
+            regOnFocus?.(e)
           }}
           onBlur={(e) => {
             setFocused(false)
             onBlur?.(e)
           }}
           className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-6 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
+          {...selectRest}
         >
           {children}
         </select>
@@ -379,7 +438,7 @@ export function FloatingSelect({
       </div>
     </div>
   )
-}
+})
 
 export function FieldLabel({ children }) {
   return (

@@ -1,16 +1,22 @@
+import { useFormContext } from 'react-hook-form'
 import { Card, FieldLabel, OutlinedTextarea } from './FormPrimitives.jsx'
 
-export function BankDetailsSection({ bankDetailsText, onChange }) {
+export function BankDetailsSection() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
+
   return (
     <Card>
       <FieldLabel>Bank details</FieldLabel>
-        <OutlinedTextarea
-          id="bank-payment-details"
-          label="Payment details"
-          rows={5}
-          value={bankDetailsText}
-          onChange={(e) => onChange({ bankDetailsText: e.target.value })}
-        />
+      <OutlinedTextarea
+        id="bank-payment-details"
+        label="Payment details"
+        rows={5}
+        error={errors.bankDetailsText?.message}
+        {...register('bankDetailsText')}
+      />
     </Card>
   )
 }

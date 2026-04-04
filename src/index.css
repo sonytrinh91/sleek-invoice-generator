@@ -45,3 +45,15 @@ body {
   transform: translateY(-50%);
   opacity: 0.75;
 }
+
+/* Number input without browser stepper arrows (class on OutlinedInput shell) */
+.input-number-no-spin input[type='number']::-webkit-outer-spin-button,
+.input-number-no-spin input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-number-no-spin input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

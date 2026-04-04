@@ -1,4 +1,6 @@
-import { useMemo, useRef, useState, useCallback } from 'react'
+import { useMemo, useRef } from 'react'
+import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useReactToPrint } from 'react-to-print'
 import { format, isValid } from 'date-fns'
 import { AddressSection } from './components/invoice/AddressSection.jsx'
@@ -13,23 +15,17 @@ import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
 import { PaymentTermsSection } from './components/invoice/PaymentTermsSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
-import { isEmailFieldValid } from './invoice/validation.js'
+import { invoiceFormSchema } from './invoice/invoiceSchema.js'
+import { isInvoiceDownloadReady } from './invoice/validation.js'
 import {
   computeDueDate,
   initialForm,
   lineAmount,
-  newLineItem,
   parseIssueDate,
 } from './invoice/utils.js'
 
-export default function App() {
-  const [form, setForm] = useState(initialForm)
-  const [showCustomerErrors, setShowCustomerErrors] = useState(false)
-  const printRef = useRef(null)
-
-  const setPatch = useCallback((patch) => {
-    setForm((f) => ({ ...f, ...patch }))
-  }, [])
+function InvoiceWorkspace({ printRef }) {
+  const form = useWatch()
 
   const issueDateParsed = useMemo(
     () => parseIssueDate(form.issueDate),
@@ -43,8 +39,8 @@ export default function App() {
     [form.issueDate, form.paymentTerms, issueDateParsed],
   )
 
-  const { subtotal, lineAmounts } = useMemo(() => {
-    const amounts = form.items.map((it) =>
+  const { lineAmounts, subtotal } = useMemo(() => {
+    const amounts = (form.items ?? []).map((it) =>
       lineAmount(it.qty, it.unitPrice),
     )
     return {
@@ -52,6 +48,11 @@ export default function App() {
       subtotal: amounts.reduce((a, b) => a + b, 0),
     }
   }, [form.items])
+
+  const canDownload = useMemo(
+    () => isInvoiceDownloadReady(form),
+    [form],
+  )
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
@@ -64,24 +65,6 @@ export default function App() {
     `,
   })
 
-  const updateItem = (id, patch) => {
-    setForm((f) => ({
-      ...f,
-      items: f.items.map((it) => (it.id === id ? { ...it, ...patch } : it)),
-    }))
-  }
-
-  const addLineItem = () => {
-    setForm((f) => ({ ...f, items: [...f.items, newLineItem()] }))
-  }
-
-  const removeLineItem = (id) => {
-    setForm((f) => {
-      if (f.items.length <= 1) return f
-      return { ...f, items: f.items.filter((it) => it.id !== id) }
-    })
-  }
-
   const issueDisplay = isValid(issueDateParsed)
     ? format(issueDateParsed, DISPLAY_DATE_FORMAT)
     : '—'
@@ -93,14 +76,6 @@ export default function App() {
     [form.customerName, form.customerEmail].filter(Boolean).join(', ') ||
     'Customer Name, customer@email.com'
 
-  const handleSend = () => {
-    if (!isEmailFieldValid(form.customerEmail)) {
-      setShowCustomerErrors(true)
-      return
-    }
-    window.alert(`Invoice would be sent to ${form.customerEmail}`)
-  }
-
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-white font-sans text-neutral-800">
       <CreateInvoiceHeader />
@@ -110,46 +85,22 @@ export default function App() {
           aria-label="Invoice form"
           className="w-1/2 min-w-0 overflow-y-auto border-r border-gray-200 px-6 py-6"
         >
-          <div className="mx-auto max-w-2xl space-y-5">
-            <CustomerSection
-              customerName={form.customerName}
-              customerEmail={form.customerEmail}
-              onChange={setPatch}
-              showCustomerErrors={showCustomerErrors}
-            />
-            <AddressSection
-              addressVisible={form.addressVisible}
-              addressLine1={form.addressLine1}
-              addressLine2={form.addressLine2}
-              postalCode={form.postalCode}
-              country={form.country}
-              onChange={setPatch}
-            />
-            <InvoiceDetailsSection
-              invoiceNumber={form.invoiceNumber}
-              issueDate={form.issueDate}
-              onChange={setPatch}
-            />
-            <CurrencySection currency={form.currency} onChange={setPatch} />
-            <ItemsSection
-              items={form.items}
-              currency={form.currency}
-              lineAmounts={lineAmounts}
-              subtotal={subtotal}
-              onUpdateItem={updateItem}
-              onAddItem={addLineItem}
-              onRemoveItem={removeLineItem}
-            />
-            <NotesSection notes={form.notes} onChange={setPatch} />
-            <BankDetailsSection
-              bankDetailsText={form.bankDetailsText}
-              onChange={setPatch}
-            />
-            <PaymentTermsSection
-              paymentTerms={form.paymentTerms}
-              onChange={setPatch}
-            />
-          </div>
+          <form
+            noValidate
+            className="contents"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <div className="mx-auto max-w-2xl space-y-5">
+              <CustomerSection />
+              <AddressSection />
+              <InvoiceDetailsSection />
+              <CurrencySection />
+              <ItemsSection />
+              <NotesSection />
+              <BankDetailsSection />
+              <PaymentTermsSection />
+            </div>
+          </form>
         </section>
 
         <InvoicePreviewPanel
@@ -165,8 +116,24 @@ export default function App() {
 
       <InvoiceFooter
         onDownload={() => handlePrint()}
-        onSend={handleSend}
+        downloadDisabled={!canDownload}
       />
     </div>
+  )
+}
+
+export default function App() {
+  const printRef = useRef(null)
+  const methods = useForm({
+    resolver: zodResolver(invoiceFormSchema),
+    defaultValues: initialForm(),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  })
+
+  return (
+    <FormProvider {...methods}>
+      <InvoiceWorkspace printRef={printRef} />
+    </FormProvider>
   )
 }

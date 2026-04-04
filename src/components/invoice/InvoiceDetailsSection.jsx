@@ -1,10 +1,13 @@
+import { Controller, useFormContext } from 'react-hook-form'
 import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
 
-export function InvoiceDetailsSection({
-  invoiceNumber,
-  issueDate,
-  onChange,
-}) {
+export function InvoiceDetailsSection() {
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext()
+
   return (
     <Card>
       <FieldLabel>Invoice details</FieldLabel>
@@ -13,15 +16,23 @@ export function InvoiceDetailsSection({
           id="invoice-number"
           label="Invoice number"
           type="text"
-          value={invoiceNumber}
-          onChange={(e) => onChange({ invoiceNumber: e.target.value })}
+          error={errors.invoiceNumber?.message}
+          {...register('invoiceNumber')}
         />
-        <OutlinedInput
-          id="issue-date"
-          label="Issue date"
-          type="date"
-          value={issueDate}
-          onChange={(e) => onChange({ issueDate: e.target.value })}
+        <Controller
+          control={control}
+          name="issueDate"
+          render={({ field, fieldState }) => (
+            <OutlinedInput
+              id="issue-date"
+              label="Issue date"
+              type="date"
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              error={fieldState.error?.message}
+            />
+          )}
         />
       </div>
     </Card>

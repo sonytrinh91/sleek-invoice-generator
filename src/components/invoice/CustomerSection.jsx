@@ -1,20 +1,11 @@
-import { useState } from 'react'
-import { isValidEmailFormat } from '../../invoice/validation.js'
+import { useFormContext } from 'react-hook-form'
 import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
 
-export function CustomerSection({
-  customerName,
-  customerEmail,
-  onChange,
-  showCustomerErrors,
-}) {
-  const [emailBlurred, setEmailBlurred] = useState(false)
-  const shouldValidateEmail = emailBlurred || showCustomerErrors
-  const emailError =
-    shouldValidateEmail &&
-    (customerEmail.trim() === '' || !isValidEmailFormat(customerEmail))
-      ? 'Please provide a valid email address.'
-      : null
+export function CustomerSection() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <Card>
@@ -25,8 +16,8 @@ export function CustomerSection({
           label="Customer name"
           type="text"
           autoComplete="name"
-          value={customerName}
-          onChange={(e) => onChange({ customerName: e.target.value })}
+          error={errors.customerName?.message}
+          {...register('customerName')}
         />
         <OutlinedInput
           id="customer-email"
@@ -34,10 +25,8 @@ export function CustomerSection({
           type="email"
           autoComplete="email"
           inputMode="email"
-          value={customerEmail}
-          onChange={(e) => onChange({ customerEmail: e.target.value })}
-          onBlur={() => setEmailBlurred(true)}
-          error={emailError}
+          error={errors.customerEmail?.message}
+          {...register('customerEmail')}
         />
       </div>
     </Card>
