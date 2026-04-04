@@ -14,11 +14,11 @@ export function NotesSection({ notes, onChange }) {
         </label>
         <textarea
           id="invoice-notes"
-          rows={5}
+          rows={3}
           value={notes}
           onChange={(e) => onChange({ notes: e.target.value })}
           placeholder="Enter a note for the customer"
-          className="min-h-[148px] w-full resize-y rounded border-0 bg-transparent px-3 pb-14 pr-14 pt-8 text-base leading-relaxed text-input-value outline-none ring-0 placeholder:text-gray-400 focus:ring-0"
+          className="min-h-[118px] w-full resize-y rounded border-0 bg-transparent px-3 pb-8 pr-10 pt-8 text-base leading-relaxed text-input-value outline-none ring-0 placeholder:text-gray-400 focus:ring-0"
         />
         <button
           type="button"

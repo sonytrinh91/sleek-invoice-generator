@@ -23,9 +23,8 @@ export function parseIssueDate(issueDateStr) {
 export function computeDueDate(issueDateStr, paymentTerms) {
   const d = parseIssueDate(issueDateStr)
   if (!isValid(d)) return null
-  if (paymentTerms === 'receipt') return d
-  const days =
-    paymentTerms === '15' ? 15 : paymentTerms === '60' ? 60 : 30
+  const days = Number.parseInt(paymentTerms, 10)
+  if (!Number.isFinite(days) || days < 0) return addDays(d, 30)
   return addDays(d, days)
 }
 

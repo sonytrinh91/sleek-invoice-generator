@@ -4,17 +4,17 @@ import { ChevronDown } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 export const inputClass =
-  'w-full rounded border border-gray-300 px-3 py-2.5 text-sm text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
+  'w-full rounded border border-gray-200 px-3 py-2 text-sm text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
 
 export const selectClass =
-  'w-full appearance-none rounded border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-sm text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
+  'w-full appearance-none rounded border border-gray-200 bg-white py-2 pl-3 pr-10 text-sm text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent'
 
 const shellBorder = (hasError) =>
   clsx(
     'overflow-hidden rounded border bg-white transition-colors',
     hasError
       ? 'border-red-700 focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
-      : 'border-gray-300 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
+      : 'border-gray-200 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
   )
 
 const floatingLabelPeer = (hasError) =>
@@ -23,9 +23,9 @@ const floatingLabelPeer = (hasError) =>
     hasError
       ? 'text-red-800 peer-focus:text-red-800'
       : 'text-gray-500 peer-focus:text-accent',
-    'top-2.5 translate-y-0 text-xs',
+    'top-2 translate-y-0 text-xs',
     'peer-placeholder-shown:top-[50%] peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm',
-    'peer-focus:top-2.5 peer-focus:translate-y-0 peer-focus:text-xs',
+    'peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs',
   )
 
 const floatingLabelState = (hasError, floated) =>
@@ -33,15 +33,15 @@ const floatingLabelState = (hasError, floated) =>
     'pointer-events-none absolute left-3 z-[1] origin-[0] transition-all duration-200 ease-out',
     hasError ? 'text-red-800' : 'text-gray-500',
     floated
-      ? 'top-2.5 translate-y-0 text-xs'
+      ? 'top-2 translate-y-0 text-xs'
       : 'top-[50%] -translate-y-1/2 text-sm',
   )
 
 const peerInputClass =
-  'peer w-full border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 placeholder:text-transparent focus:ring-0'
+  'peer w-full border-0 bg-transparent px-3 pb-2 pt-6 text-base font-medium text-input-value outline-none ring-0 placeholder:text-transparent focus:ring-0'
 
 const dateInputClass =
-  'w-full border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
+  'date-field-floating relative w-full border-0 bg-transparent px-3 pb-2 pt-6 pr-10 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
 
 export function OutlinedInput({
   id,
@@ -224,7 +224,7 @@ export function OutlinedSelect({
             selectOnBlur?.(e)
           }}
           className={clsx(
-            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
+            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-6 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
             selectInnerClass,
           )}
         >
@@ -360,7 +360,7 @@ export function FloatingSelect({
             setFocused(false)
             onBlur?.(e)
           }}
-          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2.5 pt-6 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
+          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-6 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
         >
           {children}
         </select>
@@ -390,7 +390,7 @@ export function FieldLabel({ children }) {
 export function Card({ children, className = '' }) {
   return (
     <div
-      className={clsx('border border-gray-200 bg-white p-5', className)}
+      className={clsx('border border-gray-100 bg-white p-5', className)}
     >
       {children}
     </div>

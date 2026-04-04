@@ -5,9 +5,10 @@ export const DISPLAY_DATE_FORMAT = 'dd-MM-yyyy'
 
 export const PAYMENT_OPTIONS = [
   { value: '30', label: 'Due in 30 days' },
+  { value: '25', label: 'Due in 25 days' },
+  { value: '20', label: 'Due in 20 days' },
   { value: '15', label: 'Due in 15 days' },
-  { value: '60', label: 'Due in 60 days' },
-  { value: 'receipt', label: 'Due on receipt' },
+  { value: '10', label: 'Due in 10 days' },
 ]
 
 /** ISO-style codes for the address country select */

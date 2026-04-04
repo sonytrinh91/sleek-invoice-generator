@@ -13,13 +13,13 @@ export function ItemsSection({
   onRemoveItem,
 }) {
   return (
-    <section className="rounded-lg border border-gray-200 bg-white p-6">
+    <section className="border border-gray-200 bg-white p-6">
       <h2 className="mb-3 text-base font-semibold text-gray-900">Items</h2>
 
       <div className="space-y-4">
         {items.map((item, index) => (
           <div key={item.id} className="space-y-3">
-            <OutlinedTextarea
+            <OutlinedInput
               id={`item-desc-${item.id}`}
               label="Product or service name"
               rows={2}

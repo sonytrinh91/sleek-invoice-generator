@@ -31,3 +31,17 @@ body {
   height: 100dvh;
   min-height: 100dvh;
 }
+
+/* Native date picker control: vertical center (Chromium, Safari, Edge) */
+.date-field-floating::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  margin: 0;
+  padding: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  transform: translateY(-50%);
+  opacity: 0.75;
+}

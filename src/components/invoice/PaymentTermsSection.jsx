@@ -1,5 +1,6 @@
 import { PAYMENT_OPTIONS } from '../../invoice/constants.js'
-import { Card, OutlinedSelect } from './FormPrimitives.jsx'
+import { Card } from './FormPrimitives.jsx'
+import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
 
 export function PaymentTermsSection({ paymentTerms, onChange }) {
   return (
@@ -7,18 +8,14 @@ export function PaymentTermsSection({ paymentTerms, onChange }) {
       <h2 className="mb-3 text-base font-semibold text-gray-900">
         Payment details
       </h2>
-      <OutlinedSelect
+      <SearchableSelectCombobox
         id="payment-terms"
         label="Payment terms"
+        options={PAYMENT_OPTIONS}
         value={paymentTerms}
-        onChange={(e) => onChange({ paymentTerms: e.target.value })}
-      >
-        {PAYMENT_OPTIONS.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </OutlinedSelect>
+        onValueChange={(v) => onChange({ paymentTerms: v })}
+        toggleAriaLabel="Toggle payment terms list"
+      />
     </Card>
   )
 }
