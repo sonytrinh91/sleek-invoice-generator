@@ -38,10 +38,10 @@ const floatingLabelState = (hasError, floated) =>
   )
 
 const peerInputClass =
-  'peer w-full border-0 bg-transparent px-3 pb-2 pt-6 text-base font-medium text-input-value outline-none ring-0 placeholder:text-transparent focus:ring-0'
+  'peer w-full border-0 bg-transparent px-3 pb-1 pt-5 text-base font-medium text-input-value outline-none ring-0 placeholder:text-transparent focus:ring-0'
 
 const dateInputClass =
-  'date-field-floating relative w-full border-0 bg-transparent px-3 pb-2 pt-6 pr-10 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
+  'date-field-floating relative w-full border-0 bg-transparent px-3 pb-1 pt-5 pr-10 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
 
 function assignRef(ref, node) {
   if (!ref) return
@@ -252,7 +252,7 @@ export function OutlinedSelect({
             selectOnBlur?.(e)
           }}
           className={clsx(
-            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-6 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
+            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-4 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
             selectInnerClass,
           )}
         >
@@ -418,7 +418,7 @@ export const FloatingSelect = forwardRef(function FloatingSelect(
             setFocused(false)
             onBlur?.(e)
           }}
-          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-6 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
+          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-4 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
           {...selectRest}
         >
           {children}

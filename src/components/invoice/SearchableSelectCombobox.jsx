@@ -6,10 +6,10 @@ const shellClass =
   'overflow-hidden rounded border border-gray-200 hover:bg-gray-50 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
 
 const inputClass =
-  'peer w-full min-w-0 border-0 bg-transparent px-3 pb-2.5 pt-6 text-base font-medium text-input-value outline-none ring-0 placeholder:text-gray-400 focus:ring-0'
+  'peer w-full min-w-0 border-0 bg-transparent px-3 pb-1 pt-5 text-base font-medium text-input-value outline-none ring-0 placeholder:text-gray-400 focus:ring-0'
 
 const labelFloated =
-  'pointer-events-none absolute left-3 z-[1] origin-[0] top-2.5 translate-y-0 text-xs text-gray-500 transition-all duration-200 ease-out peer-focus:text-accent'
+  'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs text-gray-500 transition-all duration-200 ease-out peer-focus:text-accent'
 
 /**
  * @param {{ value: string, label: string }[]} options
