@@ -371,11 +371,19 @@ export const FloatingField = forwardRef(function FloatingField(
   )
 })
 
+const floatingSelectShellClass =
+  'overflow-hidden rounded border border-gray-200 bg-white transition-colors hover:bg-gray-50 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
+
+const floatingSelectLabelClass =
+  'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs text-gray-500 transition-all duration-200 ease-out peer-focus:text-accent'
+
+const floatingSelectNativeClass =
+  'peer w-full min-w-0 cursor-pointer appearance-none border-0 bg-transparent px-3 pb-1 pt-5 pr-2 text-base font-medium text-input-value outline-none ring-0 focus:ring-0'
+
 export const FloatingSelect = forwardRef(function FloatingSelect(
   { id, label, value, className, children, ...rest },
   forwardedRef,
 ) {
-  const [focused, setFocused] = useState(false)
   const {
     ref: registerRef,
     onChange,
@@ -393,48 +401,41 @@ export const FloatingSelect = forwardRef(function FloatingSelect(
     [registerRef, forwardedRef],
   )
 
-  const floated =
-    focused || (value !== undefined && value !== null && String(value) !== '')
-
   return (
-    <div
-      className={clsx(
-        'flex min-w-0 flex-1 rounded border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
-        className,
-      )}
-    >
-      <div className="relative min-w-0 flex-1">
-        <select
-          id={id}
-          ref={setRef}
-          name={name}
-          value={value}
-          onChange={onChange}
-          onFocus={(e) => {
-            setFocused(true)
-            regOnFocus?.(e)
-          }}
-          onBlur={(e) => {
-            setFocused(false)
-            onBlur?.(e)
-          }}
-          className="w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-4 pr-2 text-sm font-medium text-input-value outline-none ring-0 focus:ring-0"
-          {...selectRest}
-        >
-          {children}
-        </select>
-        <label
-          htmlFor={id}
-          className={floatingLabelState(false, floated)}
-        >
-          {label}
-        </label>
-      </div>
-      <div
-        className="flex shrink-0 items-center border-l border-gray-200 px-2.5"
-        aria-hidden
-      >
-        <ChevronDown className="pointer-events-none size-4 text-gray-400" strokeWidth={1.75} />
+    <div className={clsx('relative min-w-0 flex-1', className)}>
+      <div className={floatingSelectShellClass}>
+        <div className="flex min-w-0">
+          <div className="relative min-w-0 flex-1">
+            <select
+              id={id}
+              ref={setRef}
+              name={name}
+              value={value}
+              onChange={onChange}
+              onFocus={(e) => {
+                regOnFocus?.(e)
+              }}
+              onBlur={(e) => {
+                onBlur?.(e)
+              }}
+              className={floatingSelectNativeClass}
+              {...selectRest}
+            >
+              {children}
+            </select>
+            <label htmlFor={id} className={floatingSelectLabelClass}>
+              {label}
+            </label>
+          </div>
+          <div className="my-2 flex shrink-0 items-stretch border-l border-gray-200">
+            <span
+              className="flex cursor-default items-center px-2.5 text-gray-400"
+              aria-hidden
+            >
+              <ChevronDown className="size-4" />
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -1,12 +1,17 @@
-import { useFormContext } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { COUNTRIES } from '../../invoice/constants.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
-import { Card, FloatingField, FloatingSelect } from './FormPrimitives.jsx'
+import { Card, FloatingField } from './FormPrimitives.jsx'
+import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
+
+const COUNTRY_OPTIONS = COUNTRIES.map((c) => ({
+  value: c.code,
+  label: c.name,
+}))
 
 export function AddressSection() {
-  const { register, watch, setValue } = useFormContext()
+  const { register, watch, control, setValue } = useFormContext()
   const addressVisible = watch('addressVisible')
-  const country = watch('country')
 
   return (
     <Card>
@@ -28,7 +33,7 @@ export function AddressSection() {
             autoComplete="address-line2"
             {...register('addressLine2')}
           />
-          <div className="flex gap-2 sm:gap-3">
+          <div className="flex items-end gap-2 sm:gap-3">
             <FloatingField
               id="address-postal"
               label="Postal code"
@@ -37,21 +42,22 @@ export function AddressSection() {
               narrow
               {...register('postalCode')}
             />
-            <FloatingSelect
-              id="address-country"
-              label="Country"
-              value={country}
-              {...register('country')}
-            >
-              <option value="" disabled>
-                {'\u00a0'}
-              </option>
-              {COUNTRIES.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name}
-                </option>
-              ))}
-            </FloatingSelect>
+            <div className="min-w-0 flex-1">
+              <Controller
+                control={control}
+                name="country"
+                render={({ field }) => (
+                  <SearchableSelectCombobox
+                    id="address-country"
+                    label="Country"
+                    options={COUNTRY_OPTIONS}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    toggleAriaLabel="Toggle country list"
+                  />
+                )}
+              />
+            </div>
           </div>
         </div>
       ) : (

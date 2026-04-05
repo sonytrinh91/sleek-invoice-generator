@@ -5,11 +5,17 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 const shellClass =
   'overflow-hidden rounded border border-gray-200 hover:bg-gray-50 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
 
-const inputClass =
-  'peer w-full min-w-0 border-0 bg-transparent px-3 pb-1 pt-5 text-base font-medium text-input-value outline-none ring-0 placeholder:text-gray-400 focus:ring-0'
+const inputClassBase =
+  'peer w-full min-w-0 border-0 bg-transparent px-3 text-base font-medium text-input-value outline-none ring-0 focus:ring-0 placeholder:font-normal placeholder:text-sm placeholder:text-gray-500'
+
+const inputPadWithLabel = 'pb-1 pt-5'
+
+const inputPadCentered = 'py-3'
 
 const labelFloated =
-  'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs text-gray-500 transition-all duration-200 ease-out peer-focus:text-accent'
+  'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs text-gray-500 transition-opacity duration-200 ease-out peer-focus:text-accent'
+
+const labelHidden = 'sr-only'
 
 /**
  * @param {{ value: string, label: string }[]} options
@@ -21,6 +27,7 @@ export function SearchableSelectCombobox({
   value,
   onValueChange,
   toggleAriaLabel = 'Toggle list',
+  className,
 }) {
   const rootRef = useRef(null)
   const inputRef = useRef(null)
@@ -34,6 +41,8 @@ export function SearchableSelectCombobox({
     [options, value],
   )
   const closedLabel = selected?.label ?? ''
+  const hasSelection = Boolean(closedLabel)
+  const showFloatingLabel = hasSelection && !open
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -119,9 +128,9 @@ export function SearchableSelectCombobox({
   const listboxId = `${id}-listbox`
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className={clsx('relative w-full min-w-0', className)}>
       <div className={shellClass}>
-        <div className="flex min-w-0">
+        <div className="flex min-w-0 items-stretch">
           <div className="relative min-w-0 flex-1">
             <input
               ref={inputRef}
@@ -133,9 +142,12 @@ export function SearchableSelectCombobox({
               aria-autocomplete="list"
               autoComplete="off"
               spellCheck={false}
-              placeholder={open ? 'Search...' : ' '}
+              placeholder={
+                open ? 'Search...' : hasSelection ? ' ' : label
+              }
               className={clsx(
-                inputClass,
+                inputClassBase,
+                showFloatingLabel ? inputPadWithLabel : inputPadCentered,
                 open ? 'cursor-text' : 'cursor-pointer',
               )}
               value={open ? query : closedLabel}
@@ -152,16 +164,19 @@ export function SearchableSelectCombobox({
               }}
               onKeyDown={onKeyDown}
             />
-            <label htmlFor={id} className={labelFloated}>
+            <label
+              htmlFor={id}
+              className={clsx(labelFloated, !showFloatingLabel && labelHidden)}
+            >
               {label}
             </label>
           </div>
-          <div className="my-2 flex shrink-0 items-stretch border-l border-gray-200">
+          <div className="flex shrink-0 items-center my-2 self-stretch border-l border-gray-200">
             <button
               type="button"
               tabIndex={-1}
               aria-label={toggleAriaLabel}
-              className="flex cursor-pointer items-center px-2.5 text-gray-400 hover:text-gray-600"
+              className="flex h-full cursor-pointer items-center px-2.5 text-gray-400 hover:text-gray-600"
               onMouseDown={(e) => {
                 e.preventDefault()
                 if (open) {

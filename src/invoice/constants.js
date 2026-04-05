@@ -11,24 +11,8 @@ export const PAYMENT_OPTIONS = [
   { value: '10', label: 'Due in 10 days' },
 ]
 
-/** ISO-style codes for the address country select */
-export const COUNTRIES = [
-  { code: 'SG', name: 'Singapore' },
-  { code: 'MY', name: 'Malaysia' },
-  { code: 'ID', name: 'Indonesia' },
-  { code: 'TH', name: 'Thailand' },
-  { code: 'VN', name: 'Vietnam' },
-  { code: 'PH', name: 'Philippines' },
-  { code: 'US', name: 'United States' },
-  { code: 'GB', name: 'United Kingdom' },
-  { code: 'AU', name: 'Australia' },
-  { code: 'HK', name: 'Hong Kong' },
-  { code: 'IN', name: 'India' },
-  { code: 'CN', name: 'China' },
-  { code: 'JP', name: 'Japan' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' },
-]
+/** Full ISO 3166-1 list for address country (see `countries.generated.js`). */
+export { COUNTRIES } from './countries.generated.js'
 
 export const BANK_ACCOUNTS = [
   {

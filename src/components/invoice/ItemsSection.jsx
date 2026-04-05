@@ -1,5 +1,4 @@
-import { useMemo } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { X } from 'lucide-react'
 import { formatMoney, lineAmount, newLineItem } from '../../invoice/utils.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
@@ -9,7 +8,6 @@ export function ItemsSection() {
   const {
     control,
     register,
-    watch,
     formState: { errors },
   } = useFormContext()
 
@@ -19,18 +17,13 @@ export function ItemsSection() {
     keyName: '_key',
   })
 
-  const currency = watch('currency')
-  const items = watch('items')
+  const currency = useWatch({ control, name: 'currency' })
+  const items = useWatch({ control, name: 'items' })
 
-  const { lineAmounts, subtotal } = useMemo(() => {
-    const amounts = (items ?? []).map((it) =>
-      lineAmount(it.qty, it.unitPrice),
-    )
-    return {
-      lineAmounts: amounts,
-      subtotal: amounts.reduce((a, b) => a + b, 0),
-    }
-  }, [items])
+  const lineAmounts = (items ?? []).map((it) =>
+    lineAmount(it.qty, it.unitPrice),
+  )
+  const subtotal = lineAmounts.reduce((a, b) => a + b, 0)
 
   const itemErrors = (i) => errors.items?.[i]
 

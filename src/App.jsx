@@ -39,15 +39,10 @@ function InvoiceWorkspace({ printRef }) {
     [form.issueDate, form.paymentTerms, issueDateParsed],
   )
 
-  const { lineAmounts, subtotal } = useMemo(() => {
-    const amounts = (form.items ?? []).map((it) =>
-      lineAmount(it.qty, it.unitPrice),
-    )
-    return {
-      lineAmounts: amounts,
-      subtotal: amounts.reduce((a, b) => a + b, 0),
-    }
-  }, [form.items])
+  const lineAmounts = (form.items ?? []).map((it) =>
+    lineAmount(it.qty, it.unitPrice),
+  )
+  const subtotal = lineAmounts.reduce((a, b) => a + b, 0)
 
   const canDownload = useMemo(
     () => isInvoiceDownloadReady(form),
