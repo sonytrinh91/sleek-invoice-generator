@@ -28,7 +28,7 @@ export function ItemsSection() {
   const itemErrors = (i) => errors.items?.[i]
 
   return (
-    <section className="border border-gray-200 bg-white p-6">
+    <section className="border border-gray-100 bg-white p-6">
       <h2 className="mb-3 text-base font-semibold text-gray-900">Items</h2>
 
       <div className="space-y-4">
