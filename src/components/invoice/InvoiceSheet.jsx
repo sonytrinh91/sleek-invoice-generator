@@ -43,7 +43,11 @@ export function InvoiceSheet({
           <MetaBlock label="Bill to">
             <span className="whitespace-pre-line">{billTo}</span>
           </MetaBlock>
-          <MetaBlock label="From">{form.companyName}</MetaBlock>
+          <MetaBlock label="From">
+            <span className="whitespace-pre-line">
+              {form.companyName?.trim() || '—'}
+            </span>
+          </MetaBlock>
           {addressBlock ? (
             <div>
               <div className={labelClass}>Address</div>
@@ -54,12 +58,22 @@ export function InvoiceSheet({
           ) : null}
         </div>
 
-        <div
-          className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500 sm:justify-self-end"
-          aria-hidden
-        >
-          <User className="size-9 stroke-[1.25]" aria-hidden />
-        </div>
+        {form.logoDataUrl ? (
+          <div className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white sm:justify-self-end">
+            <img
+              src={form.logoDataUrl}
+              alt=""
+              className="max-h-[72px] max-w-[72px] object-contain"
+            />
+          </div>
+        ) : (
+          <div
+            className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500 sm:justify-self-end"
+            aria-hidden
+          >
+            <User className="size-9 stroke-[1.25]" aria-hidden />
+          </div>
+        )}
       </div>
 
       <div className="mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">

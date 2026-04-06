@@ -54,6 +54,7 @@ export function initialForm() {
     bankDetailsText: bankDetailsFor(BANK_ACCOUNTS[0].id),
     paymentTerms: '30',
     companyName: 'COMPANY NAME PTE. LTD.',
+    logoDataUrl: '',
   }
 }
 

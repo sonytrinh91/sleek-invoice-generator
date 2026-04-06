@@ -55,4 +55,11 @@ export const invoiceFormSchema = z.object({
     .min(1, 'Payment details are required'),
   paymentTerms: z.string().trim().min(1, 'Payment terms are required'),
   companyName: z.string(),
+  /** Base64 data URL from local image file; empty when no logo. */
+  logoDataUrl: z
+    .string()
+    .refine(
+      (v) => v === '' || v.startsWith('data:image/'),
+      { message: 'Logo must be an image' },
+    ),
 })

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useReactToPrint } from 'react-to-print'
 import { format, isValid } from 'date-fns'
 import { AddressSection } from './components/invoice/AddressSection.jsx'
+import { CompanySection } from './components/invoice/CompanySection.jsx'
 import { BankDetailsSection } from './components/invoice/BankDetailsSection.jsx'
 import { CreateInvoiceHeader } from './components/invoice/CreateInvoiceHeader.jsx'
 import { CurrencySection } from './components/invoice/CurrencySection.jsx'
@@ -86,6 +87,7 @@ function InvoiceWorkspace({ printRef }) {
             onSubmit={(e) => e.preventDefault()}
           >
             <div className="mx-auto max-w-2xl space-y-5">
+              <CompanySection />
               <CustomerSection />
               <AddressSection />
               <InvoiceDetailsSection />
