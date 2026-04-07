@@ -39,14 +39,15 @@ export function newLineItem() {
 
 export function initialForm() {
   return {
+    documentType: 'INVOICE',
     customerName: '',
     customerEmail: '',
     addressVisible: false,
     addressLine1: '',
     addressLine2: '',
     postalCode: '',
-    country: '',
-    invoiceNumber: 'US-115',
+    country: 'SG',
+    invoiceNumber: '1',
     issueDate: format(new Date(), 'yyyy-MM-dd'),
     currency: 'SGD',
     items: [newLineItem()],

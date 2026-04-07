@@ -1,9 +1,11 @@
 import { clsx } from 'clsx'
 import { ChevronDown } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-
-const shellClass =
-  'overflow-hidden rounded border border-gray-200 hover:bg-gray-50 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
+import {
+  DROPDOWN_FIELD_SHELL,
+  DROPDOWN_FIELD_SHELL_ERROR,
+  DropdownChevronRail,
+} from './FormPrimitives.jsx'
 
 const inputClassBase =
   'peer w-full min-w-0 border-0 bg-transparent px-3 text-base font-medium text-input-value outline-none ring-0 focus:ring-0 placeholder:font-normal placeholder:text-sm placeholder:text-gray-500'
@@ -12,13 +14,11 @@ const inputPadWithLabel = 'pb-1 pt-5'
 
 const inputPadCentered = 'py-3'
 
-const labelFloated =
-  'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs text-gray-500 transition-opacity duration-200 ease-out peer-focus:text-accent'
-
 const labelHidden = 'sr-only'
 
 /**
  * @param {{ value: string, label: string }[]} options
+ * @param {boolean} [searchable=true] When false, shows the same popover list without type-to-filter (plain select).
  */
 export function SearchableSelectCombobox({
   id,
@@ -28,6 +28,9 @@ export function SearchableSelectCombobox({
   onValueChange,
   toggleAriaLabel = 'Toggle list',
   className,
+  searchable = true,
+  error,
+  onBlur,
 }) {
   const rootRef = useRef(null)
   const inputRef = useRef(null)
@@ -35,6 +38,9 @@ export function SearchableSelectCombobox({
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [highlight, setHighlight] = useState(0)
+
+  const hasError = Boolean(error)
+  const errId = hasError ? `${id}-error` : undefined
 
   const selected = useMemo(
     () => options.find((o) => o.value === value),
@@ -45,6 +51,7 @@ export function SearchableSelectCombobox({
   const showFloatingLabel = hasSelection && !open
 
   const filtered = useMemo(() => {
+    if (!searchable) return options
     const q = query.trim().toLowerCase()
     if (!q) return options
     return options.filter(
@@ -52,7 +59,7 @@ export function SearchableSelectCombobox({
         o.value.toLowerCase().includes(q) ||
         o.label.toLowerCase().includes(q),
     )
-  }, [options, query])
+  }, [options, query, searchable])
 
   const activeIdx =
     filtered.length === 0
@@ -81,13 +88,18 @@ export function SearchableSelectCombobox({
     [onValueChange],
   )
 
+  const openToCurrentIndex = useCallback(() => {
+    const i = options.findIndex((o) => o.value === value)
+    setHighlight(i >= 0 ? i : 0)
+  }, [options, value])
+
   const onKeyDown = (e) => {
     if (!open) {
       if (e.key === 'ArrowDown' || e.key === 'Enter') {
         e.preventDefault()
         setOpen(true)
         setQuery('')
-        setHighlight(0)
+        openToCurrentIndex()
       }
       return
     }
@@ -129,7 +141,12 @@ export function SearchableSelectCombobox({
 
   return (
     <div ref={rootRef} className={clsx('relative w-full min-w-0', className)}>
-      <div className={shellClass}>
+      <div
+        className={clsx(
+          'group',
+          hasError ? DROPDOWN_FIELD_SHELL_ERROR : DROPDOWN_FIELD_SHELL,
+        )}
+      >
         <div className="flex min-w-0 items-stretch">
           <div className="relative min-w-0 flex-1">
             <input
@@ -139,44 +156,66 @@ export function SearchableSelectCombobox({
               role="combobox"
               aria-expanded={open}
               aria-controls={listboxId}
-              aria-autocomplete="list"
+              aria-autocomplete={searchable ? 'list' : 'none'}
+              aria-invalid={hasError}
+              aria-describedby={errId}
               autoComplete="off"
               spellCheck={false}
+              readOnly={!searchable}
               placeholder={
-                open ? 'Search...' : hasSelection ? ' ' : label
+                open
+                  ? searchable
+                    ? 'Search...'
+                    : ' '
+                  : hasSelection
+                    ? ' '
+                    : label
               }
               className={clsx(
                 inputClassBase,
                 showFloatingLabel ? inputPadWithLabel : inputPadCentered,
-                open ? 'cursor-text' : 'cursor-pointer',
+                open && searchable ? 'cursor-text' : 'cursor-pointer',
               )}
-              value={open ? query : closedLabel}
-              onChange={(e) => {
-                setQuery(e.target.value)
-                setOpen(true)
-                setHighlight(0)
-              }}
+              value={open && searchable ? query : closedLabel}
+              onChange={
+                searchable
+                  ? (e) => {
+                      setQuery(e.target.value)
+                      setOpen(true)
+                      setHighlight(0)
+                    }
+                  : undefined
+              }
               onFocus={() => {
                 setOpen(true)
                 setQuery('')
-                const i = options.findIndex((o) => o.value === value)
-                setHighlight(i >= 0 ? i : 0)
+                openToCurrentIndex()
               }}
+              onBlur={onBlur}
               onKeyDown={onKeyDown}
             />
             <label
               htmlFor={id}
-              className={clsx(labelFloated, !showFloatingLabel && labelHidden)}
+              className={clsx(
+                'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs transition-opacity duration-200 ease-out',
+                hasError
+                  ? 'text-red-800 peer-focus:text-red-800'
+                  : 'text-gray-500 peer-focus:text-accent',
+                !showFloatingLabel && labelHidden,
+              )}
             >
               {label}
             </label>
           </div>
-          <div className="flex shrink-0 items-center my-2 self-stretch border-l border-gray-200">
+          <DropdownChevronRail>
             <button
               type="button"
               tabIndex={-1}
               aria-label={toggleAriaLabel}
-              className="flex h-full cursor-pointer items-center px-2.5 text-gray-400 hover:text-gray-600"
+              className={clsx(
+                'flex h-full cursor-pointer items-center px-2.5 group-hover:text-gray-600',
+                hasError ? 'text-red-300' : 'text-gray-400',
+              )}
               onMouseDown={(e) => {
                 e.preventDefault()
                 if (open) {
@@ -187,10 +226,19 @@ export function SearchableSelectCombobox({
                 }
               }}
             >
-              <ChevronDown className="size-4" aria-hidden />
+              <ChevronDown className="size-4 shrink-0" aria-hidden />
             </button>
-          </div>
+          </DropdownChevronRail>
         </div>
+        {hasError ? (
+          <div
+            id={errId}
+            role="alert"
+            className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
+          >
+            {error}
+          </div>
+        ) : null}
       </div>
 
       {open ? (

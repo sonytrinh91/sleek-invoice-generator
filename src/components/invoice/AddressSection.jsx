@@ -1,5 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { COUNTRIES } from '../../invoice/constants.js'
+import { syncCurrencyFromCountry } from '../../invoice/countryCurrency.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
 import { Card, FloatingField } from './FormPrimitives.jsx'
 import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
@@ -52,7 +53,10 @@ export function AddressSection() {
                     label="Country"
                     options={COUNTRY_OPTIONS}
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(v) => {
+                      field.onChange(v)
+                      syncCurrencyFromCountry(setValue, v)
+                    }}
                     toggleAriaLabel="Toggle country list"
                   />
                 )}

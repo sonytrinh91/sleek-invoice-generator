@@ -17,6 +17,28 @@ const shellBorder = (hasError) =>
       : 'border-gray-200 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
   )
 
+/** Shell shared by {@link SearchableSelectCombobox} and {@link OutlinedSelect}. */
+export const DROPDOWN_FIELD_SHELL =
+  'overflow-hidden rounded border border-gray-200 bg-white transition-colors hover:bg-gray-50 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
+
+export const DROPDOWN_FIELD_SHELL_ERROR =
+  'overflow-hidden rounded border border-red-700 bg-white transition-colors focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
+
+/** Right column: divider + chevron (shared by combobox and {@link OutlinedSelect}). */
+export function DropdownChevronRail({ children, className, ...props }) {
+  return (
+    <div
+      className={clsx(
+        'flex shrink-0 items-center self-stretch border-l border-gray-200 my-2',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
 const floatingLabelPeer = (hasError) =>
   clsx(
     'pointer-events-none absolute left-3 z-[1] origin-[0] transition-all duration-200 ease-out',
@@ -233,47 +255,73 @@ export function OutlinedSelect({
   } = selectProps
 
   return (
-    <div className={clsx(shellBorder(hasError), className)}>
-      <div className="relative pr-10">
-        <select
-          id={id}
-          aria-invalid={hasError}
-          aria-describedby={errId}
-          {...restSelectProps}
-          value={value}
-          onFocus={(e) => {
-            setFocused(true)
-            onFocus?.(e)
-            selectOnFocus?.(e)
-          }}
-          onBlur={(e) => {
-            setFocused(false)
-            onBlur?.(e)
-            selectOnBlur?.(e)
-          }}
-          className={clsx(
-            'w-full cursor-pointer appearance-none border-0 bg-transparent px-3 pb-2 pt-4 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
-            selectInnerClass,
-          )}
-        >
-          {children}
-        </select>
-        <label htmlFor={id} className={floatingLabelState(hasError, floated)}>
-          {label}
-        </label>
-        <SelectChevron
-          className={hasError ? 'text-red-300' : undefined}
-        />
-      </div>
-      {hasError ? (
-        <div
-          id={errId}
-          role="alert"
-          className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
-        >
-          {error}
+    <div className={clsx('relative w-full min-w-0', className)}>
+      <div
+        className={clsx(
+          'group',
+          hasError ? DROPDOWN_FIELD_SHELL_ERROR : DROPDOWN_FIELD_SHELL,
+        )}
+      >
+        <div className="flex min-w-0 items-stretch">
+          <div className="relative min-w-0 flex-1">
+            <select
+              id={id}
+              aria-invalid={hasError}
+              aria-describedby={errId}
+              {...restSelectProps}
+              value={value}
+              onFocus={(e) => {
+                setFocused(true)
+                onFocus?.(e)
+                selectOnFocus?.(e)
+              }}
+              onBlur={(e) => {
+                setFocused(false)
+                onBlur?.(e)
+                selectOnBlur?.(e)
+              }}
+              className={clsx(
+                'w-full min-w-0 cursor-pointer appearance-none border-0 bg-transparent px-3 pb-1 pt-5 text-base font-medium text-input-value outline-none ring-0 focus:ring-0',
+                selectInnerClass,
+              )}
+            >
+              {children}
+            </select>
+            <label
+              htmlFor={id}
+              className={clsx(
+                floatingLabelState(hasError, floated),
+                !hasError &&
+                  'transition-opacity duration-200 ease-out group-focus-within:text-accent',
+              )}
+            >
+              {label}
+            </label>
+          </div>
+          <DropdownChevronRail aria-hidden>
+            <span className="flex h-full items-center px-2.5">
+              <ChevronDown
+                className={clsx(
+                  'size-4 shrink-0',
+                  hasError
+                    ? 'text-red-300'
+                    : 'text-gray-400 group-hover:text-gray-600',
+                )}
+                aria-hidden
+              />
+            </span>
+          </DropdownChevronRail>
         </div>
-      ) : null}
+        {hasError ? (
+          <div
+            id={errId}
+            role="alert"
+            className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
+          >
+            {error}
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }
@@ -454,17 +502,5 @@ export function Card({ children, className = '' }) {
     >
       {children}
     </div>
-  )
-}
-
-export function SelectChevron({ className }) {
-  return (
-    <ChevronDown
-      className={twMerge(
-        'pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-400',
-        className,
-      )}
-      aria-hidden
-    />
   )
 }

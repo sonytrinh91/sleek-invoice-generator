@@ -6,8 +6,8 @@ import { format, isValid } from 'date-fns'
 import { AddressSection } from './components/invoice/AddressSection.jsx'
 import { CompanySection } from './components/invoice/CompanySection.jsx'
 import { BankDetailsSection } from './components/invoice/BankDetailsSection.jsx'
-import { CurrencySection } from './components/invoice/CurrencySection.jsx'
 import { CustomerSection } from './components/invoice/CustomerSection.jsx'
+import { DocumentSection } from './components/invoice/DocumentSection.jsx'
 import { InvoiceDetailsSection } from './components/invoice/InvoiceDetailsSection.jsx'
 import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.jsx'
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
@@ -16,6 +16,7 @@ import { PaymentTermsSection } from './components/invoice/PaymentTermsSection.js
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
+import { documentTypeHeading } from './invoice/documentTypes.js'
 import {
   computeDueDate,
   initialForm,
@@ -50,7 +51,8 @@ function InvoiceWorkspace({ printRef }) {
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: () => `Invoice-${form.invoiceNumber}`,
+    documentTitle: () =>
+      `${documentTypeHeading(form.documentType ?? 'INVOICE')}-${form.invoiceNumber}`,
     pageStyle: `
       @page { margin: 12mm; size: auto; }
       @media print {
@@ -83,11 +85,11 @@ function InvoiceWorkspace({ printRef }) {
             onSubmit={(e) => e.preventDefault()}
           >
             <div className="mx-auto max-w-2xl space-y-5">
+              <DocumentSection />
               <CompanySection />
               <CustomerSection />
               <AddressSection />
               <InvoiceDetailsSection />
-              <CurrencySection />
               <ItemsSection />
               <NotesSection />
               <BankDetailsSection />
