@@ -17,9 +17,9 @@ export { COUNTRIES } from './countries.generated.js'
 export const BANK_ACCOUNTS = [
   {
     id: 'wise',
-    label: 'Wise - 1231231231122 Multi currency',
+    label: 'Wise - Multi currency',
     details:
-      'Pay via bank transfer - \nBank Name: Wise - \nAccount Number: 1231231231122',
+      'Pay via bank transfer - \nBank Name - \nAccount Number -',
   },
   {
     id: 'dbs',

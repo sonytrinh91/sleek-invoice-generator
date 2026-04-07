@@ -22,8 +22,17 @@ export function InvoiceSheet({
   dueDisplay,
   lineAmounts,
   subtotal,
+  totals,
 }) {
   const addressBlock = formatInvoiceAddress(form)
+  const t = totals ?? {
+    itemsSubtotal: subtotal,
+    taxAmount: 0,
+    discountAmount: 0,
+    shippingAmount: 0,
+    grandTotal: subtotal,
+  }
+  const cur = form.currency
 
   return (
     <div className="text-[15px] leading-relaxed text-fg antialiased">
@@ -106,21 +115,62 @@ export function InvoiceSheet({
                     {item.qty || '0'}
                   </td>
                   <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
-                    {formatMoney(parseFloat(item.unitPrice) || 0, form.currency)}
+                    {formatMoney(parseFloat(item.unitPrice) || 0, cur)}
                   </td>
                   <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
-                    {formatMoney(lineAmounts[i], form.currency)}
+                    {formatMoney(lineAmounts[i], cur)}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="flex items-center justify-end gap-6 border-t border-neutral-200 bg-white px-4 py-3.5">
-          <span className="text-[15px] font-bold text-fg-strong">Total</span>
-          <span className="text-[15px] font-bold tabular-nums text-fg-strong">
-            {formatMoney(subtotal, form.currency)}
-          </span>
+        <div className="space-y-1 border-t border-neutral-200 bg-white px-4 py-3.5 text-[14px]">
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+              Subtotal
+            </span>
+            <span className="tabular-nums text-fg-body">
+              {formatMoney(t.itemsSubtotal, cur)}
+            </span>
+          </div>
+          {form.taxEnabled ? (
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+                GST
+              </span>
+              <span className="tabular-nums text-fg-body">
+                {formatMoney(t.taxAmount, cur)}
+              </span>
+            </div>
+          ) : null}
+          {t.discountAmount > 1e-9 ? (
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+                Discount
+              </span>
+              <span className="tabular-nums text-fg-body">
+                {formatMoney(-t.discountAmount, cur)}
+              </span>
+            </div>
+          ) : null}
+          {t.shippingAmount > 1e-9 ? (
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+                Shipping
+              </span>
+              <span className="tabular-nums text-fg-body">
+                {formatMoney(t.shippingAmount, cur)}
+              </span>
+            </div>
+          ) : null}
+          <div className="my-2 border-t border-neutral-200/90" />
+          <div className="flex items-center justify-between gap-4 pt-0.5">
+            <span className="text-[15px] font-bold text-fg-strong">Total</span>
+            <span className="text-[15px] font-bold tabular-nums text-accent">
+              {formatMoney(t.grandTotal, cur)}
+            </span>
+          </div>
         </div>
       </div>
 

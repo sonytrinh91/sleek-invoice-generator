@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { X } from 'lucide-react'
 import { formatMoney, lineAmount, newLineItem } from '../../invoice/utils.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
-import { OutlinedInput, OutlinedTextarea } from './FormPrimitives.jsx'
+import { OutlinedInput } from './FormPrimitives.jsx'
 
 export function ItemsSection() {
   const {
@@ -33,69 +33,71 @@ export function ItemsSection() {
 
       <div className="space-y-4">
         {fields.map((field, index) => (
-          <div key={field._key} className="space-y-3">
+          <div
+            key={field._key}
+            className="flex min-w-0 flex-nowrap items-end gap-2 overflow-x-auto pb-0.5 sm:gap-3"
+          >
             <OutlinedInput
               id={`item-desc-${field.id}`}
               label="Product or service name"
+              className="min-w-[10rem] flex-1"
               error={itemErrors(index)?.description?.message}
               {...register(`items.${index}.description`)}
             />
-            <div className="flex flex-wrap items-end gap-4">
-              <div className="w-24 shrink-0">
-                <OutlinedInput
-                  id={`item-qty-${field.id}`}
-                  label="Qty"
-                  type="number"
-                  inputMode="decimal"
-                  min={0}
-                  step="any"
-                  required
-                  aria-required="true"
-                  className="input-number-no-spin"
-                  error={itemErrors(index)?.qty?.message}
-                  {...register(`items.${index}.qty`)}
-                />
-              </div>
-              <div className="min-w-[120px] max-w-[200px] shrink-0 flex-1">
-                <OutlinedInput
-                  id={`item-price-${field.id}`}
-                  label="Unit price"
-                  type="number"
-                  inputMode="decimal"
-                  min={0}
-                  step="0.01"
-                  required
-                  aria-required="true"
-                  className="input-number-no-spin"
-                  error={itemErrors(index)?.unitPrice?.message}
-                  {...register(`items.${index}.unitPrice`)}
-                />
-              </div>
-              <div className="ml-auto min-w-[100px] text-right">
-                <span className="mb-1 block text-xs text-gray-500">Amount</span>
-                <span className="flex h-9 items-center justify-end text-sm font-medium tabular-nums text-gray-900">
-                  {formatMoney(lineAmounts[index] ?? 0, currency)}
-                </span>
-              </div>
-              <div className="flex shrink-0 flex-col">
-                <span
-                  className="mb-1 block h-4 text-xs text-transparent select-none"
-                  aria-hidden
-                >
-                  .
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (fields.length <= 1) return
-                    remove(index)
-                  }}
-                  className="flex size-9 cursor-pointer items-center justify-center rounded text-red-500 transition hover:bg-red-50"
-                  aria-label="Remove line item"
-                >
-                  <X className="size-4" />
-                </button>
-              </div>
+            <div className="w-[5.25rem] shrink-0 sm:w-24">
+              <OutlinedInput
+                id={`item-qty-${field.id}`}
+                label="Qty"
+                type="number"
+                inputMode="decimal"
+                min={0}
+                step="any"
+                required
+                aria-required="true"
+                className="input-number-no-spin"
+                error={itemErrors(index)?.qty?.message}
+                {...register(`items.${index}.qty`)}
+              />
+            </div>
+            <div className="min-w-[6.5rem] w-[6.5rem] shrink-0 sm:min-w-[7.5rem] sm:w-32">
+              <OutlinedInput
+                id={`item-price-${field.id}`}
+                label="Unit price"
+                type="number"
+                inputMode="decimal"
+                min={0}
+                step="0.01"
+                required
+                aria-required="true"
+                className="input-number-no-spin"
+                error={itemErrors(index)?.unitPrice?.message}
+                {...register(`items.${index}.unitPrice`)}
+              />
+            </div>
+            <div className="min-w-[5.5rem] shrink-0 text-right">
+              <span className="mb-1 block text-xs text-gray-500">Amount</span>
+              <span className="flex min-h-9 items-center justify-end text-sm font-medium tabular-nums text-gray-900">
+                {formatMoney(lineAmounts[index] ?? 0, currency)}
+              </span>
+            </div>
+            <div className="flex shrink-0 flex-col">
+              <span
+                className="mb-1 block h-4 text-xs text-transparent select-none"
+                aria-hidden
+              >
+                .
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (fields.length <= 1) return
+                  remove(index)
+                }}
+                className="flex size-9 cursor-pointer items-center justify-center rounded text-red-500 transition hover:bg-red-50"
+                aria-label="Remove line item"
+              >
+                <X className="size-4" />
+              </button>
             </div>
           </div>
         ))}

@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import { useMemo, useRef } from 'react'
 import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,12 +9,13 @@ import { CompanySection } from './components/invoice/CompanySection.jsx'
 import { BankDetailsSection } from './components/invoice/BankDetailsSection.jsx'
 import { CustomerSection } from './components/invoice/CustomerSection.jsx'
 import { DocumentSection } from './components/invoice/DocumentSection.jsx'
-import { InvoiceDetailsSection } from './components/invoice/InvoiceDetailsSection.jsx'
+import { InvoicePaymentSection } from './components/invoice/InvoicePaymentSection.jsx'
 import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.jsx'
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
-import { PaymentTermsSection } from './components/invoice/PaymentTermsSection.jsx'
+import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
+import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
 import { documentTypeHeading } from './invoice/documentTypes.js'
@@ -43,6 +45,11 @@ function InvoiceWorkspace({ printRef }) {
     lineAmount(it.qty, it.unitPrice),
   )
   const subtotal = lineAmounts.reduce((a, b) => a + b, 0)
+
+  const totals = useMemo(
+    () => computeInvoiceTotals(form, subtotal),
+    [form, subtotal],
+  )
 
   const canDownload = useMemo(
     () => isInvoiceDownloadReady(form),
@@ -88,15 +95,24 @@ function InvoiceWorkspace({ printRef }) {
               <DocumentSection />
               <CompanySection />
               <CustomerSection />
+              <InvoicePaymentSection />
               <AddressSection />
-              <InvoiceDetailsSection />
               <ItemsSection />
               <NotesSection />
+              <SubtotalSection />
               <BankDetailsSection />
-              <PaymentTermsSection
-                onDownload={() => handlePrint()}
-                downloadDisabled={!canDownload}
-              />
+              <button
+                type="button"
+                disabled={!canDownload}
+                onClick={() => handlePrint()}
+                className={clsx(
+                  'w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium text-white transition',
+                  'bg-accent hover:bg-accent-hover',
+                  'disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-accent',
+                )}
+              >
+                Download
+              </button>
             </div>
           </form>
         </section>
@@ -109,6 +125,7 @@ function InvoiceWorkspace({ printRef }) {
           dueDisplay={dueDisplay}
           lineAmounts={lineAmounts}
           subtotal={subtotal}
+          totals={totals}
         />
       </div>
     </div>

@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { InvoiceSheet } from './InvoiceSheet.jsx'
 
 export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
-  { form, billTo, issueDisplay, dueDisplay, lineAmounts, subtotal },
+  { form, billTo, issueDisplay, dueDisplay, lineAmounts, subtotal, totals },
   ref,
 ) {
   return (
@@ -25,6 +25,7 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
             dueDisplay={dueDisplay}
             lineAmounts={lineAmounts}
             subtotal={subtotal}
+            totals={totals}
           />
         </div>
       </div>

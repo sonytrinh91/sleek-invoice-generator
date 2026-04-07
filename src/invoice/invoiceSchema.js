@@ -56,6 +56,15 @@ export const invoiceFormSchema = z.object({
   currency: z.string().trim().min(1, 'Currency is required'),
   items: z.array(lineItemSchema).min(1, 'Add at least one line item'),
   notes: z.string(),
+  taxEnabled: z.boolean(),
+  taxRate: z.string(),
+  taxIsPercent: z.boolean(),
+  discountExpanded: z.boolean(),
+  shippingExpanded: z.boolean(),
+  discountValue: z.string(),
+  discountIsPercent: z.boolean(),
+  shippingValue: z.string(),
+  shippingIsPercent: z.boolean(),
   bankDetailsText: z
     .string()
     .trim()
