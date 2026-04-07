@@ -6,11 +6,9 @@ import { format, isValid } from 'date-fns'
 import { AddressSection } from './components/invoice/AddressSection.jsx'
 import { CompanySection } from './components/invoice/CompanySection.jsx'
 import { BankDetailsSection } from './components/invoice/BankDetailsSection.jsx'
-import { CreateInvoiceHeader } from './components/invoice/CreateInvoiceHeader.jsx'
 import { CurrencySection } from './components/invoice/CurrencySection.jsx'
 import { CustomerSection } from './components/invoice/CustomerSection.jsx'
 import { InvoiceDetailsSection } from './components/invoice/InvoiceDetailsSection.jsx'
-import { InvoiceFooter } from './components/invoice/InvoiceFooter.jsx'
 import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.jsx'
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
@@ -74,8 +72,6 @@ function InvoiceWorkspace({ printRef }) {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-white font-sans text-neutral-800">
-      <CreateInvoiceHeader />
-
       <div className="flex min-h-0 flex-1 flex-row">
         <section
           aria-label="Invoice form"
@@ -95,7 +91,10 @@ function InvoiceWorkspace({ printRef }) {
               <ItemsSection />
               <NotesSection />
               <BankDetailsSection />
-              <PaymentTermsSection />
+              <PaymentTermsSection
+                onDownload={() => handlePrint()}
+                downloadDisabled={!canDownload}
+              />
             </div>
           </form>
         </section>
@@ -110,11 +109,6 @@ function InvoiceWorkspace({ printRef }) {
           subtotal={subtotal}
         />
       </div>
-
-      <InvoiceFooter
-        onDownload={() => handlePrint()}
-        downloadDisabled={!canDownload}
-      />
     </div>
   )
 }

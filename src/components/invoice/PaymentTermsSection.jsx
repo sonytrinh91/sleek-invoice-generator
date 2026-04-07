@@ -1,9 +1,10 @@
+import { clsx } from 'clsx'
 import { Controller, useFormContext } from 'react-hook-form'
 import { PAYMENT_OPTIONS } from '../../invoice/constants.js'
 import { Card } from './FormPrimitives.jsx'
 import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
 
-export function PaymentTermsSection() {
+export function PaymentTermsSection({ onDownload, downloadDisabled }) {
   const {
     control,
     formState: { errors },
@@ -33,6 +34,19 @@ export function PaymentTermsSection() {
           {errors.paymentTerms.message}
         </p>
       ) : null}
+
+      <button
+        type="button"
+        disabled={downloadDisabled}
+        onClick={onDownload}
+        className={clsx(
+          'mt-6 w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium text-white transition',
+          'bg-accent hover:bg-accent-hover',
+          'disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-accent',
+        )}
+      >
+        Download
+      </button>
     </Card>
   )
 }
