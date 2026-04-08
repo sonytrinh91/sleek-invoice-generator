@@ -32,14 +32,20 @@
   --color-accent: #0f6dfa !important;
   --color-accent-hover: #0047e0 !important;
   isolation: isolate;
-  /* One viewport tall: clip overflow so the host page does not gain a second vertical scroll (e.g. WordPress). */
+  /*
+   * Viewport-locked shell + overflow-y auto = single scroll container. Required for position:sticky
+   * on the preview: with height:auto the page scrolls on body/html and sticky is unreliable across
+   * browsers/embeds. Marketing sections below the workspace still scroll inside this element.
+   */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
   height: 100dvh;
   max-height: 100dvh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   font-synthesis: none;
   font-family:
     ui-sans-serif,
@@ -57,15 +63,14 @@
   color: var(--text-fg-body);
 }
 
-/*
- * WordPress embed: use the same viewport-locked shell as standalone so the form scrolls inside
- * the left column only while the preview stays fixed on the right (master–detail).
- */
+/* WordPress embed: same viewport-locked scroll shell as standalone (sticky preview). */
 #sleek-invoice-app.sleek-wp-embed {
   min-height: 100dvh;
   height: 100dvh;
   max-height: 100dvh;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 /*
@@ -84,6 +89,73 @@
 
 #sleek-invoice-app h2.mb-3 {
   margin-bottom: 0.75rem !important;
+}
+
+/* Hero: themes often set enormous h1 for page titles. */
+#sleek-invoice-app .sleek-hero h1 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  color: #111827 !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-hero h1 {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
+}
+
+/* Why Sleek: theme h2/h3 and link styles */
+#sleek-invoice-app .sleek-why-sleek h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-why-sleek h2 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-why-sleek h3 {
+  font-size: 1.125rem !important;
+  line-height: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin: 0 !important;
+}
+
+#sleek-invoice-app a.sleek-why-sleek-cta {
+  color: #fff !important;
+  text-decoration: none !important;
+  background-color: #0f6dfa !important;
+}
+
+#sleek-invoice-app a.sleek-why-sleek-cta:hover {
+  background-color: #0047e0 !important;
+  color: #fff !important;
+}
+
+#sleek-invoice-app .sleek-trusted-by h2 {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin: 0 0 2.5rem !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-trusted-by h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
 }
 
 /* Items section: WP themes often zero margin-* and break space-y; flex gap is more reliable. */
@@ -462,9 +534,10 @@ body {
   background-color: #f9fafb !important;
 }
 
-/* Two-column layout: absolute left/right halves so only the form scrolls; preview stays put (no fragile flex min-height chain). */
+/* Two-column layout: grid + align-items:start so the preview column can use position:sticky. */
 #sleek-invoice-app .sleek-workspace-columns {
-  position: relative !important;
+  display: grid !important;
+  align-items: start !important;
 }
 
 #sleek-invoice-app .invoice-form-panel,
@@ -472,19 +545,29 @@ body {
   box-sizing: border-box !important;
 }
 
+/* Form follows normal document scroll (no nested scroll trap). */
 #sleek-invoice-app .invoice-form-panel {
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible !important;
 }
 
+/* Tall preview can still scroll inside the sticky panel. */
 #sleek-invoice-app .invoice-preview-panel {
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
+  /* Room for lg:top-6 sticky offset inside the viewport-locked shell */
+  max-height: calc(100dvh - 2.5rem) !important;
 }
 
 @media print {
+  #sleek-invoice-app {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    overscroll-behavior: auto !important;
+  }
+
   #sleek-invoice-app .sleek-workspace-columns {
-    position: static !important;
+    display: block !important;
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
@@ -498,6 +581,7 @@ body {
     right: auto !important;
     width: auto !important;
     max-width: none !important;
+    max-height: none !important;
     height: auto !important;
     overflow: visible !important;
     border: none !important;

@@ -13,6 +13,9 @@ import { InvoicePaymentSection } from './components/invoice/InvoicePaymentSectio
 import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.jsx'
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
+import { HeroSection } from './components/HeroSection.jsx'
+import { TrustedBySection } from './components/TrustedBySection.jsx'
+import { WhySleekSection } from './components/WhySleekSection.jsx'
 import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
@@ -78,14 +81,16 @@ function InvoiceWorkspace({ printRef }) {
     'Customer Name, customer@email.com'
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-white font-sans text-neutral-800">
+    <div className="flex w-full flex-col">
       {/*
-        Master–detail: only the left column scrolls. The right preview stays in view (no window-level sticky).
+        Grid + items-start: preview column does not stretch to row height (required for sticky).
+        Do not use flex-1 here — it caps height to the viewport and makes the form paint over sections below.
+        Scroll container is #sleek-invoice-app (see index.css); preview uses lg:sticky lg:top-6.
       */}
-      <div className="sleek-workspace-columns relative isolate min-h-0 w-full flex-1 overflow-hidden">
+      <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:gap-x-0 lg:gap-y-0">
         <section
           aria-label="Invoice form"
-          className="invoice-form-panel absolute inset-y-0 left-0 right-1/2 z-0 flex min-h-0 flex-col overflow-y-auto border-r border-gray-200 px-6 py-6"
+          className="invoice-form-panel w-full border-gray-200 px-6 py-6 lg:col-span-7 lg:border-r lg:pr-8"
         >
           <form
             noValidate
@@ -118,17 +123,20 @@ function InvoiceWorkspace({ printRef }) {
           </form>
         </section>
 
-        <InvoicePreviewPanel
-          ref={printRef}
-          className="absolute inset-y-0 left-1/2 right-0 z-0"
-          form={form}
-          billTo={billTo}
-          issueDisplay={issueDisplay}
-          dueDisplay={dueDisplay}
-          lineAmounts={lineAmounts}
-          subtotal={subtotal}
-          totals={totals}
-        />
+        <div className="w-full self-start lg:col-span-5">
+          <div className="lg:sticky lg:top-6 lg:z-10">
+            <InvoicePreviewPanel
+              ref={printRef}
+              form={form}
+              billTo={billTo}
+              issueDisplay={issueDisplay}
+              dueDisplay={dueDisplay}
+              lineAmounts={lineAmounts}
+              subtotal={subtotal}
+              totals={totals}
+            />
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -145,7 +153,19 @@ export default function App() {
 
   return (
     <FormProvider {...methods}>
-      <InvoiceWorkspace printRef={printRef} />
+      <div className="flex w-full flex-col bg-white font-sans text-neutral-800">
+        <HeroSection />
+        {/*
+          No flex-1 on this wrapper: flex-1 + min-h-0 on ancestors was shrinking the workspace to
+          viewport height while the form stayed taller, so fields overlapped Why Sleek / Trusted.
+          Scroll lives on #sleek-invoice-app only — avoid nested overflow-y-auto (breaks sticky).
+        */}
+        <div className="flex w-full flex-col min-h-[min(750px,80dvh)]">
+          <InvoiceWorkspace printRef={printRef} />
+        </div>
+        <WhySleekSection />
+        <TrustedBySection />
+      </div>
     </FormProvider>
   )
 }

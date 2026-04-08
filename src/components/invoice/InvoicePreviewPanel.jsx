@@ -10,27 +10,32 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
     <aside
       aria-label="Invoice preview"
       className={clsx(
-        'invoice-preview-panel flex min-h-0 min-w-0 flex-col overflow-y-auto bg-transparent px-6 py-6',
+        'invoice-preview-panel flex min-h-0 min-w-0 flex-col overflow-y-auto bg-transparent px-4 py-4 sm:px-5 sm:py-5',
         className,
       )}
     >
-      <div className="mx-auto w-full max-w-xl">
-        <h2 className="mb-3 text-base font-semibold text-gray-900">
+      <div className="mx-auto w-full max-w-lg">
+        <h2 className="mb-2 text-sm font-semibold text-gray-900">
           Invoice Preview
         </h2>
-        <div
-          ref={ref}
-          className="rounded border border-neutral-200/90 bg-white p-9 print:border-0 print:p-8 print:shadow-none md:p-10"
-        >
-          <InvoiceSheet
-            form={form}
-            billTo={billTo}
-            issueDisplay={issueDisplay}
-            dueDisplay={dueDisplay}
-            lineAmounts={lineAmounts}
-            subtotal={subtotal}
-            totals={totals}
-          />
+        {/* Screen-only scale keeps the sheet readable without eating the viewport; print stays full size. */}
+        <div className="flex justify-center print:block print:scale-100">
+          <div className="origin-top scale-[0.82] sm:scale-[0.88] print:scale-100">
+            <div
+              ref={ref}
+              className="w-[min(100%,28rem)] rounded border border-neutral-200/90 bg-white p-5 shadow-sm print:w-auto print:border-0 print:p-8 print:shadow-none sm:p-6 md:p-7"
+            >
+              <InvoiceSheet
+                form={form}
+                billTo={billTo}
+                issueDisplay={issueDisplay}
+                dueDisplay={dueDisplay}
+                lineAmounts={lineAmounts}
+                subtotal={subtotal}
+                totals={totals}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </aside>
