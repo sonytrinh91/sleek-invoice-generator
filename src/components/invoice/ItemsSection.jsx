@@ -31,7 +31,7 @@ export function ItemsSection() {
     <section className="border border-gray-100 bg-white p-6">
       <h2 className="mb-3 text-base font-semibold text-gray-900">Items</h2>
 
-      <div className="space-y-4">
+      <div className="sleek-items-stack flex flex-col gap-4">
         {fields.map((field, index) => (
           <div
             key={field._key}
@@ -115,7 +115,7 @@ export function ItemsSection() {
           </p>
         ) : null}
 
-        <div className="border-t border-gray-200 pt-4 text-sm">
+        <div className="sleek-items-subtotal border-t border-gray-200 pt-4 text-sm">
           <div className="flex items-center justify-between text-gray-600">
             <span>Subtotal</span>
             <span className="tabular-nums">

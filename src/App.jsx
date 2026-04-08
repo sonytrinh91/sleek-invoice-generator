@@ -25,8 +25,6 @@ import {
   parseIssueDate,
 } from './invoice/utils.js'
 
-const isWordPressEmbed = import.meta.env.MODE === 'wordpress'
-
 function InvoiceWorkspace({ printRef }) {
   const form = useWatch()
 
@@ -80,25 +78,14 @@ function InvoiceWorkspace({ printRef }) {
     'Customer Name, customer@email.com'
 
   return (
-    <div
-      className={clsx(
-        'flex w-full flex-col bg-white font-sans text-neutral-800',
-        isWordPressEmbed
-          ? 'min-h-[100dvh] overflow-visible'
-          : 'min-h-0 flex-1 overflow-hidden',
-      )}
-    >
-      <div
-        className={clsx(
-          'flex min-w-0 flex-row items-stretch overflow-x-hidden',
-          isWordPressEmbed
-            ? 'min-h-[100dvh] w-full'
-            : 'min-h-0 min-w-0 flex-1 overflow-y-auto',
-        )}
-      >
+    <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-white font-sans text-neutral-800">
+      {/*
+        Master–detail: only the left column scrolls. The right preview stays in view (no window-level sticky).
+      */}
+      <div className="sleek-workspace-columns relative isolate min-h-0 w-full flex-1 overflow-hidden">
         <section
           aria-label="Invoice form"
-          className="flex w-1/2 min-w-0 flex-col border-r border-gray-200 px-6 py-6"
+          className="invoice-form-panel absolute inset-y-0 left-0 right-1/2 z-0 flex min-h-0 flex-col overflow-y-auto border-r border-gray-200 px-6 py-6"
         >
           <form
             noValidate
@@ -120,7 +107,7 @@ function InvoiceWorkspace({ printRef }) {
                 disabled={!canDownload}
                 onClick={() => handlePrint()}
                 className={clsx(
-                  'w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium text-white transition',
+                  'sleek-download-btn w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium text-white transition',
                   'bg-accent hover:bg-accent-hover',
                   'disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-accent',
                 )}
@@ -133,6 +120,7 @@ function InvoiceWorkspace({ printRef }) {
 
         <InvoicePreviewPanel
           ref={printRef}
+          className="absolute inset-y-0 left-1/2 right-0 z-0"
           form={form}
           billTo={billTo}
           issueDisplay={issueDisplay}

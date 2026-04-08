@@ -87,19 +87,19 @@ export function InvoiceSheet({
 
       <div className="mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-[14px]">
+          <table className="sleek-invoice-sheet-table w-full border-collapse text-[14px]">
             <thead>
               <tr className="bg-neutral-100">
-                <th className="border-b border-neutral-200/90 px-4 py-3 text-left text-[13px] font-bold text-fg-strong">
+                <th className="px-4 py-3 text-left text-[13px] font-bold text-fg-strong">
                   Description
                 </th>
-                <th className="w-[4.5rem] border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
+                <th className="w-[4.5rem] px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
                   Qty
                 </th>
-                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
+                <th className="px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
                   Unit price
                 </th>
-                <th className="border-b border-neutral-200/90 px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
+                <th className="px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
                   Amount
                 </th>
               </tr>
@@ -107,16 +107,16 @@ export function InvoiceSheet({
             <tbody>
               {form.items.map((item, i) => (
                 <tr key={item.id}>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-fg-body">
+                  <td className="px-4 py-3.5 text-fg-body">
                     {item.description.trim() || 'Item description'}
                   </td>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
+                  <td className="px-4 py-3.5 text-right tabular-nums text-fg-body">
                     {item.qty || '0'}
                   </td>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
+                  <td className="px-4 py-3.5 text-right tabular-nums text-fg-body">
                     {formatMoney(parseFloat(item.unitPrice) || 0, cur)}
                   </td>
-                  <td className="border-b border-neutral-100 px-4 py-3.5 text-right tabular-nums text-fg-body">
+                  <td className="px-4 py-3.5 text-right tabular-nums text-fg-body">
                     {formatMoney(lineAmounts[i], cur)}
                   </td>
                 </tr>
@@ -124,7 +124,8 @@ export function InvoiceSheet({
             </tbody>
           </table>
         </div>
-        <div className="space-y-1 border-t border-neutral-200 bg-white px-4 py-3.5 text-[14px]">
+        {/* No border-t here: last table row already has a bottom rule; avoids a doubled line with themes. */}
+        <div className="space-y-1 bg-white px-4 py-3.5 text-[14px]">
           <div className="flex items-center justify-between gap-4">
             <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
               Subtotal

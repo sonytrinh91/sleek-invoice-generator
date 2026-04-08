@@ -1,16 +1,20 @@
+import { clsx } from 'clsx'
 import { forwardRef } from 'react'
 import { InvoiceSheet } from './InvoiceSheet.jsx'
 
 export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
-  { form, billTo, issueDisplay, dueDisplay, lineAmounts, subtotal, totals },
+  { form, billTo, issueDisplay, dueDisplay, lineAmounts, subtotal, totals, className },
   ref,
 ) {
   return (
     <aside
       aria-label="Invoice preview"
-      className="flex w-1/2 min-w-0 flex-col bg-neutral-50 px-6 py-6"
+      className={clsx(
+        'invoice-preview-panel flex min-h-0 min-w-0 flex-col overflow-y-auto bg-transparent px-6 py-6',
+        className,
+      )}
     >
-      <div className="mx-auto max-w-xl">
+      <div className="mx-auto w-full max-w-xl">
         <h2 className="mb-3 text-base font-semibold text-gray-900">
           Invoice Preview
         </h2>

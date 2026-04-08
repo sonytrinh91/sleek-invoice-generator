@@ -21,10 +21,7 @@ function ToggleSwitch({ checked, onChange, disabled, id }) {
       )}
     >
       <span
-        className={clsx(
-          'absolute top-0.5 left-0.5 size-5 rounded-full bg-white shadow transition-transform duration-200',
-          checked && 'translate-x-[1.25rem]',
-        )}
+        className="sleek-switch-thumb pointer-events-none absolute top-0.5 rounded-full bg-white shadow"
         aria-hidden
       />
     </button>
@@ -107,7 +104,7 @@ export function SubtotalSection() {
 
         <div
           className={clsx(
-            'flex flex-wrap items-center gap-2 border-t border-gray-100 pt-4',
+            'flex flex-wrap items-center gap-3 border-t border-gray-100 pt-4',
             !taxEnabled && 'opacity-60',
           )}
         >
