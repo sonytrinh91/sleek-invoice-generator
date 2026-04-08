@@ -1,5 +1,4 @@
 import { User } from 'lucide-react'
-import { documentTypeHeading } from '../../invoice/documentTypes.js'
 import { formatInvoiceAddress, formatMoney } from '../../invoice/utils.js'
 
 const labelClass = 'text-[13px] font-normal leading-tight text-fg-muted'
@@ -37,7 +36,7 @@ export function InvoiceSheet({
   return (
     <div className="text-[15px] leading-relaxed text-fg antialiased">
       <h3 className="mb-10 text-[28px] font-bold leading-tight tracking-tight text-fg-strong">
-        {documentTypeHeading(form.documentType ?? 'INVOICE')}
+        Invoice
       </h3>
 
       <div className="mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_auto] sm:gap-x-10 sm:gap-y-0">

@@ -11,7 +11,7 @@ export const selectClass =
 
 const shellBorder = (hasError) =>
   clsx(
-    'overflow-hidden rounded border bg-white transition-colors',
+    'sleek-field-shell overflow-hidden rounded border bg-white transition-colors',
     hasError
       ? 'border-red-700 focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
       : 'border-gray-200 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
@@ -19,17 +19,17 @@ const shellBorder = (hasError) =>
 
 /** Shell shared by {@link SearchableSelectCombobox} and {@link OutlinedSelect}. */
 export const DROPDOWN_FIELD_SHELL =
-  'overflow-hidden rounded border border-gray-200 bg-white transition-colors hover:bg-gray-50 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
+  'sleek-field-shell overflow-hidden rounded border border-gray-200 bg-white transition-colors hover:bg-gray-50 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
 
 export const DROPDOWN_FIELD_SHELL_ERROR =
-  'overflow-hidden rounded border border-red-700 bg-white transition-colors focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
+  'sleek-field-shell overflow-hidden rounded border border-red-700 bg-white transition-colors focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
 
 /** Right column: divider + chevron (shared by combobox and {@link OutlinedSelect}). */
 export function DropdownChevronRail({ children, className, ...props }) {
   return (
     <div
       className={clsx(
-        'flex shrink-0 items-center self-stretch border-l border-gray-200 my-2',
+        'sleek-dropdown-rail flex shrink-0 items-center self-stretch border-l border-gray-200 my-2',
         className,
       )}
       {...props}
@@ -356,7 +356,7 @@ export const FloatingField = forwardRef(function FloatingField(
   return (
     <div
       className={clsx(
-        'relative overflow-hidden rounded border bg-white transition-colors',
+        'sleek-field-shell relative overflow-hidden rounded border bg-white transition-colors',
         hasError
           ? 'border-red-700 focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
           : 'border-gray-200 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25',
@@ -420,7 +420,7 @@ export const FloatingField = forwardRef(function FloatingField(
 })
 
 const floatingSelectShellClass =
-  'overflow-hidden rounded border border-gray-200 bg-white transition-colors hover:bg-gray-50 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
+  'sleek-field-shell overflow-hidden rounded border border-gray-200 bg-white transition-colors hover:bg-gray-50 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25'
 
 const floatingSelectLabelClass =
   'pointer-events-none absolute left-3 z-[1] origin-[0] top-2 translate-y-0 text-xs text-gray-500 transition-all duration-200 ease-out peer-focus:text-accent'
@@ -475,7 +475,7 @@ export const FloatingSelect = forwardRef(function FloatingSelect(
               {label}
             </label>
           </div>
-          <div className="my-2 flex shrink-0 items-stretch border-l border-gray-200">
+          <div className="sleek-dropdown-rail my-2 flex shrink-0 items-stretch border-l border-gray-200">
             <span
               className="flex cursor-default items-center px-2.5 text-gray-400"
               aria-hidden

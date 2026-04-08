@@ -8,7 +8,7 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
   return (
     <aside
       aria-label="Invoice preview"
-      className="w-1/2 min-w-0 overflow-y-auto bg-neutral-50 px-6 py-6"
+      className="flex w-1/2 min-w-0 flex-col bg-neutral-50 px-6 py-6"
     >
       <div className="mx-auto max-w-xl">
         <h2 className="mb-3 text-base font-semibold text-gray-900">

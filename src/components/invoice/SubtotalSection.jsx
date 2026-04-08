@@ -15,7 +15,7 @@ function ToggleSwitch({ checked, onChange, disabled, id }) {
       disabled={disabled}
       onClick={() => onChange(!checked)}
       className={clsx(
-        'relative h-6 w-11 shrink-0 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+        'sleek-switch relative h-6 w-11 shrink-0 rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
         checked ? 'bg-accent' : 'bg-gray-200',
         disabled && 'cursor-not-allowed opacity-50',
       )}
@@ -33,7 +33,7 @@ function ToggleSwitch({ checked, onChange, disabled, id }) {
 
 function PercentDollarToggle({ isPercent, onChange, disabled }) {
   return (
-    <div className="flex shrink-0 overflow-hidden rounded-md border border-gray-200">
+    <div className="sleek-segment-toggle flex shrink-0 overflow-hidden rounded-md border border-gray-200">
       <button
         type="button"
         disabled={disabled}
@@ -67,7 +67,7 @@ function PercentDollarToggle({ isPercent, onChange, disabled }) {
 }
 
 const compactInput =
-  'rounded border border-gray-200 px-2 py-1 text-sm font-medium text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent/25'
+  'sleek-compact-input rounded border border-gray-200 px-2 py-1 text-sm font-medium text-input-value outline-none transition focus:border-accent focus:ring-1 focus:ring-accent/25'
 
 export function SubtotalSection() {
   const { register, control, setValue } = useFormContext()

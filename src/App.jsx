@@ -18,13 +18,14 @@ import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
-import { documentTypeHeading } from './invoice/documentTypes.js'
 import {
   computeDueDate,
   initialForm,
   lineAmount,
   parseIssueDate,
 } from './invoice/utils.js'
+
+const isWordPressEmbed = import.meta.env.MODE === 'wordpress'
 
 function InvoiceWorkspace({ printRef }) {
   const form = useWatch()
@@ -58,8 +59,7 @@ function InvoiceWorkspace({ printRef }) {
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: () =>
-      `${documentTypeHeading(form.documentType ?? 'INVOICE')}-${form.invoiceNumber}`,
+    documentTitle: () => `Invoice-${form.invoiceNumber}`,
     pageStyle: `
       @page { margin: 12mm; size: auto; }
       @media print {
@@ -80,11 +80,25 @@ function InvoiceWorkspace({ printRef }) {
     'Customer Name, customer@email.com'
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-white font-sans text-neutral-800">
-      <div className="flex min-h-0 flex-1 flex-row">
+    <div
+      className={clsx(
+        'flex w-full flex-col bg-white font-sans text-neutral-800',
+        isWordPressEmbed
+          ? 'min-h-[100dvh] overflow-visible'
+          : 'min-h-0 flex-1 overflow-hidden',
+      )}
+    >
+      <div
+        className={clsx(
+          'flex min-w-0 flex-row items-stretch overflow-x-hidden',
+          isWordPressEmbed
+            ? 'min-h-[100dvh] w-full'
+            : 'min-h-0 min-w-0 flex-1 overflow-y-auto',
+        )}
+      >
         <section
           aria-label="Invoice form"
-          className="w-1/2 min-w-0 overflow-y-auto border-r border-gray-200 px-6 py-6"
+          className="flex w-1/2 min-w-0 flex-col border-r border-gray-200 px-6 py-6"
         >
           <form
             noValidate

@@ -44,7 +44,7 @@ export function ItemsSection() {
               error={itemErrors(index)?.description?.message}
               {...register(`items.${index}.description`)}
             />
-            <div className="w-[5.25rem] shrink-0 sm:w-24">
+            <div className="w-16 shrink-0 sm:w-20">
               <OutlinedInput
                 id={`item-qty-${field.id}`}
                 label="Qty"
@@ -59,7 +59,7 @@ export function ItemsSection() {
                 {...register(`items.${index}.qty`)}
               />
             </div>
-            <div className="min-w-[6.5rem] w-[6.5rem] shrink-0 sm:min-w-[7.5rem] sm:w-32">
+            <div className="min-w-24 w-24 shrink-0 sm:min-w-28 sm:w-28">
               <OutlinedInput
                 id={`item-price-${field.id}`}
                 label="Unit price"

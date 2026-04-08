@@ -1,17 +1,75 @@
 @import 'tailwindcss';
+@config '../tailwind.config.js';
 
-:root {
+/* App shell: tokens + stacking context for embeds (e.g. WordPress theme CSS). */
+#sleek-invoice-app .text-accent {
+  color: #0f6dfa !important;
+}
+
+/* Host themes often force column flex on buttons; keep icon + label on one row. */
+#sleek-invoice-app .sleek-inline-action {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+
+#sleek-invoice-app .sleek-inline-action > * {
+  flex-shrink: 0 !important;
+}
+
+#sleek-invoice-app {
   --input-value-text: #363636;
-  /* Default / invoice preview copy */
   --text-fg: #1a1a1a;
   --text-fg-strong: #111111;
   --text-fg-body: #222222;
   --text-fg-muted: #888888;
   --text-fg-secondary: #333333;
+  /* Re-anchor Tailwind theme tokens so host pages cannot repoint accent via :root. */
+  --color-accent: #0f6dfa !important;
+  --color-accent-hover: #0047e0 !important;
+  isolation: isolate;
+  /* One viewport tall: clip overflow so the host page does not gain a second vertical scroll (e.g. WordPress). */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  font-synthesis: none;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'DM Sans',
+    sans-serif !important;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-fg-body);
+}
+
+/*
+ * WordPress Custom HTML embed: the block sits below headers/title, so height:100dvh still
+ * stacks on top of theme chrome → the page scrolls while the app also uses overflow-y-auto.
+ * Flowing layout: min-height fills the viewport when content is short; tall content grows the
+ * page so only the browser scrolls (no nested scroll trap).
+ */
+#sleek-invoice-app.sleek-wp-embed {
+  min-height: 100dvh;
+  height: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 @theme {
-  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  /* System stack first so the app works without Google Fonts (e.g. WordPress embed). */
+  --font-sans: ui-sans-serif, system-ui, sans-serif, 'DM Sans';
   --color-accent: #0f6dfa;
   --color-accent-hover: #0047e0;
   --color-input-value: var(--input-value-text);
@@ -27,13 +85,318 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-#root {
-  height: 100dvh;
-  min-height: 100dvh;
+/* Undo common theme overrides inside the app shell (floating labels, typography). */
+#sleek-invoice-app input,
+#sleek-invoice-app textarea,
+#sleek-invoice-app select,
+#sleek-invoice-app button {
+  font-family: inherit !important;
+  letter-spacing: inherit;
+  text-transform: none;
+  box-sizing: border-box;
+}
+
+#sleek-invoice-app button {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/*
+ * WordPress themes often ship rules like input { border: 1px solid #666 !important }.
+ * Our bordered “field” is the outer shell; inner inputs use border-0 and lose to !important.
+ * These resets win over typical theme !important on border/box-shadow.
+ */
+#sleek-invoice-app
+  input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']):not(
+    .sleek-compact-input
+  ),
+#sleek-invoice-app textarea,
+#sleek-invoice-app select {
+  accent-color: #0f6dfa;
+  border: none !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#sleek-invoice-app input:not(.sleek-compact-input):focus,
+#sleek-invoice-app input:not(.sleek-compact-input):focus-visible,
+#sleek-invoice-app textarea:focus,
+#sleek-invoice-app textarea:focus-visible,
+#sleek-invoice-app select:focus,
+#sleek-invoice-app select:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Standalone compact inputs (Subtotal tax/discount/shipping): keep a visible shell; global reset strips other inputs. */
+#sleek-invoice-app input.sleek-compact-input {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.25rem !important;
+  box-shadow: none !important;
+  background-color: #fff !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+}
+
+#sleek-invoice-app input.sleek-compact-input:focus,
+#sleek-invoice-app input.sleek-compact-input:focus-visible {
+  border-color: #0f6dfa !important;
+  outline: none !important;
+  box-shadow: 0 0 0 1px rgb(15 109 250 / 0.25) !important;
+}
+
+#sleek-invoice-app input.sleek-compact-input:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+#sleek-invoice-app label {
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: inherit;
+  text-transform: none;
+}
+
+/* Floating labels: block themes that force static/relative labels. */
+#sleek-invoice-app label.pointer-events-none:not(.sr-only) {
+  position: absolute !important;
+  box-sizing: border-box !important;
+}
+
+/* Field shells + rails: keep neutral borders / focus ring away from theme accent. */
+#sleek-invoice-app .sleek-field-shell.border-gray-200 {
+  border-color: #e5e7eb !important;
+}
+
+#sleek-invoice-app .sleek-field-shell.border-gray-200:focus-within {
+  border-color: #0f6dfa !important;
+  box-shadow: 0 0 0 1px rgb(15 109 250 / 0.25) !important;
+}
+
+#sleek-invoice-app .sleek-field-shell.border-red-700:focus-within {
+  box-shadow: 0 0 0 1px rgb(185 28 28 / 0.25) !important;
+}
+
+#sleek-invoice-app .sleek-dropdown-rail {
+  border-left-color: #e5e7eb !important;
+}
+
+#sleek-invoice-app .sleek-dropdown-rail button {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#sleek-invoice-app .sleek-dropdown-rail button.text-gray-400 {
+  color: #9ca3af !important;
+}
+
+#sleek-invoice-app .group:hover .sleek-dropdown-rail button.text-gray-400 {
+  color: #4b5563 !important;
+}
+
+#sleek-invoice-app .sleek-dropdown-rail button.text-red-300 {
+  color: #fca5a5 !important;
+}
+
+/* Floating-label field geometry (themes often set input padding / min-height with !important). */
+#sleek-invoice-app .sleek-field-shell input.peer.pt-5 {
+  padding-top: 1.25rem !important;
+  padding-bottom: 0.25rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  min-height: 0 !important;
+  height: auto !important;
+  font-size: 1rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+}
+
+#sleek-invoice-app .sleek-field-shell input.peer.py-3 {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  min-height: 0 !important;
+  height: auto !important;
+  font-size: 1rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+}
+
+#sleek-invoice-app .sleek-field-shell input.date-field-floating {
+  padding-top: 1.25rem !important;
+  padding-bottom: 0.25rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 2.5rem !important;
+  min-height: 0 !important;
+  height: auto !important;
+  font-size: 1rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+}
+
+#sleek-invoice-app .sleek-field-shell select {
+  padding-top: 1.25rem !important;
+  padding-bottom: 0.25rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  min-height: 0 !important;
+  height: auto !important;
+  font-size: 1rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+}
+
+#sleek-invoice-app .sleek-field-shell textarea.peer {
+  padding-top: 1.75rem !important;
+  padding-bottom: 0.75rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  min-height: 5.5rem !important;
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  font-weight: 500 !important;
+}
+
+#sleek-invoice-app .sleek-field-shell > textarea {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+  padding-left: 0.75rem !important;
+  padding-right: 2.5rem !important;
+  font-size: 1rem !important;
+  line-height: 1.625 !important;
+  font-weight: 400 !important;
+}
+
+/*
+ * Themes often add button { border: 1px solid accent !important }. Reset, then restore only where intended.
+ */
+#sleek-invoice-app button {
+  border-style: none !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  background-clip: padding-box !important;
+  box-shadow: none !important;
+}
+
+/* Outline actions */
+#sleek-invoice-app button.border-accent {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #0f6dfa !important;
+  color: #0f6dfa !important;
+  background-color: transparent !important;
+}
+
+#sleek-invoice-app button.border-accent:hover {
+  background-color: #eff6ff !important;
+}
+
+/* % / $ segment group: divider between segments */
+#sleek-invoice-app button.border-l.border-gray-200 {
+  border-left-width: 1px !important;
+  border-left-style: solid !important;
+  border-left-color: #e5e7eb !important;
+}
+
+/* Icon buttons that intentionally use a full neutral ring (e.g. remove logo). */
+#sleek-invoice-app button.border-gray-200:not(.border-l):not(.sleek-logo-add) {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #e5e7eb !important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+}
+
+/* Add logo: neutral surface + hover (themes often set button:hover to brand accent). */
+#sleek-invoice-app button.sleek-logo-add {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #fafafa !important;
+  color: #6b7280 !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #e5e7eb !important;
+  box-shadow: none !important;
+}
+
+#sleek-invoice-app button.sleek-logo-add:hover {
+  background-color: #f5f5f5 !important;
+  border-color: #d4d4d4 !important;
+  color: #6b7280 !important;
+}
+
+#sleek-invoice-app button.sleek-logo-add:active {
+  background-color: #eeeeee !important;
+  border-color: #d4d4d4 !important;
+  color: #6b7280 !important;
+}
+
+#sleek-invoice-app .sleek-segment-toggle {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.375rem !important;
+  background-color: #fff !important;
+}
+
+#sleek-invoice-app .sleek-segment-toggle button.bg-white.text-gray-600:hover:not(:disabled) {
+  background-color: #f9fafb !important;
+}
+
+/* Toggle switch track */
+#sleek-invoice-app button.sleek-switch[aria-checked='true'] {
+  background-color: #0f6dfa !important;
+}
+
+#sleek-invoice-app button.sleek-switch[aria-checked='false'] {
+  background-color: #e5e7eb !important;
+}
+
+/* Segment + link-style accent buttons */
+#sleek-invoice-app button.bg-accent.text-white {
+  background-color: #0f6dfa !important;
+  color: #fff !important;
+}
+
+#sleek-invoice-app button.bg-white.text-gray-600 {
+  background-color: #fff !important;
+  color: #4b5563 !important;
+}
+
+#sleek-invoice-app button.text-accent {
+  color: #0f6dfa !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#sleek-invoice-app button.text-red-500 {
+  color: #ef4444 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#sleek-invoice-app button:focus,
+#sleek-invoice-app button:focus-visible {
+  outline: none !important;
+}
+
+#sleek-invoice-app button:focus-visible {
+  outline: 2px solid #0f6dfa !important;
+  outline-offset: 2px !important;
+}
+
+#sleek-invoice-app button.sleek-switch:focus-visible {
+  outline-color: #0f6dfa !important;
 }
 
 /* Native date picker control: vertical center (Chromium, Safari, Edge) */
-.date-field-floating::-webkit-calendar-picker-indicator {
+#sleek-invoice-app .date-field-floating::-webkit-calendar-picker-indicator {
   cursor: pointer;
   position: absolute;
   right: 0.75rem;
@@ -47,13 +410,13 @@ body {
 }
 
 /* Number input without browser stepper arrows (class on OutlinedInput shell) */
-.input-number-no-spin input[type='number']::-webkit-outer-spin-button,
-.input-number-no-spin input[type='number']::-webkit-inner-spin-button {
+#sleek-invoice-app .input-number-no-spin input[type='number']::-webkit-outer-spin-button,
+#sleek-invoice-app .input-number-no-spin input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.input-number-no-spin input[type='number'] {
+#sleek-invoice-app .input-number-no-spin input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
 }

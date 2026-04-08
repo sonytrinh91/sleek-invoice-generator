@@ -39,7 +39,6 @@ export function newLineItem() {
 
 export function initialForm() {
   return {
-    documentType: 'INVOICE',
     customerName: '',
     customerEmail: '',
     addressVisible: false,

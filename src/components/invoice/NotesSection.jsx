@@ -8,7 +8,7 @@ export function NotesSection() {
   return (
     <Card>
       <h2 className="mb-3 text-base font-semibold text-gray-900">Notes</h2>
-      <div className="relative rounded border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25">
+      <div className="sleek-field-shell relative rounded border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25">
         <label
           htmlFor="invoice-notes"
           className="pointer-events-none absolute left-3 top-3 z-[1] text-xs font-normal text-gray-500"

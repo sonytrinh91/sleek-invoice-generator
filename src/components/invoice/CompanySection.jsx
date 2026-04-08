@@ -58,7 +58,7 @@ export function CompanySection() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex h-24 min-h-24 w-full flex-1 cursor-pointer flex-col items-center justify-center overflow-hidden rounded border border-gray-200 bg-neutral-50 text-center text-xs text-gray-500 transition hover:border-gray-300 hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:h-full sm:min-h-0"
+              className="sleek-logo-add flex h-24 min-h-24 w-full flex-1 cursor-pointer flex-row items-center justify-center overflow-hidden rounded border border-gray-200 bg-neutral-50 text-center text-xs text-gray-500 transition hover:border-gray-300 hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:h-full sm:min-h-0"
               aria-label={logoDataUrl ? 'Change logo' : 'Add logo from your computer'}
             >
               {logoDataUrl ? (
@@ -68,7 +68,7 @@ export function CompanySection() {
                   className="max-h-full max-w-full object-contain"
                 />
               ) : (
-                <span className="px-2">Add logo</span>
+                <span className="whitespace-nowrap px-2">Add logo</span>
               )}
             </button>
             {logoDataUrl ? (

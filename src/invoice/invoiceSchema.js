@@ -30,13 +30,6 @@ export const lineItemSchema = z.object({
 
 /** Single source of truth for invoice form validation (required vs optional fields). */
 export const invoiceFormSchema = z.object({
-  documentType: z.enum([
-    'INVOICE',
-    'RECEIPT',
-    'QUOTE',
-    'CREDIT_NOTE',
-    'PURCHASE_ORDER',
-  ]),
   customerName: z.string().trim().min(1, 'Customer name is required'),
   customerEmail: z
     .string()
