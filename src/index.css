@@ -158,6 +158,97 @@
   }
 }
 
+#sleek-invoice-app .sleek-more-than-invoicing h2 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-more-than-invoicing h2 {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-more-than-invoicing ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+
+#sleek-invoice-app a.sleek-more-than-invoicing-cta {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+#sleek-invoice-app a.sleek-more-than-invoicing-cta:hover {
+  background-color: #f3f4f6 !important;
+  color: #0f172a !important;
+}
+
+#sleek-invoice-app section.sleek-faq {
+  background-color: #f9fafb !important;
+  border-top: 1px solid #e5e7eb !important;
+}
+
+#sleek-invoice-app .sleek-faq h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 0 2rem !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-faq h2 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-ready-to-go h2 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-ready-to-go h2 {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
+}
+
+#sleek-invoice-app a.sleek-ready-to-go-primary {
+  color: #fff !important;
+  background-color: #0f6dfa !important;
+  text-decoration: none !important;
+}
+
+#sleek-invoice-app a.sleek-ready-to-go-primary:hover {
+  background-color: #0047e0 !important;
+  color: #fff !important;
+}
+
+#sleek-invoice-app a.sleek-ready-to-go-secondary {
+  color: #0f172a !important;
+  background-color: #fff !important;
+  border: 1px solid #d1d5db !important;
+  text-decoration: none !important;
+}
+
+#sleek-invoice-app a.sleek-ready-to-go-secondary:hover {
+  background-color: #f9fafb !important;
+  color: #0f172a !important;
+}
+
 /* Items section: WP themes often zero margin-* and break space-y; flex gap is more reliable. */
 #sleek-invoice-app .sleek-items-stack {
   display: flex !important;

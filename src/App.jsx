@@ -14,6 +14,9 @@ import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.js
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
 import { HeroSection } from './components/HeroSection.jsx'
+import { FaqSection } from './components/FaqSection.jsx'
+import { ReadyToGoSection } from './components/ReadyToGoSection.jsx'
+import { MoreThanInvoicingSection } from './components/MoreThanInvoicingSection.jsx'
 import { TrustedBySection } from './components/TrustedBySection.jsx'
 import { WhySleekSection } from './components/WhySleekSection.jsx'
 import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
@@ -165,6 +168,9 @@ export default function App() {
         </div>
         <WhySleekSection />
         <TrustedBySection />
+        <MoreThanInvoicingSection />
+        <FaqSection />
+        <ReadyToGoSection />
       </div>
     </FormProvider>
   )

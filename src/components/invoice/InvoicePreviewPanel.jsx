@@ -20,7 +20,7 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
         </h2>
         {/* Screen-only scale keeps the sheet readable without eating the viewport; print stays full size. */}
         <div className="flex justify-center print:block print:scale-100">
-          <div className="origin-top scale-[0.82] sm:scale-[0.88] print:scale-100">
+          <div className="origin-top print:scale-100">
             <div
               ref={ref}
               className="w-[min(100%,28rem)] rounded border border-neutral-200/90 bg-white p-5 shadow-sm print:w-auto print:border-0 print:p-8 print:shadow-none sm:p-6 md:p-7"
