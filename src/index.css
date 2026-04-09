@@ -33,9 +33,8 @@
   --color-accent-hover: #0047e0 !important;
   isolation: isolate;
   /*
-   * Viewport-locked shell + overflow-y auto = single scroll container. Required for position:sticky
-   * on the preview: with height:auto the page scrolls on body/html and sticky is unreliable across
-   * browsers/embeds. Marketing sections below the workspace still scroll inside this element.
+   * Standalone: viewport-locked shell + overflow-y auto (single scroll). WordPress overrides
+   * via .sleek-wp-embed so the host page scrolls and the full page height is visible.
    */
   box-sizing: border-box;
   display: flex;
@@ -63,14 +62,37 @@
   color: var(--text-fg-body);
 }
 
-/* WordPress embed: same viewport-locked scroll shell as standalone (sticky preview). */
+/*
+ * WordPress embed: full natural height; no inner scroll trap; !important beats theme + block CSS.
+ * html/body classes are set in main.jsx (pages build / iframe shell only).
+ */
+html.sleek-wp-embed-root,
+body.sleek-wp-embed-body {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+body.sleek-wp-embed-body {
+  margin: 0 !important;
+}
+
 #sleek-invoice-app.sleek-wp-embed {
-  min-height: 100dvh;
-  height: 100dvh;
-  max-height: 100dvh;
-  overflow-x: clip;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  /* Fit host / iframe height to content (no forced viewport min). */
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+  overscroll-behavior: auto !important;
+}
+
+/* Embed: drop viewport-capped preview scroll so total height matches full page (WP / iframe resize). */
+#sleek-invoice-app.sleek-wp-embed .invoice-preview-panel {
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 
 /*
@@ -209,6 +231,72 @@
     line-height: 2.25rem !important;
     margin-bottom: 2.5rem !important;
   }
+}
+
+/* FAQ accordion triggers: themes often set button { width:auto; flex-direction:column } and brand hover backgrounds that don’t span full width. */
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  min-height: 4rem !important;
+  padding: 1rem 1.25rem !important;
+  line-height: 1.375 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #0f172a !important;
+  text-align: left !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-faq button.sleek-faq-trigger {
+    min-height: 4.5rem !important;
+    padding: 1.25rem 1.5rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger > span {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  text-align: left !important;
+  font-size: 1rem !important;
+  line-height: 1.375rem !important;
+  font-weight: 700 !important;
+}
+
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger svg {
+  flex-shrink: 0 !important;
+}
+
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger::before,
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app .sleek-faq button.sleek-faq-trigger:hover {
+    background-color: #f9fafb !important;
+    background-image: none !important;
+    color: #0f172a !important;
+  }
+}
+
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger:focus,
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger:active {
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #0f172a !important;
+}
+
+#sleek-invoice-app .sleek-faq button.sleek-faq-trigger:focus-visible {
+  outline: 2px solid #0f6dfa !important;
+  outline-offset: 2px !important;
 }
 
 #sleek-invoice-app .sleek-ready-to-go h2 {
@@ -641,15 +729,14 @@ body {
   overflow: visible !important;
 }
 
-/* Tall preview can still scroll inside the sticky panel. */
-#sleek-invoice-app .invoice-preview-panel {
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch;
-  /* Room for lg:top-6 sticky offset inside the viewport-locked shell */
-  max-height: calc(100dvh - 2.5rem) !important;
-}
-
 @media print {
+  html.sleek-wp-embed-root,
+  body.sleek-wp-embed-body {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
   #sleek-invoice-app {
     height: auto !important;
     max-height: none !important;

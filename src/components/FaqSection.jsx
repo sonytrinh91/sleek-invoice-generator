@@ -72,12 +72,12 @@ export function FaqSection() {
                   type="button"
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  className="flex w-full items-center justify-between gap-4 rounded-xl p-5 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:p-6"
+                  className="sleek-faq-trigger flex min-h-16 w-full cursor-pointer flex-row flex-nowrap items-center justify-between gap-4 rounded-xl px-5 py-4 text-left sm:min-h-[4.5rem] sm:px-6 sm:py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   onClick={() =>
                     setOpenIndex((prev) => (prev === index ? null : index))
                   }
                 >
-                  <span className="text-base font-bold text-slate-900 sm:text-lg">
+                  <span className="text-base font-bold leading-snug text-slate-900">
                     {item.question}
                   </span>
                   <ChevronDown
@@ -101,7 +101,7 @@ export function FaqSection() {
                     className="min-h-0 overflow-hidden"
                     aria-hidden={!isOpen}
                   >
-                    <p className="px-5 pb-5 text-sm leading-relaxed text-slate-500 sm:px-6 sm:pb-6 sm:text-base">
+                    <p className="border-t border-gray-100 px-5 pb-5 pt-4 text-sm leading-relaxed text-slate-500 sm:px-6 sm:pb-6 sm:pt-5 sm:text-base">
                       {item.answer}
                     </p>
                   </div>

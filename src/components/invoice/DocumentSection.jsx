@@ -34,7 +34,7 @@ export function DocumentSection() {
           control={control}
           name="country"
           render={({ field }) => (
-            // <div className="min-w-44 shrink-0 sm:min-w-0 sm:flex-1">
+            <div className="min-w-44 shrink-0 sm:min-w-0 sm:flex-1">
               <SearchableSelectCombobox
                 id="document-country"
                 label="Country"
@@ -46,20 +46,20 @@ export function DocumentSection() {
                 }}
                 toggleAriaLabel="Toggle country list"
               />
-            // </div>
+            </div>
           )}
         />
         <Controller
           control={control}
           name="currency"
           render={({ field }) => (
-            // <div className="min-w-48 shrink-0 sm:w-56">
+            <div className="min-w-48 shrink-0 sm:w-56">
               <CurrencyCombobox
                 id="document-currency"
                 value={field.value}
                 onChange={(patch) => field.onChange(patch.currency)}
               />
-            // </div>
+            </div>
           )}
         />
       </div>
