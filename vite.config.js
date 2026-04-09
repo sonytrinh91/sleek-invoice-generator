@@ -1,4 +1,5 @@
 import { copyFileSync, readFileSync, writeFileSync } from 'node:fs'
+import { cwd } from 'node:process'
 import { join } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -63,7 +64,7 @@ export default defineConfig(({ mode }) => {
             {
               name: 'pages-docs-artifacts',
               closeBundle() {
-                const outDir = join(process.cwd(), 'docs')
+                const outDir = join(cwd(), 'docs')
                 let full
                 try {
                   full = readFileSync(join(outDir, 'index.html'), 'utf8')
@@ -103,7 +104,7 @@ ${scriptHtml}
 
                 try {
                   copyFileSync(
-                    join(process.cwd(), 'public', 'sleek-invoice-embed.js'),
+                    join(cwd(), 'public', 'sleek-invoice-embed.js'),
                     join(outDir, 'sleek-invoice-embed.js'),
                   )
                 } catch {

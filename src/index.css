@@ -171,6 +171,74 @@ body.sleek-wp-embed-body {
   }
 }
 
+#sleek-invoice-app .sleek-simplicity h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-simplicity h2 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-invoice-format h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-invoice-format h2 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-invoice-format h3 {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+#sleek-invoice-app .sleek-how-to h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-how-to h2 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
+#sleek-invoice-app .sleek-comparison h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-comparison h2 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
 #sleek-invoice-app .sleek-more-than-invoicing h2 {
   font-size: 1.875rem !important;
   line-height: 2.25rem !important;

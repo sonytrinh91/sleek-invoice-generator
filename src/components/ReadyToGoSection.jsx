@@ -4,7 +4,7 @@ const TALK_EXPERT_HREF = 'https://sleek.com'
 export function ReadyToGoSection() {
   return (
     <section
-      className="sleek-ready-to-go shrink-0 border-t border-gray-100 bg-gray-100 px-4 py-16 sm:py-20"
+      className="sleek-ready-to-go shrink-0 border-t border-gray-200/80 bg-white px-4 py-16 sm:py-20"
       aria-labelledby="ready-to-go-heading"
     >
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -25,7 +25,7 @@ export function ReadyToGoSection() {
             rel="noopener noreferrer"
             className="sleek-ds-btn sleek-ds-btn--primary sleek-ds-btn--comfortable inline-flex text-center shadow-sm"
           >
-            Get started — free
+            Get started for free
           </a>
           <a
             href={TALK_EXPERT_HREF}

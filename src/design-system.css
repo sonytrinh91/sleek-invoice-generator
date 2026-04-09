@@ -109,6 +109,28 @@
   border-color: var(--ds-primary-active) !important;
 }
 
+/* Solid white on dark navy (e.g. “More than invoicing” → Explore our solutions) */
+#sleek-invoice-app .sleek-ds-btn--inverse {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08) !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app .sleek-ds-btn--inverse:hover:not(:disabled) {
+    background-color: #f1f5f9 !important;
+    border-color: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+}
+
+#sleek-invoice-app .sleek-ds-btn--inverse:active:not(:disabled) {
+  background-color: #e2e8f0 !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
 #sleek-invoice-app .sleek-ds-btn--outline {
   background-color: transparent !important;
   color: var(--ds-outline-fg) !important;

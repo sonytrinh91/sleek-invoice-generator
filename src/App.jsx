@@ -19,6 +19,10 @@ import { ReadyToGoSection } from './components/ReadyToGoSection.jsx'
 import { MoreThanInvoicingSection } from './components/MoreThanInvoicingSection.jsx'
 import { TrustedBySection } from './components/TrustedBySection.jsx'
 import { WhySleekSection } from './components/WhySleekSection.jsx'
+import { SimplicitySection } from './components/SimplicitySection.jsx'
+import { InvoiceFormatSection } from './components/InvoiceFormatSection.jsx'
+import { HowToCreateSection } from './components/HowToCreateSection.jsx'
+import { InvoiceComparisonSection } from './components/InvoiceComparisonSection.jsx'
 import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
@@ -162,11 +166,15 @@ export default function App() {
           viewport height while the form stayed taller, so fields overlapped Why Sleek / Trusted.
           Scroll lives on #sleek-invoice-app only — avoid nested overflow-y-auto (breaks sticky).
         */}
-        <div className="flex w-full flex-col min-h-[min(750px,80dvh)]">
+        <div className="flex min-h-[min(750px,80dvh)] w-full flex-col bg-white">
           <InvoiceWorkspace printRef={printRef} />
         </div>
         <WhySleekSection />
         <TrustedBySection />
+        <SimplicitySection />
+        <InvoiceFormatSection />
+        <HowToCreateSection />
+        <InvoiceComparisonSection />
         <MoreThanInvoicingSection />
         <FaqSection />
         <ReadyToGoSection />

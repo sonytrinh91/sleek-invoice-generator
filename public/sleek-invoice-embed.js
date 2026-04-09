@@ -68,7 +68,7 @@
       .forEach(function (iframe) {
         try {
           if (iframe.contentWindow === e.source) applyResize(iframe, d.height)
-        } catch (_) {
+        } catch {
           /* cross-origin */
         }
       })

@@ -45,7 +45,7 @@ export function WhySleekSection() {
         >
           Why thousands of businesses use Sleek
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-pretty text-base text-gray-500 sm:text-lg">
+        <p className="mx-auto mt-3 max-w-xl text-pretty text-base text-slate-600 sm:text-lg">
           The free invoice tool is just the beginning.
         </p>
 
@@ -81,7 +81,7 @@ export function WhySleekSection() {
             rel="noopener noreferrer"
             className="sleek-ds-btn sleek-ds-btn--primary sleek-ds-btn--comfortable-lg inline-flex w-full max-w-md text-center shadow-sm sm:w-auto sm:min-w-[20rem]"
           >
-            Create free account — takes 30 seconds
+            Get started for free
           </a>
         </div>
       </div>

@@ -1,6 +1,4 @@
-import { ArrowRight } from 'lucide-react'
-
-const ACCOUNTING_PLANS_HREF = 'https://sleek.com/sg/accounting/'
+const EXPLORE_SOLUTIONS_HREF = 'https://sleek.com/sg/'
 
 const tags = [
   'Incorporation',
@@ -45,13 +43,12 @@ export function MoreThanInvoicingSection() {
 
         <div className="mt-10">
           <a
-            href={ACCOUNTING_PLANS_HREF}
+            href={EXPLORE_SOLUTIONS_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="sleek-ds-btn sleek-ds-btn--outline sleek-ds-btn--comfortable inline-flex gap-2"
+            className="sleek-ds-btn sleek-ds-btn--inverse sleek-ds-btn--comfortable inline-flex"
           >
-            See accounting plans
-            <ArrowRight className="size-4 shrink-0" aria-hidden />
+            Explore our solutions
           </a>
         </div>
       </div>
