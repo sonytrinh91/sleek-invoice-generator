@@ -2,6 +2,17 @@
 @config '../tailwind.config.js';
 @import './design-system.css';
 
+/* Unified content width (marketing .container: 1120px + 24px horizontal padding). */
+#sleek-invoice-app .sleek-page-container {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
 /* App shell: tokens + stacking context for embeds (e.g. WordPress theme CSS). */
 #sleek-invoice-app .text-accent {
   color: var(--ds-primary) !important;
@@ -352,6 +363,12 @@ body.sleek-wp-embed-body {
     background-color: var(--ds-text-btn-bg-hover, #f0f6fe) !important;
     background-image: none !important;
     color: #0f172a !important;
+  }
+
+  /* Pink FAQ cards: keep trigger visually aligned with card (no blue hover fill). */
+  #sleek-invoice-app .sleek-faq .sleek-faq-item--pink button.sleek-faq-trigger:hover {
+    background-color: transparent !important;
+    color: #040015 !important;
   }
 }
 

@@ -3,10 +3,10 @@ import { Star } from 'lucide-react'
 export function HeroSection() {
   return (
     <header
-      className="sleek-hero sleek-surface-light-blue shrink-0 border-b border-[#E9ECEF] bg-[linear-gradient(135deg,#EBF2FF_0%,#F8FAFF_60%,#FAFAFA_100%)] px-4 pb-11 pt-[52px] text-center sm:pb-11"
+      className="sleek-hero sleek-surface-light-blue shrink-0 border-b border-[#E9ECEF] bg-[linear-gradient(135deg,#EBF2FF_0%,#F8FAFF_60%,#FAFAFA_100%)] pb-11 pt-[52px] text-center sm:pb-11"
       role="banner"
     >
-      <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
+      <div className="sleek-page-container space-y-3 sm:space-y-4">
         <p className="inline-flex items-center rounded-full bg-[#EBF2FF] px-3.5 py-1 text-[0.75rem] font-bold uppercase tracking-[0.04em] text-[#0F6DFA]">
           100% free - no account required to download
         </p>

@@ -59,7 +59,7 @@ export function FaqSection() {
           'overflow-hidden rounded-xl border transition-colors',
           variant === 'pink'
             ? clsx(
-                'border-[#F8BBD9] bg-[#FFF0F6]',
+                'sleek-faq-item--pink border-[#F8BBD9] bg-[#FFF0F6]',
                 isOpen && 'border-[#E91E8C]',
               )
             : clsx(
@@ -117,10 +117,10 @@ export function FaqSection() {
 
   return (
     <section
-      className="sleek-faq shrink-0 border-t border-[#E9ECEF] bg-white px-4 py-20 sm:py-20"
+      className="sleek-faq shrink-0 border-t border-[#E9ECEF] bg-white py-20 sm:py-20"
       aria-labelledby="sleek-faq-heading"
     >
-      <div className="mx-auto max-w-3xl">
+      <div className="sleek-page-container">
         <h2
           id="sleek-faq-heading"
           className="mb-8 text-center text-2xl font-extrabold tracking-tight text-[#040015] sm:mb-8 sm:text-3xl"

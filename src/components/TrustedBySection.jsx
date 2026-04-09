@@ -34,10 +34,10 @@ function StarRow() {
 export function TrustedBySection() {
   return (
     <section
-      className="sleek-trusted-by shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] px-4 py-16 sm:py-16"
+      className="sleek-trusted-by shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] py-16 sm:py-16"
       aria-labelledby="trusted-by-heading"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="sleek-page-container">
         <h2
           id="trusted-by-heading"
           className="mb-8 text-center text-xl font-extrabold tracking-tight text-[#040015] sm:mb-8 sm:text-2xl"

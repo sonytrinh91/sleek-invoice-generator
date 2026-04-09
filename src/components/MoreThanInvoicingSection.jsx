@@ -12,10 +12,10 @@ const tags = [
 export function MoreThanInvoicingSection() {
   return (
     <section
-      className="sleek-more-than-invoicing shrink-0 bg-[#1A2E5A] px-4 py-20 sm:py-20"
+      className="sleek-more-than-invoicing shrink-0 bg-[#1A2E5A] py-20 sm:py-20"
       aria-labelledby="more-than-invoicing-heading"
     >
-      <div className="mx-auto max-w-3xl text-center">
+      <div className="sleek-page-container text-center">
         <h2
           id="more-than-invoicing-heading"
           className="text-balance text-3xl font-extrabold tracking-tight text-white sm:text-4xl"

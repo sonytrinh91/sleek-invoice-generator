@@ -3,10 +3,10 @@ const ACCOUNTING_HREF = 'https://sleek.com/sg/accounting-services-singapore/'
 export function ReadyToGoSection() {
   return (
     <section
-      className="sleek-ready-to-go shrink-0 border-t border-[#E9ECEF] bg-[#FAFAFA] px-4 py-20 sm:py-20"
+      className="sleek-ready-to-go shrink-0 border-t border-[#E9ECEF] bg-[#FAFAFA] py-20 sm:py-20"
       aria-labelledby="ready-to-go-heading"
     >
-      <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+      <div className="sleek-page-container flex flex-col items-center text-center">
         <h2
           id="ready-to-go-heading"
           className="mb-3 text-balance text-2xl font-extrabold tracking-tight text-[#040015] sm:text-3xl"

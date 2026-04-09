@@ -64,10 +64,10 @@ function DataCell({ cell, highlight }) {
 export function InvoiceComparisonSection() {
   return (
     <section
-      className="sleek-comparison shrink-0 border-t border-[#E9ECEF] bg-white px-4 py-20 sm:py-20"
+      className="sleek-comparison shrink-0 border-t border-[#E9ECEF] bg-white py-20 sm:py-20"
       aria-labelledby="comparison-heading"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="sleek-page-container">
         <div className="mb-4 text-center">
           <h2
             id="comparison-heading"

@@ -35,10 +35,10 @@ export function SimplicitySection() {
 
   return (
     <section
-      className="sleek-simplicity shrink-0 border-t border-[#E9ECEF] bg-[#F0F5FF] px-4 py-20 sm:py-20"
+      className="sleek-simplicity shrink-0 border-t border-[#E9ECEF] bg-[#F0F5FF] py-20 sm:py-20"
       aria-labelledby="simplicity-heading"
     >
-      <div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-[60px]">
+      <div className="sleek-page-container grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-[60px]">
         <div>
           <h2
             id="simplicity-heading"

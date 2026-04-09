@@ -24,10 +24,10 @@ const steps = [
 export function HowToCreateSection() {
   return (
     <section
-      className="sleek-how-to shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] px-4 py-20 sm:py-20"
+      className="sleek-how-to shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] py-20 sm:py-20"
       aria-labelledby="how-to-heading"
     >
-      <div className="mx-auto max-w-[720px]">
+      <div className="sleek-page-container">
         <div className="mb-4 text-center">
           <h2
             id="how-to-heading"

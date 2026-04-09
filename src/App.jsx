@@ -96,14 +96,14 @@ function InvoiceWorkspace({ printRef }) {
       <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:gap-x-0 lg:gap-y-0">
         <section
           aria-label="Invoice form"
-          className="invoice-form-panel w-full border-gray-200 px-6 py-6 lg:col-span-7 lg:border-r lg:pr-8"
+          className="invoice-form-panel w-full border-gray-200 px-0 py-6 lg:col-span-7 lg:border-r lg:pr-8"
         >
           <form
             noValidate
             className="contents"
             onSubmit={(e) => e.preventDefault()}
           >
-            <div className="mx-auto max-w-2xl space-y-5">
+            <div className="w-full space-y-5">
               <DocumentSection />
               <CompanySection />
               <CustomerSection />
@@ -166,7 +166,7 @@ export default function App() {
           Scroll lives on #sleek-invoice-app only — avoid nested overflow-y-auto (breaks sticky).
         */}
         <div className="flex w-full flex-col border-b border-[#E9ECEF] bg-white">
-          <div className="sleek-tool-intro mx-auto w-full max-w-6xl px-6 pb-2 pt-11">
+          <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
             <h2>Create an Invoice Online in Seconds</h2>
             <p className="mb-7 mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed text-[#6C757D]">
               Fill in the form below and get a professional online invoice template ready to
@@ -174,7 +174,9 @@ export default function App() {
             </p>
           </div>
           <div className="flex min-h-[min(750px,80dvh)] w-full flex-col">
-            <InvoiceWorkspace printRef={printRef} />
+            <div className="sleek-page-container">
+              <InvoiceWorkspace printRef={printRef} />
+            </div>
           </div>
         </div>
         <WhySleekSection />

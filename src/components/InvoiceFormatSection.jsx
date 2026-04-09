@@ -46,10 +46,10 @@ const blocks = [
 export function InvoiceFormatSection() {
   return (
     <section
-      className="sleek-invoice-format shrink-0 border-t border-gray-200/80 bg-white px-4 py-14 sm:py-16"
+      className="sleek-invoice-format shrink-0 border-t border-gray-200/80 bg-white py-14 sm:py-16"
       aria-labelledby="invoice-format-heading"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="sleek-page-container">
         <h2
           id="invoice-format-heading"
           className="text-center text-balance text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"

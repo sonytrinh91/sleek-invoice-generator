@@ -38,10 +38,10 @@ const cards = [
 export function WhySleekSection() {
   return (
     <section
-      className="sleek-why-sleek shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] px-4 py-20 sm:py-20"
+      className="sleek-why-sleek shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] py-20 sm:py-20"
       aria-labelledby="why-sleek-heading"
     >
-      <div className="mx-auto max-w-5xl text-center">
+      <div className="sleek-page-container text-center">
         <p className="mb-4 inline-flex items-center rounded-full bg-[#EBF2FF] px-3 py-1 text-[0.6875rem] font-bold uppercase tracking-[0.04em] text-[#0F6DFA]">
           Why sleek
         </p>
