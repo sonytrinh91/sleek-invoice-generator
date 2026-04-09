@@ -154,7 +154,7 @@ export function SubtotalSection() {
         <div className="flex flex-wrap gap-6 border-t border-gray-100 pt-3">
           <button
             type="button"
-            className="text-sm font-semibold text-accent hover:underline"
+            className="sleek-ds-btn-text"
             onClick={() =>
               setValue('discountExpanded', !discountExpanded, {
                 shouldDirty: true,
@@ -165,7 +165,7 @@ export function SubtotalSection() {
           </button>
           <button
             type="button"
-            className="text-sm font-semibold text-accent hover:underline"
+            className="sleek-ds-btn-text"
             onClick={() =>
               setValue('shippingExpanded', !shippingExpanded, {
                 shouldDirty: true,

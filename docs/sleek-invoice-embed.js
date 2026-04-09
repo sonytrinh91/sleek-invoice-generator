@@ -23,6 +23,7 @@
     var container = iframe.parentElement
     if (!container) return
     unlockContainer(container)
+    container.style.height = 'auto'
     container.style.minHeight = height + 'px'
   }
 
@@ -49,7 +50,8 @@
     var minH =
       container.getAttribute('data-min-height') ||
       container.getAttribute('data-initial-height')
-    iframe.style.minHeight = minH || '720px'
+    /* Placeholder until postMessage; real height set by resize. */
+    iframe.style.minHeight = minH || '75vh'
 
     container.appendChild(iframe)
   }

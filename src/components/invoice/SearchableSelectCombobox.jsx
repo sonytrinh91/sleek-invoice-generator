@@ -259,7 +259,7 @@ export function SearchableSelectCombobox({
                 data-idx={idx}
                 className={clsx(
                   'cursor-pointer px-3 py-2 text-sm text-fg-strong',
-                  idx === activeIdx ? 'bg-blue-50' : 'hover:bg-blue-50',
+                  idx === activeIdx ? 'bg-ds-highlight' : 'hover:bg-ds-highlight',
                 )}
                 onMouseEnter={() => setHighlight(idx)}
                 onMouseDown={(e) => {

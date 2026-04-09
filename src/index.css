@@ -1,9 +1,10 @@
 @import 'tailwindcss';
 @config '../tailwind.config.js';
+@import './design-system.css';
 
 /* App shell: tokens + stacking context for embeds (e.g. WordPress theme CSS). */
 #sleek-invoice-app .text-accent {
-  color: #0f6dfa !important;
+  color: var(--ds-primary) !important;
 }
 
 /* Host themes often force column flex on buttons; keep icon + label on one row. */
@@ -28,9 +29,10 @@
   --text-fg-body: #222222;
   --text-fg-muted: #888888;
   --text-fg-secondary: #333333;
-  /* Re-anchor Tailwind theme tokens so host pages cannot repoint accent via :root. */
+  /* Re-anchor Tailwind theme tokens (aligned with design-system.css). */
   --color-accent: #0f6dfa !important;
-  --color-accent-hover: #0047e0 !important;
+  --color-accent-hover: #0959d3 !important;
+  --color-accent-active: #0242a2 !important;
   isolation: isolate;
   /*
    * Standalone: viewport-locked shell + overflow-y auto (single scroll). WordPress overrides
@@ -154,17 +156,6 @@ body.sleek-wp-embed-body {
   margin: 0 !important;
 }
 
-#sleek-invoice-app a.sleek-why-sleek-cta {
-  color: #fff !important;
-  text-decoration: none !important;
-  background-color: #0f6dfa !important;
-}
-
-#sleek-invoice-app a.sleek-why-sleek-cta:hover {
-  background-color: #0047e0 !important;
-  color: #fff !important;
-}
-
 #sleek-invoice-app .sleek-trusted-by h2 {
   font-size: 1.25rem !important;
   line-height: 1.75rem !important;
@@ -199,17 +190,6 @@ body.sleek-wp-embed-body {
   list-style: none !important;
   padding-left: 0 !important;
   margin: 0 !important;
-}
-
-#sleek-invoice-app a.sleek-more-than-invoicing-cta {
-  color: #0f172a !important;
-  background-color: #ffffff !important;
-  text-decoration: none !important;
-}
-
-#sleek-invoice-app a.sleek-more-than-invoicing-cta:hover {
-  background-color: #f3f4f6 !important;
-  color: #0f172a !important;
 }
 
 #sleek-invoice-app section.sleek-faq {
@@ -281,7 +261,7 @@ body.sleek-wp-embed-body {
 
 @media (hover: hover) {
   #sleek-invoice-app .sleek-faq button.sleek-faq-trigger:hover {
-    background-color: #f9fafb !important;
+    background-color: var(--ds-text-btn-bg-hover, #f0f6fe) !important;
     background-image: none !important;
     color: #0f172a !important;
   }
@@ -295,7 +275,7 @@ body.sleek-wp-embed-body {
 }
 
 #sleek-invoice-app .sleek-faq button.sleek-faq-trigger:focus-visible {
-  outline: 2px solid #0f6dfa !important;
+  outline: 2px solid var(--ds-primary) !important;
   outline-offset: 2px !important;
 }
 
@@ -312,29 +292,6 @@ body.sleek-wp-embed-body {
     font-size: 2.25rem !important;
     line-height: 2.5rem !important;
   }
-}
-
-#sleek-invoice-app a.sleek-ready-to-go-primary {
-  color: #fff !important;
-  background-color: #0f6dfa !important;
-  text-decoration: none !important;
-}
-
-#sleek-invoice-app a.sleek-ready-to-go-primary:hover {
-  background-color: #0047e0 !important;
-  color: #fff !important;
-}
-
-#sleek-invoice-app a.sleek-ready-to-go-secondary {
-  color: #0f172a !important;
-  background-color: #fff !important;
-  border: 1px solid #d1d5db !important;
-  text-decoration: none !important;
-}
-
-#sleek-invoice-app a.sleek-ready-to-go-secondary:hover {
-  background-color: #f9fafb !important;
-  color: #0f172a !important;
 }
 
 /* Items section: WP themes often zero margin-* and break space-y; flex gap is more reliable. */
@@ -357,7 +314,7 @@ body.sleek-wp-embed-body {
 
 @media (hover: hover) {
   #sleek-invoice-app ul.sleek-listbox li[role='option']:hover {
-    background-color: #eff6ff !important;
+    background-color: var(--ds-highlight, #f0f6fe) !important;
   }
 }
 
@@ -366,7 +323,7 @@ body.sleek-wp-embed-body {
 }
 
 #sleek-invoice-app ul.sleek-listbox li[role='option'].bg-blue-50 {
-  background-color: #eff6ff !important;
+  background-color: var(--ds-highlight, #f0f6fe) !important;
 }
 
 /*
@@ -395,7 +352,8 @@ body.sleek-wp-embed-body {
   /* System stack first so the app works without Google Fonts (e.g. WordPress embed). */
   --font-sans: ui-sans-serif, system-ui, sans-serif, 'DM Sans';
   --color-accent: #0f6dfa;
-  --color-accent-hover: #0047e0;
+  --color-accent-hover: #0959d3;
+  --color-accent-active: #0242a2;
   --color-input-value: var(--input-value-text);
   --color-fg: var(--text-fg);
   --color-fg-strong: var(--text-fg-strong);
@@ -634,31 +592,46 @@ body {
   justify-content: center !important;
   align-items: center !important;
   box-sizing: border-box !important;
-  background-color: #0f6dfa !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  background-color: var(--ds-primary) !important;
+  border-color: var(--ds-primary) !important;
   color: #fff !important;
 }
 
 @media (hover: hover) {
   #sleek-invoice-app button.sleek-download-btn:hover:not(:disabled) {
-    background-color: #0047e0 !important;
+    background-color: var(--ds-primary-hover) !important;
+    border-color: var(--ds-primary-hover) !important;
   }
+}
+
+#sleek-invoice-app button.sleek-download-btn:active:not(:disabled) {
+  background-color: var(--ds-primary-active) !important;
+  border-color: var(--ds-primary-active) !important;
 }
 
 #sleek-invoice-app button.sleek-download-btn:disabled {
   opacity: 0.45 !important;
 }
 
-/* Outline actions */
+/* Outline actions (Add line item, etc.) — matches DS outline on white */
 #sleek-invoice-app button.border-accent {
   border-width: 1px !important;
   border-style: solid !important;
-  border-color: #0f6dfa !important;
-  color: #0f6dfa !important;
+  border-color: var(--ds-outline-border) !important;
+  color: var(--ds-outline-fg) !important;
   background-color: transparent !important;
 }
 
-#sleek-invoice-app button.border-accent:hover {
-  background-color: #eff6ff !important;
+@media (hover: hover) {
+  #sleek-invoice-app button.border-accent:hover {
+    background-color: var(--ds-outline-bg-hover) !important;
+  }
+}
+
+#sleek-invoice-app button.border-accent:active {
+  background-color: var(--ds-outline-bg-active) !important;
 }
 
 /* % / $ segment group: divider between segments */
@@ -833,7 +806,7 @@ body {
 
 /* Segment + link-style accent buttons */
 #sleek-invoice-app button.bg-accent.text-white {
-  background-color: #0f6dfa !important;
+  background-color: var(--ds-primary) !important;
   color: #fff !important;
 }
 
@@ -843,7 +816,7 @@ body {
 }
 
 #sleek-invoice-app button.text-accent {
-  color: #0f6dfa !important;
+  color: var(--ds-primary) !important;
   background-color: transparent !important;
   box-shadow: none !important;
 }

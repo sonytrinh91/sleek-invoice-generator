@@ -23,7 +23,7 @@ export function ReadyToGoSection() {
             href={GET_STARTED_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="sleek-ready-to-go-primary inline-flex min-h-11 items-center justify-center rounded-lg bg-accent px-6 py-3 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-accent-hover"
+            className="sleek-ds-btn sleek-ds-btn--primary sleek-ds-btn--comfortable inline-flex text-center shadow-sm"
           >
             Get started — free
           </a>
@@ -31,7 +31,7 @@ export function ReadyToGoSection() {
             href={TALK_EXPERT_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="sleek-ready-to-go-secondary inline-flex min-h-11 items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-center text-sm font-semibold text-slate-900 transition hover:bg-gray-50"
+            className="sleek-ds-btn sleek-ds-btn--outline sleek-ds-btn--comfortable inline-flex text-center"
           >
             Talk to an expert
           </a>

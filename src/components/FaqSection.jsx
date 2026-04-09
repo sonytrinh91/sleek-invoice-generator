@@ -63,7 +63,7 @@ export function FaqSection() {
                 className={clsx(
                   'rounded-xl border bg-white transition-all duration-200',
                   isOpen
-                    ? 'border-blue-500 shadow-md shadow-blue-500/10 ring-1 ring-blue-500/20'
+                    ? 'border-ds-primary shadow-md shadow-ds-primary/10 ring-1 ring-ds-primary/20'
                     : 'border-gray-200',
                 )}
               >
@@ -72,7 +72,7 @@ export function FaqSection() {
                   type="button"
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  className="sleek-faq-trigger flex min-h-16 w-full cursor-pointer flex-row flex-nowrap items-center justify-between gap-4 rounded-xl px-5 py-4 text-left sm:min-h-[4.5rem] sm:px-6 sm:py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  className="sleek-faq-trigger flex min-h-16 w-full cursor-pointer flex-row flex-nowrap items-center justify-between gap-4 rounded-xl px-5 py-4 text-left sm:min-h-[4.5rem] sm:px-6 sm:py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-primary focus-visible:ring-offset-2"
                   onClick={() =>
                     setOpenIndex((prev) => (prev === index ? null : index))
                   }
@@ -83,7 +83,7 @@ export function FaqSection() {
                   <ChevronDown
                     className={clsx(
                       'size-5 shrink-0 text-gray-400 transition-transform duration-200',
-                      isOpen && 'rotate-180 text-blue-600',
+                      isOpen && 'rotate-180 text-ds-primary',
                     )}
                     aria-hidden
                   />

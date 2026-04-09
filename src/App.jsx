@@ -115,9 +115,8 @@ function InvoiceWorkspace({ printRef }) {
                 disabled={!canDownload}
                 onClick={() => handlePrint()}
                 className={clsx(
-                  'sleek-download-btn w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium text-white transition',
-                  'bg-accent hover:bg-accent-hover',
-                  'disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-accent',
+                  'sleek-download-btn sleek-ds-btn sleek-ds-btn--primary w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition',
+                  'disabled:cursor-not-allowed disabled:opacity-45',
                 )}
               >
                 Download

@@ -17,7 +17,7 @@ export function AddOutlineButton({
       type={type}
       onClick={onClick}
       className={clsx(
-        'sleek-inline-action inline-flex self-start cursor-pointer flex-row flex-nowrap items-center gap-1.5 rounded border border-accent px-4 py-3 text-sm font-medium text-accent transition hover:bg-blue-50',
+        'sleek-inline-action sleek-ds-btn sleek-ds-btn--outline inline-flex self-start cursor-pointer flex-row flex-nowrap items-center gap-1.5 px-4 py-3 text-sm',
         className,
       )}
       {...rest}

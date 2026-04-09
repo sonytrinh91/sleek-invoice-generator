@@ -1,0 +1,201 @@
+/**
+ * Sleek design system — buttons & links (white / dark / light-blue surfaces).
+ * All rules scoped to #sleek-invoice-app for WP embed + Tailwind important().
+ */
+
+#sleek-invoice-app {
+  /* Primary — all surfaces */
+  --ds-primary: #0f6dfa;
+  --ds-primary-hover: #0959d3;
+  --ds-primary-active: #0242a2;
+  --ds-on-primary: #ffffff;
+
+  /* Default (white) surface — outline, text, link */
+  --ds-outline-fg: #0f6dfa;
+  --ds-outline-border: #0f6dfa;
+  --ds-outline-bg-hover: #f0f6fe;
+  --ds-outline-bg-active: #e2edfe;
+
+  --ds-text-btn-fg: #0f6dfa;
+  --ds-text-btn-bg-hover: #f0f6fe;
+  --ds-text-btn-bg-active: #e2edfe;
+
+  --ds-link: #0f6dfa;
+  --ds-link-hover: #0f6dfa;
+  --ds-link-active: #0242a2;
+
+  /* Light button (not on light-blue backgrounds per guidelines) */
+  --ds-light-fg: #0f6dfa;
+  --ds-light-bg: #e2edfe;
+  --ds-light-fg-hover: #01317a;
+  --ds-light-bg-hover: #adccfb;
+  --ds-light-fg-active: #01317a;
+  --ds-light-bg-active: #7eb0fb;
+
+  /* List / row highlight (outline hover fill) */
+  --ds-highlight: #f0f6fe;
+}
+
+/* Dark blue section (e.g. hero band alternative, “More than invoicing”) */
+#sleek-invoice-app .sleek-surface-on-dark {
+  --ds-outline-fg: #ffffff;
+  --ds-outline-border: #ffffff;
+  --ds-outline-bg-hover: #01317a;
+  --ds-outline-bg-active: #0242a2;
+
+  --ds-text-btn-fg: #ffffff;
+  --ds-text-btn-bg-hover: #01317a;
+  --ds-text-btn-bg-active: #0242a2;
+
+  --ds-link: #ffffff;
+  --ds-link-hover: #ffffff;
+  --ds-link-active: #ebebeb;
+}
+
+/* Light blue band — text + link only; avoid light-button here */
+#sleek-invoice-app .sleek-surface-light-blue {
+  --ds-text-btn-fg: #01317a;
+  --ds-text-btn-bg-hover: #e2edfe;
+  --ds-text-btn-bg-active: #adccfb;
+
+  --ds-link: #0959d3;
+  --ds-link-hover: #0959d3;
+  --ds-link-active: #0242a2;
+}
+
+/* ---------- Buttons ---------- */
+
+#sleek-invoice-app .sleek-ds-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  border-radius: 0.5rem !important;
+  text-decoration: none !important;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease !important;
+  cursor: pointer !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+#sleek-invoice-app .sleek-ds-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.45 !important;
+}
+
+#sleek-invoice-app .sleek-ds-btn--primary {
+  background-color: var(--ds-primary) !important;
+  border-color: var(--ds-primary) !important;
+  color: var(--ds-on-primary) !important;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05) !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app .sleek-ds-btn--primary:hover:not(:disabled) {
+    background-color: var(--ds-primary-hover) !important;
+    border-color: var(--ds-primary-hover) !important;
+  }
+}
+
+#sleek-invoice-app .sleek-ds-btn--primary:active:not(:disabled) {
+  background-color: var(--ds-primary-active) !important;
+  border-color: var(--ds-primary-active) !important;
+}
+
+#sleek-invoice-app .sleek-ds-btn--outline {
+  background-color: transparent !important;
+  color: var(--ds-outline-fg) !important;
+  border-color: var(--ds-outline-border) !important;
+  box-shadow: none !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app .sleek-ds-btn--outline:hover:not(:disabled) {
+    background-color: var(--ds-outline-bg-hover) !important;
+  }
+}
+
+#sleek-invoice-app .sleek-ds-btn--outline:active:not(:disabled) {
+  background-color: var(--ds-outline-bg-active) !important;
+}
+
+#sleek-invoice-app .sleek-ds-btn--light {
+  background-color: var(--ds-light-bg) !important;
+  border-color: transparent !important;
+  color: var(--ds-light-fg) !important;
+  box-shadow: none !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app .sleek-ds-btn--light:hover:not(:disabled) {
+    background-color: var(--ds-light-bg-hover) !important;
+    color: var(--ds-light-fg-hover) !important;
+  }
+}
+
+#sleek-invoice-app .sleek-ds-btn--light:active:not(:disabled) {
+  background-color: var(--ds-light-bg-active) !important;
+  color: var(--ds-light-fg-active) !important;
+}
+
+/* Text-style control (Discount / Shipping toggles) */
+#sleek-invoice-app button.sleek-ds-btn-text {
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  color: var(--ds-text-btn-fg) !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 0.25rem !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app button.sleek-ds-btn-text:hover {
+    background-color: var(--ds-text-btn-bg-hover) !important;
+  }
+}
+
+#sleek-invoice-app button.sleek-ds-btn-text:active {
+  background-color: var(--ds-text-btn-bg-active) !important;
+}
+
+/* Inline text link (anchors) */
+#sleek-invoice-app a.sleek-ds-link {
+  color: var(--ds-link) !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease !important;
+}
+
+@media (hover: hover) {
+  #sleek-invoice-app a.sleek-ds-link:hover {
+    color: var(--ds-link-hover, var(--ds-link)) !important;
+  }
+}
+
+#sleek-invoice-app a.sleek-ds-link:active {
+  color: var(--ds-link-active) !important;
+}
+
+/* Size helper for marketing CTAs */
+#sleek-invoice-app a.sleek-ds-btn--comfortable,
+#sleek-invoice-app button.sleek-ds-btn--comfortable {
+  min-height: 2.75rem !important;
+  padding: 0.75rem 1.5rem !important;
+}
+
+#sleek-invoice-app a.sleek-ds-btn--comfortable-lg,
+#sleek-invoice-app button.sleek-ds-btn--comfortable-lg {
+  padding: 0.875rem 1.5rem !important;
+}

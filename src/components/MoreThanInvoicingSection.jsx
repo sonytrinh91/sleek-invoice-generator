@@ -14,7 +14,7 @@ const tags = [
 export function MoreThanInvoicingSection() {
   return (
     <section
-      className="sleek-more-than-invoicing shrink-0 bg-linear-to-b from-slate-950 via-[#0c1929] to-slate-950 px-4 py-16 sm:py-20"
+      className="sleek-more-than-invoicing sleek-surface-on-dark shrink-0 bg-linear-to-b from-slate-950 via-[#0c1929] to-slate-950 px-4 py-16 sm:py-20"
       aria-labelledby="more-than-invoicing-heading"
     >
       <div className="mx-auto max-w-3xl text-center">
@@ -48,7 +48,7 @@ export function MoreThanInvoicingSection() {
             href={ACCOUNTING_PLANS_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="sleek-more-than-invoicing-cta inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-gray-100"
+            className="sleek-ds-btn sleek-ds-btn--outline sleek-ds-btn--comfortable inline-flex gap-2"
           >
             See accounting plans
             <ArrowRight className="size-4 shrink-0" aria-hidden />

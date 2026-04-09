@@ -79,7 +79,7 @@ export function WhySleekSection() {
             href={SIGNUP_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="sleek-why-sleek-cta inline-flex w-full max-w-md items-center justify-center rounded-lg bg-accent px-6 py-3.5 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-accent-hover sm:w-auto sm:min-w-[20rem]"
+            className="sleek-ds-btn sleek-ds-btn--primary sleek-ds-btn--comfortable-lg inline-flex w-full max-w-md text-center shadow-sm sm:w-auto sm:min-w-[20rem]"
           >
             Create free account — takes 30 seconds
           </a>
