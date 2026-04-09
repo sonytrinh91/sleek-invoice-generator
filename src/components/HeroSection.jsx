@@ -1,51 +1,50 @@
-import { Shield, Star, Users } from 'lucide-react'
+import { Star } from 'lucide-react'
 
 export function HeroSection() {
   return (
     <header
-      className="sleek-hero sleek-surface-light-blue shrink-0 border-b border-gray-200/80 bg-ds-highlight px-4 pb-10 pt-10 text-center sm:pb-12 sm:pt-12"
+      className="sleek-hero sleek-surface-light-blue shrink-0 border-b border-[#E9ECEF] bg-[linear-gradient(135deg,#EBF2FF_0%,#F8FAFF_60%,#FAFAFA_100%)] px-4 pb-11 pt-[52px] text-center sm:pb-11"
       role="banner"
     >
-      <div className="mx-auto max-w-3xl">
-        <p className="mb-5 inline-flex items-center rounded-full bg-[#DCFCE7] px-3 py-1 text-xs font-medium text-[#166534]">
-          100% free — no account required
+      <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
+        <p className="inline-flex items-center rounded-full bg-[#EBF2FF] px-3.5 py-1 text-[0.75rem] font-bold uppercase tracking-[0.04em] text-[#0F6DFA]">
+          100% free - no account required to download
         </p>
-        <h1 className="text-balance text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="text-balance text-[#040015] sm:max-w-none">
           Free Invoice Generator by Sleek
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-slate-600 sm:text-lg">
-          Create professional invoices in under two minutes. Download a clean PDF
-          instantly — no signup needed.
+        <p className="mx-auto max-w-[540px] text-pretty text-base leading-[1.7] text-[#6C757D]">
+          Create a professional Singapore invoice or bill clients worldwide in under 2
+          minutes. Sleek&apos;s free invoice software auto-calculates totals, supports
+          10+ countries, and downloads as PDF instantly - no signup needed.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-slate-600">
-          <div className="flex items-center gap-2">
-            <Users
-              className="size-4 shrink-0 text-emerald-700"
-              strokeWidth={1.75}
+        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 pt-2 text-sm font-medium text-[#6C757D] sm:gap-x-8 sm:pt-4">
+          <div className="flex items-center gap-1.5">
+            <span
+              className="size-2 shrink-0 rounded-full bg-[#00C853]"
               aria-hidden
             />
-            <span>450,000+ businesses trust Sleek</span>
+            <span>450,000+ businesses worldwide</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span className="flex items-center gap-0.5" aria-hidden>
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={i}
-                  className="size-3.5 fill-amber-400 text-amber-400"
+                  className="size-3.5 fill-[#FBBF24] text-[#FBBF24]"
                   aria-hidden
                 />
               ))}
             </span>
-            <span>4.5/5 on Trustpilot</span>
+            <span>4.5/5 on Google</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Shield
-              className="size-4 shrink-0 text-ds-primary"
-              strokeWidth={1.75}
+          <div className="flex items-center gap-1.5">
+            <span
+              className="size-2 shrink-0 rounded-full bg-[#0F6DFA]"
               aria-hidden
             />
-            <span>B Corp certified</span>
+            <span>Singapore, AU, UK, HK and more</span>
           </div>
         </div>
       </div>

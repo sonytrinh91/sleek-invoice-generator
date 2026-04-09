@@ -1,72 +1,77 @@
 import { FileText, TrendingUp, Zap } from 'lucide-react'
 
-const SIGNUP_HREF = 'https://sleek.com'
+const ACCOUNTING_HREF = 'https://sleek.com/sg/accounting-services-singapore/'
 
 const cards = [
   {
+    key: 'create-download',
     badge: 'Free',
-    title: 'Save & Track Invoices',
+    badgeClass: 'bg-[#E8F5E9] text-[#00C853]',
+    title: 'Create and Download Invoices',
     description:
-      'Create a free account to save all your invoices, track which ones are paid, and access your full invoice history from any device.',
+      "Sleek's free invoice generator creates professional invoices in minutes. Download as PDF instantly. No account, no credit card, no catch.",
     icon: FileText,
-    iconWrap: 'bg-blue-100 text-blue-600',
+    iconWrapClass: 'bg-[#EBF2FF] text-gray-500',
   },
   {
-    badge: 'Invoicing',
-    title: 'Get Paid Faster',
+    key: 'send-track',
+    badge: 'Sleek Accounting',
+    badgeClass: 'bg-[#EBF2FF] text-[#0F6DFA]',
+    title: 'Send, Track and Get Paid',
     description:
-      'Send invoices directly to clients. Get notified when they view it. Add a payment link so clients can pay instantly online.',
+      'Send invoices by email, get notified when clients open them, and track every invoice - Sent, Viewed, Paid, Overdue - from one dashboard.',
     icon: Zap,
-    iconWrap: 'bg-green-100 text-green-600',
+    iconWrapClass: 'bg-[#E8F5E9] text-yellow-500',
   },
   {
-    badge: 'Accounting',
+    key: 'full-accounting',
+    badge: 'Sleek Accounting',
+    badgeClass: 'bg-[#FFF8E1] text-[#F59E0B]',
     title: 'Full Accounting, Done for You',
     description:
-      'A dedicated Sleek accountant handles GST filing, corporate tax, and annual returns — all connected to your invoices.',
+      'A dedicated Sleek accountant handles tax filing, compliance, and annual returns - all connected to your invoicing history automatically.',
     icon: TrendingUp,
-    iconWrap: 'bg-amber-100 text-amber-700',
+    iconWrapClass: 'bg-[#FFF8E1] text-red-600',
   },
 ]
 
 export function WhySleekSection() {
   return (
     <section
-      className="sleek-why-sleek shrink-0 border-t border-gray-100 bg-white px-4 py-14 sm:py-16"
+      className="sleek-why-sleek shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] px-4 py-20 sm:py-20"
       aria-labelledby="why-sleek-heading"
     >
       <div className="mx-auto max-w-5xl text-center">
-        <p className="mb-4 inline-flex items-center rounded-full bg-[#DCFCE7] px-3 py-1 text-xs font-medium text-[#166534]">
-          Why Sleek
+        <p className="mb-4 inline-flex items-center rounded-full bg-[#EBF2FF] px-3 py-1 text-[0.6875rem] font-bold uppercase tracking-[0.04em] text-[#0F6DFA]">
+          Why sleek
         </p>
         <h2
           id="why-sleek-heading"
-          className="text-balance text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
+          className="text-balance text-2xl font-extrabold tracking-tight text-[#040015] sm:text-3xl"
         >
-          Why thousands of businesses use Sleek
+          Why thousands of businesses use Sleek&apos;s free invoice generator
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-pretty text-base text-slate-600 sm:text-lg">
-          The free invoice tool is just the beginning.
-        </p>
 
-        <div className="mt-10 grid gap-6 text-left sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-10 grid gap-6 text-center sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {cards.map((card) => {
             const Icon = card.icon
             return (
               <article
-                key={card.badge}
-                className="flex flex-col rounded-xl border border-gray-200/90 bg-white p-6 shadow-sm"
+                key={card.key}
+                className="flex flex-col items-center rounded-2xl border border-[#E9ECEF] bg-white p-7 text-center shadow-[0_2px_12px_rgba(4,0,21,0.04)]"
               >
                 <div
-                  className={`mb-4 flex size-11 items-center justify-center rounded-lg ${card.iconWrap}`}
+                  className={`mb-5 flex size-14 items-center justify-center rounded-2xl ${card.iconWrapClass}`}
                 >
-                  <Icon className="size-5 shrink-0" strokeWidth={1.75} aria-hidden />
+                  <Icon className="size-7 shrink-0" strokeWidth={1.75} aria-hidden />
                 </div>
-                <p className="mb-2 inline-flex w-fit rounded-full bg-sky-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+                <p
+                  className={`mb-3 inline-flex rounded-full px-3 py-0.5 text-[0.6875rem] font-bold ${card.badgeClass}`}
+                >
                   {card.badge}
                 </p>
-                <h3 className="text-lg font-bold text-gray-900">{card.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-500">
+                <h3 className="mb-2">{card.title}</h3>
+                <p className="flex-1 text-sm leading-relaxed text-[#6C757D]">
                   {card.description}
                 </p>
               </article>
@@ -74,14 +79,14 @@ export function WhySleekSection() {
           })}
         </div>
 
-        <div className="mt-10 sm:mt-12">
+        <div className="mt-10">
           <a
-            href={SIGNUP_HREF}
+            href={ACCOUNTING_HREF}
             target="_blank"
             rel="noopener noreferrer"
             className="sleek-ds-btn sleek-ds-btn--primary sleek-ds-btn--comfortable-lg inline-flex w-full max-w-md text-center shadow-sm sm:w-auto sm:min-w-[20rem]"
           >
-            Get started for free
+            View Sleek&apos;s Pricing Plans
           </a>
         </div>
       </div>

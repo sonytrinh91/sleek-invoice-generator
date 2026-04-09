@@ -1,123 +1,142 @@
 import { clsx } from 'clsx'
-import { Check, FileText } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { useState } from 'react'
-
-const TRY_ACCOUNTING_HREF = 'https://sleek.com/sg/accounting/'
 
 const items = [
   {
-    title: 'Professional layout',
-    body: 'Clean, structured fields that match how clients and auditors expect invoices to look.',
+    key: 'effortless',
+    title: 'Invoicing made effortless',
+    body: 'Create professional invoices in under 2 minutes. Auto-calculated totals, tax, discounts, and shipping - no manual maths, no formatting headaches.',
+    stripe: false,
   },
   {
-    title: 'Automatic calculations',
-    body: 'Subtotals, taxes, and discounts stay in sync as you edit line items — fewer mistakes.',
+    key: 'visibility',
+    title: 'Real-time visibility',
+    body: 'With Sleek Accounting, know exactly when your client opens your invoice. Track every invoice - Sent, Viewed, Paid, Overdue - from a single dashboard.',
+    stripe: false,
   },
   {
-    title: 'Branding & clarity',
-    body: 'Add your logo and company details so every PDF reinforces your brand.',
+    key: 'worldwide',
+    title: 'Built for businesses worldwide',
+    body: 'Supports Singapore invoice requirements (UEN, GST), Australia (ABN, GST), UK (VAT), US, Hong Kong, and more. Tax fields auto-adjust based on your country - so every invoice is locally compliant without any manual setup.',
+    stripe: false,
   },
   {
-    title: 'Instant PDF download',
-    body: 'Generate a print-ready PDF in one click, ready to email or archive.',
+    key: 'upgrade',
+    title: "Upgrades to full accounting when you're ready",
+    body: 'Subscribe to Sleek Accounting to unlock invoice history, email sending, read tracking, and a dedicated accountant for tax filing and compliance.',
+    stripe: true,
   },
 ]
 
 export function SimplicitySection() {
-  const [open, setOpen] = useState(0)
+  const [openIndex, setOpenIndex] = useState(0)
+  const [stripeOpen, setStripeOpen] = useState(false)
 
   return (
     <section
-      className="sleek-simplicity sleek-surface-light-blue shrink-0 border-t border-gray-200/80 bg-ds-highlight px-4 py-14 sm:py-16"
+      className="sleek-simplicity shrink-0 border-t border-[#E9ECEF] bg-[#F0F5FF] px-4 py-20 sm:py-20"
       aria-labelledby="simplicity-heading"
     >
-      <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
+      <div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-[60px]">
         <div>
           <h2
             id="simplicity-heading"
-            className="text-balance text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
+            className="text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
           >
-            Simple invoicing. Stronger accuracy.
+            Simplify Invoicing. Strengthen Accuracy.
           </h2>
-          <p className="mt-3 text-pretty text-base leading-relaxed text-slate-600 sm:text-lg">
-            Everything you need to issue compliant, professional invoices — without
-            wrestling with spreadsheets.
-          </p>
-          <ul className="mt-8 space-y-2">
+          <ul className="space-y-2.5">
             {items.map((item, i) => {
-              const isOpen = open === i
+              const isStripe = item.stripe
+              const isOpen = isStripe ? stripeOpen : openIndex === i
+
               return (
-                <li key={item.title}>
+                <li key={item.key}>
                   <button
                     type="button"
-                    onClick={() => setOpen(i)}
+                    onClick={() => {
+                      if (isStripe) {
+                        setStripeOpen((v) => !v)
+                        return
+                      }
+                      setOpenIndex(i)
+                    }}
                     className={clsx(
-                      'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left transition',
-                      isOpen
-                        ? 'border-ds-primary bg-white shadow-sm'
-                        : 'border-transparent bg-white/60 hover:border-gray-200 hover:bg-white',
+                      'w-full overflow-hidden rounded-xl border text-left transition',
+                      isStripe
+                        ? 'border-[#0F6DFA] bg-[#0F6DFA] text-white'
+                        : isOpen
+                          ? 'border-[#0F6DFA] bg-white'
+                          : 'border-[#E9ECEF] bg-white',
                     )}
                   >
-                    <span
-                      className={clsx(
-                        'mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md text-xs font-bold',
-                        isOpen
-                          ? 'bg-ds-primary text-white'
-                          : 'bg-slate-200 text-slate-700',
-                      )}
-                    >
-                      {isOpen ? (
+                    <span className="flex items-center gap-3.5 px-5 py-4">
+                      <span
+                        className={clsx(
+                          'flex size-7 shrink-0 items-center justify-center rounded-lg text-sm font-bold',
+                          isStripe
+                            ? 'bg-white/20 text-white'
+                            : 'bg-[#EBF2FF] text-[#0F6DFA]',
+                        )}
+                      >
                         <Check className="size-4" strokeWidth={2.5} aria-hidden />
-                      ) : (
-                        i + 1
-                      )}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold text-slate-900">
+                      </span>
+                      <span
+                        className={clsx(
+                          'text-[0.9375rem] font-semibold leading-snug',
+                          isStripe ? 'text-white' : 'text-[#040015]',
+                        )}
+                      >
                         {item.title}
                       </span>
-                      {isOpen ? (
-                        <span className="mt-1 block text-sm leading-relaxed text-slate-600">
-                          {item.body}
-                        </span>
-                      ) : null}
                     </span>
+                    {isOpen ? (
+                      <p
+                        className={clsx(
+                          'px-5 pb-4 pl-[62px] text-sm leading-relaxed',
+                          isStripe ? 'text-white/85' : 'text-[#6C757D]',
+                        )}
+                      >
+                        {item.body}
+                      </p>
+                    ) : null}
                   </button>
                 </li>
               )
             })}
           </ul>
-          <a
-            href={TRY_ACCOUNTING_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sleek-ds-btn sleek-ds-btn--primary sleek-ds-btn--comfortable mt-8 inline-flex shadow-sm"
-          >
-            Try accounting
-          </a>
         </div>
 
         <div
-          className="relative mx-auto w-full max-w-md lg:max-w-none"
+          className="relative mx-auto hidden w-full max-w-md rounded-[20px] bg-[linear-gradient(135deg,#EBF2FF_0%,#F0F8FF_100%)] p-10 lg:block lg:max-w-none"
           aria-hidden
         >
-          <div className="rounded-2xl bg-slate-900 p-6 shadow-xl sm:p-8">
-            <div className="rounded-xl border border-white/10 bg-white p-4 shadow-lg">
-              <div className="mb-3 flex items-center justify-between border-b border-gray-100 pb-3">
-                <FileText className="size-8 text-ds-primary" strokeWidth={1.5} />
-                <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                  Preview
-                </span>
+          <div className="mx-auto max-w-[280px] text-center">
+            <div className="overflow-hidden rounded-2xl bg-white shadow-[0_8px_32px_rgba(26,46,90,0.12)]">
+              <div className="bg-[#1A2E5A] px-4 py-4 text-left text-lg font-extrabold tracking-[0.05em] text-white">
+                INVOICE
               </div>
-              <div className="space-y-2 text-sm text-slate-600">
-                <div className="h-2 w-2/3 rounded bg-slate-200" />
-                <div className="h-2 w-1/2 rounded bg-slate-100" />
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                  <div className="h-16 rounded border border-gray-100 bg-slate-50" />
-                  <div className="h-16 rounded border border-gray-100 bg-slate-50" />
+              <div className="border border-t-0 border-[#E9ECEF] px-4 pb-4 pt-4">
+                <div className="mb-2.5 flex justify-between text-xs text-[#6C757D]">
+                  <span>Consulting Services</span>
+                  <span className="font-bold text-[#040015]">$1,000</span>
                 </div>
-                <div className="mt-3 h-2 w-full rounded bg-slate-100" />
-                <div className="h-2 w-5/6 rounded bg-slate-100" />
+                <div className="mb-2.5 flex justify-between text-xs text-[#6C757D]">
+                  <span>Design Work</span>
+                  <span className="font-bold text-[#040015]">$500</span>
+                </div>
+                <div className="mb-2.5 flex justify-between border-t border-[#F1F3F5] pt-2 text-xs text-[#6C757D]">
+                  <span>Tax</span>
+                  <span className="font-bold text-[#040015]">$135</span>
+                </div>
+                <div className="flex justify-between border-t border-[#E9ECEF] pt-2.5 text-sm font-extrabold text-[#1A2E5A]">
+                  <span>Total</span>
+                  <span>$1,635</span>
+                </div>
+                <div className="mt-3 rounded-lg border border-[#E9ECEF] bg-[#F8F9FA] px-2 py-2 text-center text-xs font-semibold text-[#6C757D]">
+                  Bank transfer details included
+                </div>
               </div>
             </div>
           </div>

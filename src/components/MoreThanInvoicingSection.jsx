@@ -1,9 +1,9 @@
-const EXPLORE_SOLUTIONS_HREF = 'https://sleek.com/sg/'
+const ACCOUNTING_HREF = 'https://sleek.com/sg/accounting-services-singapore/'
 
 const tags = [
   'Incorporation',
   'Accounting',
-  'GST Filing',
+  'Tax Filing',
   'Corporate Secretary',
   'Payroll',
   'Banking',
@@ -12,29 +12,29 @@ const tags = [
 export function MoreThanInvoicingSection() {
   return (
     <section
-      className="sleek-more-than-invoicing sleek-surface-on-dark shrink-0 bg-linear-to-b from-slate-950 via-[#0c1929] to-slate-950 px-4 py-16 sm:py-20"
+      className="sleek-more-than-invoicing shrink-0 bg-[#1A2E5A] px-4 py-20 sm:py-20"
       aria-labelledby="more-than-invoicing-heading"
     >
       <div className="mx-auto max-w-3xl text-center">
         <h2
           id="more-than-invoicing-heading"
-          className="text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          className="text-balance text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
         >
           More than invoicing.
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-pretty text-base leading-relaxed text-gray-300 sm:text-lg">
-          Sleek handles your company incorporation, accounting, GST filing,
-          payroll, corporate secretary, and tax — all in one platform. Start
-          with a free invoice. End with a business that runs itself.
+        <p className="mx-auto mt-4 max-w-[600px] text-pretty text-base leading-[1.7] text-white/55 sm:text-lg">
+          Start with a free invoice. Subscribe to Sleek Accounting to send invoices, track
+          payments, and get a dedicated accountant handling your tax filing, compliance, and
+          annual returns - all in one platform.
         </p>
 
         <ul
-          className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+          className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
           aria-label="Sleek services"
         >
           {tags.map((label) => (
             <li key={label}>
-              <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white sm:text-sm">
+              <span className="inline-flex rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-sm font-medium text-white/80">
                 {label}
               </span>
             </li>
@@ -43,12 +43,12 @@ export function MoreThanInvoicingSection() {
 
         <div className="mt-10">
           <a
-            href={EXPLORE_SOLUTIONS_HREF}
+            href={ACCOUNTING_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="sleek-ds-btn sleek-ds-btn--inverse sleek-ds-btn--comfortable inline-flex"
+            className="inline-flex rounded-[10px] bg-white px-8 py-3.5 text-[0.9375rem] font-bold text-[#040015] shadow-sm transition hover:bg-neutral-100"
           >
-            Explore our solutions
+            View Sleek&apos;s Pricing Plans →
           </a>
         </div>
       </div>

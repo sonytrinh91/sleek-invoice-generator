@@ -20,7 +20,6 @@ import { MoreThanInvoicingSection } from './components/MoreThanInvoicingSection.
 import { TrustedBySection } from './components/TrustedBySection.jsx'
 import { WhySleekSection } from './components/WhySleekSection.jsx'
 import { SimplicitySection } from './components/SimplicitySection.jsx'
-import { InvoiceFormatSection } from './components/InvoiceFormatSection.jsx'
 import { HowToCreateSection } from './components/HowToCreateSection.jsx'
 import { InvoiceComparisonSection } from './components/InvoiceComparisonSection.jsx'
 import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
@@ -166,13 +165,21 @@ export default function App() {
           viewport height while the form stayed taller, so fields overlapped Why Sleek / Trusted.
           Scroll lives on #sleek-invoice-app only — avoid nested overflow-y-auto (breaks sticky).
         */}
-        <div className="flex min-h-[min(750px,80dvh)] w-full flex-col bg-white">
-          <InvoiceWorkspace printRef={printRef} />
+        <div className="flex w-full flex-col border-b border-[#E9ECEF] bg-white">
+          <div className="sleek-tool-intro mx-auto w-full max-w-6xl px-6 pb-2 pt-11">
+            <h2>Create an Invoice Online in Seconds</h2>
+            <p className="mb-7 mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed text-[#6C757D]">
+              Fill in the form below and get a professional online invoice template ready to
+              download as PDF instantly - free, no account needed.
+            </p>
+          </div>
+          <div className="flex min-h-[min(750px,80dvh)] w-full flex-col">
+            <InvoiceWorkspace printRef={printRef} />
+          </div>
         </div>
         <WhySleekSection />
         <TrustedBySection />
         <SimplicitySection />
-        <InvoiceFormatSection />
         <HowToCreateSection />
         <InvoiceComparisonSection />
         <MoreThanInvoicingSection />
