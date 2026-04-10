@@ -66,6 +66,33 @@
   color: #040015;
 }
 
+/*
+ * react-to-print clones only this subtree into a new document — no #sleek-invoice-app ancestor.
+ * Mirror tokens + font so Tailwind (:is important) and fg-* utilities resolve in print preview.
+ */
+.sleek-invoice-print-root {
+  --input-value-text: #363636;
+  --text-fg: #040015;
+  --text-fg-strong: #040015;
+  --text-fg-body: #040015;
+  --text-fg-muted: #888888;
+  --text-fg-secondary: #333333;
+  --color-accent: #0f6dfa !important;
+  --color-accent-hover: #0959d3 !important;
+  --color-accent-active: #0242a2 !important;
+  isolation: isolate;
+  box-sizing: border-box;
+  font-family:
+    'Montserrat',
+    sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #040015;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
 /* Inner scroll port — flex child with min-height:0 so the shell does not grow past 100dvh. */
 #sleek-invoice-app > .sleek-app-scroll {
   box-sizing: border-box !important;
@@ -80,8 +107,8 @@
 }
 
 /*
- * WordPress / iframe shell: html/body stay loose so themes don’t clip the document.
- * Same scroll pattern as standalone: root clips; .sleek-app-scroll scrolls (sticky-safe).
+ * WordPress / iframe shell (pages build): html/body stay loose; host page scrolls the tall iframe.
+ * #sleek-invoice-app grows with content — no inner .sleek-app-scroll — so postMessage height matches full document.
  */
 html.sleek-wp-embed-root,
 body.sleek-wp-embed-body {
@@ -98,15 +125,10 @@ body.sleek-wp-embed-body {
 
 #sleek-invoice-app.sleek-wp-embed {
   min-height: 100dvh !important;
-  height: 100dvh !important;
-  max-height: 100dvh !important;
-  overflow: hidden !important;
-}
-
-#sleek-invoice-app.sleek-wp-embed > .sleek-app-scroll {
+  height: auto !important;
+  max-height: none !important;
   overflow-x: clip !important;
-  overflow-y: auto !important;
-  overscroll-behavior: contain !important;
+  overflow-y: visible !important;
 }
 
 /*
@@ -388,22 +410,70 @@ body.sleek-wp-embed-body {
  * Invoice PDF preview table: WP themes often set borders on table/td/th, which stacks with our
  * outer card border and row rules — doubled verticals and thick horizontals. One rule set, collapse model.
  */
-#sleek-invoice-app table.sleek-invoice-sheet-table {
+:is(#sleek-invoice-app, .sleek-invoice-print-root) table.sleek-invoice-sheet-table {
   border-collapse: collapse !important;
   border-spacing: 0 !important;
   border-width: 0 !important;
 }
 
-#sleek-invoice-app table.sleek-invoice-sheet-table th,
-#sleek-invoice-app table.sleek-invoice-sheet-table td {
+:is(#sleek-invoice-app, .sleek-invoice-print-root) table.sleek-invoice-sheet-table th,
+:is(#sleek-invoice-app, .sleek-invoice-print-root) table.sleek-invoice-sheet-table td {
   border-width: 0 !important;
   border-style: solid !important;
   border-bottom-width: 1px !important;
   border-bottom-color: #f5f5f5 !important;
 }
 
-#sleek-invoice-app table.sleek-invoice-sheet-table thead th {
+:is(#sleek-invoice-app, .sleek-invoice-print-root) table.sleek-invoice-sheet-table thead th {
   border-bottom-color: #e5e7eb !important;
+}
+
+/*
+ * Invoice sheet preview: themes (esp. WordPress) often use table { display: block } or strip
+ * grid/flex, which collapses columns into one run-on line. Force native table + layout models.
+ */
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table {
+  display: table !important;
+  width: 100% !important;
+  table-layout: auto !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table thead {
+  display: table-header-group !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table tbody {
+  display: table-row-group !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table tr {
+  display: table-row !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table th,
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table td {
+  display: table-cell !important;
+  vertical-align: top !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__meta {
+  display: grid !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__logo {
+  display: flex !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__total-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__table-scroll {
+  display: block !important;
+  width: 100% !important;
+  overflow-x: auto !important;
 }
 
 @theme {
@@ -771,7 +841,6 @@ body {
 @media (min-width: 1024px) {
   #sleek-invoice-app .sleek-invoice-preview-sticky {
     position: sticky !important;
-    top: 1.5rem !important;
     z-index: 10 !important;
   }
 }

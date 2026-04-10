@@ -6,10 +6,18 @@ export function initWordPressEmbed(rootEl) {
   if (!rootEl) return
 
   const measureHeight = () => {
+    const docEl = document.documentElement
+    const body = document.body
+    /* Full document height (parent iframe + host scroll). Inner .sleek-app-scroll is not used on pages build. */
+    const fromDoc = Math.max(
+      docEl.scrollHeight,
+      docEl.offsetHeight,
+      body?.scrollHeight ?? 0,
+      body?.offsetHeight ?? 0,
+    )
     const rect = rootEl.getBoundingClientRect()
-    const sh = rootEl.scrollHeight
-    /* Prefer full content height (nested scroll areas can under-report rect). */
-    return Math.ceil(Math.max(rect.height, sh))
+    const fromRoot = Math.max(rect.height, rootEl.scrollHeight, rootEl.offsetHeight)
+    return Math.ceil(Math.max(fromDoc, fromRoot))
   }
 
   const sync = () => {
@@ -43,5 +51,7 @@ export function initWordPressEmbed(rootEl) {
   ro.observe(rootEl)
 
   window.addEventListener('load', sync)
+  window.addEventListener('resize', sync)
+  window.visualViewport?.addEventListener('resize', sync)
   requestAnimationFrame(sync)
 }

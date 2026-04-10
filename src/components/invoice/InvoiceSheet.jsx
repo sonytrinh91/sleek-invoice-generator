@@ -34,12 +34,12 @@ export function InvoiceSheet({
   const cur = form.currency
 
   return (
-    <div className="text-base font-normal leading-normal text-fg antialiased">
+    <div className="invoice-sheet text-base font-normal leading-normal text-fg antialiased">
       <h3 className="mb-10 text-[1.375rem] font-semibold leading-snug tracking-tight text-fg-strong">
         Invoice
       </h3>
 
-      <div className="mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_auto] sm:gap-x-10 sm:gap-y-0">
+      <div className="invoice-sheet__meta mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_auto] sm:gap-x-10 sm:gap-y-0">
         <div className="flex flex-col gap-7">
           <MetaBlock label="Number">
             {form.invoiceNumber || '—'}
@@ -68,7 +68,7 @@ export function InvoiceSheet({
         </div>
 
         {form.logoDataUrl ? (
-          <div className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white sm:justify-self-end">
+          <div className="invoice-sheet__logo flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white sm:justify-self-end">
             <img
               src={form.logoDataUrl}
               alt=""
@@ -77,7 +77,7 @@ export function InvoiceSheet({
           </div>
         ) : (
           <div
-            className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500 sm:justify-self-end"
+            className="invoice-sheet__logo flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500 sm:justify-self-end"
             aria-hidden
           >
             <User className="size-9 stroke-[1.25]" aria-hidden />
@@ -85,8 +85,8 @@ export function InvoiceSheet({
         )}
       </div>
 
-      <div className="mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">
-        <div className="overflow-x-auto">
+      <div className="invoice-sheet__table-card mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+        <div className="invoice-sheet__table-scroll overflow-x-auto">
           <table className="sleek-invoice-sheet-table w-full border-collapse text-[14px]">
             <thead>
               <tr className="bg-neutral-100">
@@ -125,8 +125,8 @@ export function InvoiceSheet({
           </table>
         </div>
         {/* No border-t here: last table row already has a bottom rule; avoids a doubled line with themes. */}
-        <div className="space-y-1 bg-white px-4 py-3.5 text-[14px]">
-          <div className="flex items-center justify-between gap-4">
+        <div className="invoice-sheet__totals space-y-1 bg-white px-4 py-3.5 text-[14px]">
+          <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
             <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
               Subtotal
             </span>
@@ -135,7 +135,7 @@ export function InvoiceSheet({
             </span>
           </div>
           {form.taxEnabled ? (
-            <div className="flex items-center justify-between gap-4">
+            <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
               <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
                 GST
               </span>
@@ -145,7 +145,7 @@ export function InvoiceSheet({
             </div>
           ) : null}
           {t.discountAmount > 1e-9 ? (
-            <div className="flex items-center justify-between gap-4">
+            <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
               <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
                 Discount
               </span>
@@ -155,7 +155,7 @@ export function InvoiceSheet({
             </div>
           ) : null}
           {t.shippingAmount > 1e-9 ? (
-            <div className="flex items-center justify-between gap-4">
+            <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
               <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
                 Shipping
               </span>
@@ -165,7 +165,7 @@ export function InvoiceSheet({
             </div>
           ) : null}
           <div className="my-2 border-t border-neutral-200/90" />
-          <div className="flex items-center justify-between gap-4 pt-0.5">
+          <div className="invoice-sheet__total-row invoice-sheet__total-row--grand flex items-center justify-between gap-4 pt-0.5">
             <span className="text-[15px] font-bold text-fg-strong">Total</span>
             <span className="text-[15px] font-bold tabular-nums text-accent">
               {formatMoney(t.grandTotal, cur)}

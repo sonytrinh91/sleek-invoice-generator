@@ -130,7 +130,7 @@ function InvoiceWorkspace({ printRef }) {
         </section>
 
         <div className="flex w-full min-h-0 flex-col lg:col-span-5">
-          <div className="sleek-invoice-preview-sticky lg:sticky lg:top-6 lg:z-10 lg:w-full">
+          <div className="sleek-invoice-preview-sticky lg:sticky lg:top-0 lg:z-10 lg:w-full">
             <InvoicePreviewPanel
               ref={printRef}
               form={form}

@@ -21,15 +21,21 @@ if (import.meta.env.MODE === 'pages') {
   }
 }
 
+const pagesBuild = import.meta.env.MODE === 'pages'
+
 createRoot(rootEl).render(
   <StrictMode>
     {/*
-      Scroll lives on .sleek-app-scroll, not #sleek-invoice-app.
-      Sticky (invoice preview) is unreliable when the scroll container is also display:flex (WebKit / embeds).
+      Standalone / default build: scroll on .sleek-app-scroll so sticky works (flex + scroll on #sleek-invoice-app breaks WebKit).
+      Pages / WP embed: render App directly so #sleek-invoice-app grows with content; wpEmbed postMessage resizes the iframe and the *parent* page scrolls.
     */}
-    <div className="sleek-app-scroll min-h-0 w-full min-w-0 flex-1 overflow-x-clip overflow-y-auto overscroll-contain">
+    {pagesBuild ? (
       <App />
-    </div>
+    ) : (
+      <div className="sleek-app-scroll min-h-0 w-full min-w-0 flex-1 overflow-x-clip overflow-y-auto overscroll-contain">
+        <App />
+      </div>
+    )}
   </StrictMode>,
 )
 
