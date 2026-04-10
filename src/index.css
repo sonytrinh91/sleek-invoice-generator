@@ -746,10 +746,26 @@ body {
   background-color: #f9fafb !important;
 }
 
-/* Two-column layout: grid + align-items:start so the preview column can use position:sticky. */
+/* Two-column layout: stack on small screens; lg stretch so the preview column matches form row height
+   (required for position:sticky until the form ends). */
 #sleek-invoice-app .sleek-workspace-columns {
   display: grid !important;
   align-items: start !important;
+}
+
+@media (min-width: 1024px) {
+  #sleek-invoice-app .sleek-workspace-columns {
+    align-items: stretch !important;
+  }
+}
+
+/* WP themes often reset nested divs; keep preview pinned on large screens. */
+@media (min-width: 1024px) {
+  #sleek-invoice-app .sleek-invoice-preview-sticky {
+    position: sticky !important;
+    top: 1.5rem !important;
+    z-index: 10 !important;
+  }
 }
 
 #sleek-invoice-app .invoice-form-panel,
@@ -782,6 +798,12 @@ body {
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
+  }
+
+  #sleek-invoice-app .sleek-invoice-preview-sticky {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
   }
 
   #sleek-invoice-app .invoice-form-panel,

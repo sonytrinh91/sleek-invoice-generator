@@ -89,14 +89,14 @@ function InvoiceWorkspace({ printRef }) {
   return (
     <div className="flex w-full flex-col">
       {/*
-        Grid + items-start: preview column does not stretch to row height (required for sticky).
+        lg:items-stretch: preview column matches the form row height so sticky ends when the form ends.
         Do not use flex-1 here — it caps height to the viewport and makes the form paint over sections below.
-        Scroll container is #sleek-invoice-app (see index.css); preview uses lg:sticky lg:top-6.
+        Scroll container is #sleek-invoice-app (see index.css); preview uses lg:sticky.
       */}
-      <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:gap-x-0 lg:gap-y-0">
+      <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:items-stretch lg:gap-x-0 lg:gap-y-0">
         <section
           aria-label="Invoice form"
-          className="invoice-form-panel w-full border-gray-200 px-0 py-6 lg:col-span-7 lg:border-r lg:pr-8"
+          className="invoice-form-panel w-full border-gray-200 px-0 py-6 lg:col-span-7 lg:border-r lg:pr-8 lg:pb-24"
         >
           <form
             noValidate
@@ -114,6 +114,7 @@ function InvoiceWorkspace({ printRef }) {
               <SubtotalSection />
               <BankDetailsSection />
               <button
+                id='download-invoice-pdf-button'
                 type="button"
                 disabled={!canDownload}
                 onClick={() => handlePrint()}
@@ -128,8 +129,8 @@ function InvoiceWorkspace({ printRef }) {
           </form>
         </section>
 
-        <div className="w-full self-start lg:col-span-5">
-          <div className="lg:sticky lg:top-6 lg:z-10">
+        <div className="flex w-full min-h-0 flex-col lg:col-span-5">
+          <div className="sleek-invoice-preview-sticky lg:sticky lg:top-6 lg:z-10 lg:w-full">
             <InvoicePreviewPanel
               ref={printRef}
               form={form}
@@ -159,34 +160,29 @@ export default function App() {
   return (
     <FormProvider {...methods}>
       <div className="flex w-full flex-col bg-white font-sans text-neutral-800">
-        <HeroSection />
-        {/*
-          No flex-1 on this wrapper: flex-1 + min-h-0 on ancestors was shrinking the workspace to
-          viewport height while the form stayed taller, so fields overlapped Why Sleek / Trusted.
-          Scroll lives on #sleek-invoice-app only — avoid nested overflow-y-auto (breaks sticky).
-        */}
+        {/* <HeroSection /> */}
         <div className="flex w-full flex-col border-b border-[#E9ECEF] bg-white">
-          <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
+          {/* <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
             <h2>Create an Invoice Online in Seconds</h2>
             <p className="mb-7 mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed text-[#6C757D]">
               Fill in the form below and get a professional online invoice template ready to
               download as PDF instantly - free, no account needed.
             </p>
-          </div>
+          </div> */}
           <div className="flex min-h-[min(750px,80dvh)] w-full flex-col">
             <div className="sleek-page-container">
               <InvoiceWorkspace printRef={printRef} />
             </div>
           </div>
         </div>
-        <WhySleekSection />
+        {/* <WhySleekSection />
         <TrustedBySection />
         <SimplicitySection />
         <HowToCreateSection />
         <InvoiceComparisonSection />
         <MoreThanInvoicingSection />
         <FaqSection />
-        <ReadyToGoSection />
+        <ReadyToGoSection /> */}
       </div>
     </FormProvider>
   )
