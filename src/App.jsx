@@ -91,7 +91,7 @@ function InvoiceWorkspace({ printRef }) {
       {/*
         lg:items-stretch: preview column matches the form row height so sticky ends when the form ends.
         Do not use flex-1 here — it caps height to the viewport and makes the form paint over sections below.
-        Scroll container is #sleek-invoice-app (see index.css); preview uses lg:sticky.
+        Scroll container is .sleek-app-scroll (main.jsx + index.css); preview uses lg:sticky.
       */}
       <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:items-stretch lg:gap-x-0 lg:gap-y-0">
         <section
@@ -130,7 +130,7 @@ function InvoiceWorkspace({ printRef }) {
         </section>
 
         <div className="flex w-full min-h-0 flex-col lg:col-span-5">
-          <div className="sleek-invoice-preview-sticky lg:sticky lg:top-0 lg:z-10 lg:w-full">
+          <div className="sleek-invoice-preview-sticky lg:sticky lg:top-6 lg:z-10 lg:w-full">
             <InvoicePreviewPanel
               ref={printRef}
               form={form}

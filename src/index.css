@@ -46,8 +46,8 @@
   --color-accent-active: #0242a2 !important;
   isolation: isolate;
   /*
-   * Standalone: viewport-locked shell + overflow-y auto (single scroll). WordPress overrides
-   * via .sleek-wp-embed so the host page scrolls and the full page height is visible.
+   * Outer shell: flex + overflow hidden. Scrolling is on > .sleek-app-scroll so position:sticky works
+   * (flex + overflow-y on the same node breaks sticky in WebKit and many embeds).
    */
   box-sizing: border-box;
   display: flex;
@@ -55,9 +55,7 @@
   min-height: 100dvh;
   height: 100dvh;
   max-height: 100dvh;
-  overflow-x: clip;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  overflow: hidden;
   font-synthesis: none;
   font-family:
     'Montserrat',
@@ -68,9 +66,22 @@
   color: #040015;
 }
 
+/* Inner scroll port — flex child with min-height:0 so the shell does not grow past 100dvh. */
+#sleek-invoice-app > .sleek-app-scroll {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
 /*
- * WordPress embed: full natural height; no inner scroll trap; !important beats theme + block CSS.
- * html/body classes are set in main.jsx (pages build / iframe shell only).
+ * WordPress / iframe shell: html/body stay loose so themes don’t clip the document.
+ * Same scroll pattern as standalone: root clips; .sleek-app-scroll scrolls (sticky-safe).
  */
 html.sleek-wp-embed-root,
 body.sleek-wp-embed-body {
@@ -86,19 +97,16 @@ body.sleek-wp-embed-body {
 }
 
 #sleek-invoice-app.sleek-wp-embed {
-  /* Fit host / iframe height to content (no forced viewport min). */
-  min-height: 0 !important;
-  height: auto !important;
-  max-height: none !important;
-  overflow-x: clip !important;
-  overflow-y: visible !important;
-  overscroll-behavior: auto !important;
+  min-height: 100dvh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  overflow: hidden !important;
 }
 
-/* Embed: drop viewport-capped preview scroll so total height matches full page (WP / iframe resize). */
-#sleek-invoice-app.sleek-wp-embed .invoice-preview-panel {
-  max-height: none !important;
-  overflow-y: visible !important;
+#sleek-invoice-app.sleek-wp-embed > .sleek-app-scroll {
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
 }
 
 /*
@@ -763,6 +771,7 @@ body {
 @media (min-width: 1024px) {
   #sleek-invoice-app .sleek-invoice-preview-sticky {
     position: sticky !important;
+    top: 1.5rem !important;
     z-index: 10 !important;
   }
 }
@@ -790,6 +799,14 @@ body {
     max-height: none !important;
     overflow: visible !important;
     overscroll-behavior: auto !important;
+  }
+
+  #sleek-invoice-app > .sleek-app-scroll {
+    flex: none !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   #sleek-invoice-app .sleek-workspace-columns {
