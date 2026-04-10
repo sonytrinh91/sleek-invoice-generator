@@ -9,11 +9,11 @@ export function ReadyToGoSection() {
       <div className="sleek-page-container flex flex-col items-center text-center">
         <h2
           id="ready-to-go-heading"
-          className="mb-3 text-balance text-2xl font-extrabold tracking-tight text-[#040015] sm:text-3xl"
+          className="!mb-3 text-balance text-2xl font-extrabold tracking-tight text-[#040015] sm:text-3xl"
         >
           Start free. Scale with Sleek Accounting.
         </h2>
-        <p className="mx-auto mb-8 max-w-[520px] text-pretty text-[0.9375rem] leading-[1.7] text-[#6C757D]">
+        <p className="mx-auto mb-8 max-w-[520px] text-pretty text-[0.9375rem] leading-[1.7]">
           Download your first invoice free today. When you&apos;re ready for invoice history,
           email sending, payment tracking, and a dedicated accountant, Sleek Accounting is one
           step away.

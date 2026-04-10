@@ -33,13 +33,33 @@ export function InvoiceSheet({
   }
   const cur = form.currency
 
+  const logoBlock = form.logoDataUrl ? (
+    <div className="invoice-sheet__logo flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white">
+      <img
+        src={form.logoDataUrl}
+        alt=""
+        className="max-h-[72px] max-w-[72px] object-contain"
+      />
+    </div>
+  ) : (
+    <div
+      className="invoice-sheet__logo flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500"
+      aria-hidden
+    >
+      <User className="size-9 stroke-[1.25]" aria-hidden />
+    </div>
+  )
+
   return (
     <div className="invoice-sheet text-base font-normal leading-normal text-fg antialiased">
-      <h3 className="mb-10 text-[1.375rem] font-semibold leading-snug tracking-tight text-fg-strong">
-        Invoice
-      </h3>
+      <div className="invoice-sheet__header mb-10 flex items-start justify-between gap-4">
+        <h3 className="min-w-0 flex-1 text-[1.375rem] font-semibold leading-snug tracking-tight text-fg-strong">
+          Invoice
+        </h3>
+        {logoBlock}
+      </div>
 
-      <div className="invoice-sheet__meta mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_auto] sm:gap-x-10 sm:gap-y-0">
+      <div className="invoice-sheet__meta mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-x-10 sm:gap-y-0">
         <div className="flex flex-col gap-7">
           <MetaBlock label="Number">
             {form.invoiceNumber || '—'}
@@ -66,23 +86,6 @@ export function InvoiceSheet({
             </div>
           ) : null}
         </div>
-
-        {form.logoDataUrl ? (
-          <div className="invoice-sheet__logo flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg border border-neutral-200 bg-white sm:justify-self-end">
-            <img
-              src={form.logoDataUrl}
-              alt=""
-              className="max-h-[72px] max-w-[72px] object-contain"
-            />
-          </div>
-        ) : (
-          <div
-            className="invoice-sheet__logo flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-neutral-200 to-neutral-300 text-neutral-500 sm:justify-self-end"
-            aria-hidden
-          >
-            <User className="size-9 stroke-[1.25]" aria-hidden />
-          </div>
-        )}
       </div>
 
       <div className="invoice-sheet__table-card mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">

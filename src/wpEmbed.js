@@ -1,27 +1,19 @@
 /**
- * Iframe / parent page: resize the host iframe when possible and postMessage height
- * so the full app is visible (GitHub Pages, WordPress, etc.).
+ * Iframe / parent page: set the host iframe height to the embed viewport (postMessage + frameElement).
+ * Scrolling stays inside `.sleek-app-scroll` so `position:sticky` on the invoice preview works.
+ * (Sizing the iframe to full document height moves scroll to the parent and breaks sticky.)
  */
 export function initWordPressEmbed(rootEl) {
   if (!rootEl) return
 
-  const measureHeight = () => {
-    const docEl = document.documentElement
-    const body = document.body
-    /* Full document height (parent iframe + host scroll). Inner .sleek-app-scroll is not used on pages build. */
-    const fromDoc = Math.max(
-      docEl.scrollHeight,
-      docEl.offsetHeight,
-      body?.scrollHeight ?? 0,
-      body?.offsetHeight ?? 0,
-    )
-    const rect = rootEl.getBoundingClientRect()
-    const fromRoot = Math.max(rect.height, rootEl.scrollHeight, rootEl.offsetHeight)
-    return Math.ceil(Math.max(fromDoc, fromRoot))
+  const measureFrameHeight = () => {
+    const vv = window.visualViewport
+    const h = vv?.height ?? window.innerHeight
+    return Math.ceil(Math.max(1, h))
   }
 
   const sync = () => {
-    const h = measureHeight()
+    const h = measureFrameHeight()
     if (h <= 0) return
 
     try {

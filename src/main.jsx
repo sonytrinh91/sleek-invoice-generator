@@ -21,21 +21,15 @@ if (import.meta.env.MODE === 'pages') {
   }
 }
 
-const pagesBuild = import.meta.env.MODE === 'pages'
-
 createRoot(rootEl).render(
   <StrictMode>
     {/*
-      Standalone / default build: scroll on .sleek-app-scroll so sticky works (flex + scroll on #sleek-invoice-app breaks WebKit).
-      Pages / WP embed: render App directly so #sleek-invoice-app grows with content; wpEmbed postMessage resizes the iframe and the *parent* page scrolls.
+      Scroll on .sleek-app-scroll (not on #sleek-invoice-app) so position:sticky works in WebKit and WP iframe embeds.
+      wpEmbed sizes the iframe to the viewport; this layer is the scrollport inside it.
     */}
-    {pagesBuild ? (
+    <div className="sleek-app-scroll min-h-0 w-full min-w-0 flex-1 overflow-x-clip overflow-y-auto overscroll-contain">
       <App />
-    ) : (
-      <div className="sleek-app-scroll min-h-0 w-full min-w-0 flex-1 overflow-x-clip overflow-y-auto overscroll-contain">
-        <App />
-      </div>
-    )}
+    </div>
   </StrictMode>,
 )
 

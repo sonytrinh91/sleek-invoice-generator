@@ -13,13 +13,13 @@ export function HeroSection() {
         <h1 className="text-balance text-[#040015] sm:max-w-none">
           Free Invoice Generator by Sleek
         </h1>
-        <p className="mx-auto max-w-[540px] text-pretty text-base leading-[1.7] text-[#6C757D]">
+        <p className="mx-auto max-w-[540px] text-pretty text-base leading-[1.7] ">
           Create a professional Singapore invoice or bill clients worldwide in under 2
           minutes. Sleek&apos;s free invoice software auto-calculates totals, supports
           10+ countries, and downloads as PDF instantly - no signup needed.
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 pt-2 text-sm font-medium text-[#6C757D] sm:gap-x-8 sm:pt-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 pt-2 text-sm font-medium  sm:gap-x-8 sm:pt-4">
           <div className="flex items-center gap-1.5">
             <span
               className="size-2 shrink-0 rounded-full bg-[#00C853]"

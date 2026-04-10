@@ -35,7 +35,7 @@ export function HowToCreateSection() {
           >
             How to create an invoice online
           </h2>
-          <p className="mt-2.5 text-pretty text-[0.9375rem] leading-relaxed text-[#6C757D]">
+          <p className="mt-2.5 text-pretty text-[0.9375rem] leading-relaxed ">
             Create and send a professional invoice in under 2 minutes using Sleek&apos;s free
             invoice generator - the easiest free invoice software and online invoice template
             for small businesses and freelancers.
@@ -55,7 +55,7 @@ export function HowToCreateSection() {
               </span>
               <div className="min-w-0 pt-0.5">
                 <h3>{step.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#6C757D] sm:text-[0.9375rem]">
+                <p className="mt-1.5 text-sm leading-relaxed  sm:text-[0.9375rem]">
                   {step.body}
                 </p>
               </div>

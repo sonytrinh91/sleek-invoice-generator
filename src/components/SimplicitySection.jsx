@@ -95,7 +95,7 @@ export function SimplicitySection() {
                       <p
                         className={clsx(
                           'px-5 pb-4 pl-[62px] text-sm leading-relaxed',
-                          isStripe ? 'text-white/85' : 'text-[#6C757D]',
+                          isStripe ? 'text-white/85' : '',
                         )}
                       >
                         {item.body}
@@ -118,15 +118,15 @@ export function SimplicitySection() {
                 INVOICE
               </div>
               <div className="border border-t-0 border-[#E9ECEF] px-4 pb-4 pt-4">
-                <div className="mb-2.5 flex justify-between text-xs text-[#6C757D]">
+                <div className="mb-2.5 flex justify-between text-xs ">
                   <span>Consulting Services</span>
                   <span className="font-bold text-[#040015]">$1,000</span>
                 </div>
-                <div className="mb-2.5 flex justify-between text-xs text-[#6C757D]">
+                <div className="mb-2.5 flex justify-between text-xs ">
                   <span>Design Work</span>
                   <span className="font-bold text-[#040015]">$500</span>
                 </div>
-                <div className="mb-2.5 flex justify-between border-t border-[#F1F3F5] pt-2 text-xs text-[#6C757D]">
+                <div className="mb-2.5 flex justify-between border-t border-[#F1F3F5] pt-2 text-xs ">
                   <span>Tax</span>
                   <span className="font-bold text-[#040015]">$135</span>
                 </div>
@@ -134,7 +134,7 @@ export function SimplicitySection() {
                   <span>Total</span>
                   <span>$1,635</span>
                 </div>
-                <div className="mt-3 rounded-lg border border-[#E9ECEF] bg-[#F8F9FA] px-2 py-2 text-center text-xs font-semibold text-[#6C757D]">
+                <div className="mt-3 rounded-lg border border-[#E9ECEF] bg-[#F8F9FA] px-2 py-2 text-center text-xs font-semibold ">
                   Bank transfer details included
                 </div>
               </div>

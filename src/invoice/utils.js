@@ -51,7 +51,7 @@ export function initialForm() {
     currency: 'SGD',
     items: [newLineItem()],
     notes: '',
-    taxEnabled: true,
+    taxEnabled: false,
     taxRate: '9',
     taxIsPercent: true,
     discountExpanded: false,

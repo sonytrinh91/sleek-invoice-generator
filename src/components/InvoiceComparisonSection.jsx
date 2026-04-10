@@ -1,3 +1,6 @@
+const LOGO_SRC =
+  'https://sleek.com/sg/wp-content/uploads/sites/3/2022/06/Sleek-Logo-01-ORIGINAL.png'
+
 const columns = [
   'Feature',
   'Sleek Free Invoice Generator',
@@ -44,20 +47,32 @@ const rows = [
   },
 ]
 
-function DataCell({ cell, highlight }) {
-  const base =
-    'border-b border-[#F1F3F5] px-5 py-3 text-center text-sm text-[#495057]'
-  const hl = `${base} bg-[#F0F5FF] font-semibold text-[#040015]`
-
+function ComparisonCell({ cell, highlight }) {
   if (cell.type === 'check') {
     return (
-      <td className={highlight ? hl : base}>
-        <span className="font-bold text-[#00C853]">✓</span>
+      <td
+        className={
+          highlight
+            ? 'comparison-cell comparison-cell--highlight'
+            : 'comparison-cell'
+        }
+      >
+        <span className="comparison-check" aria-hidden>
+          &#10004;
+        </span>
       </td>
     )
   }
   return (
-    <td className={`${base} text-[#DEE2E6]`}>{cell.text}</td>
+    <td
+      className={
+        highlight
+          ? 'comparison-cell comparison-cell--muted comparison-cell--highlight'
+          : 'comparison-cell comparison-cell--muted'
+      }
+    >
+      {cell.text}
+    </td>
   )
 }
 
@@ -75,45 +90,55 @@ export function InvoiceComparisonSection() {
           >
             Free invoice generator vs Excel vs Word
           </h2>
-          <p className="mt-2.5 text-pretty text-[0.9375rem] leading-relaxed text-[#6C757D]">
+          <p className="mt-2.5 text-pretty text-[0.9375rem] leading-relaxed text-gray-500">
             Why businesses switch from Excel and Word to Sleek&apos;s free invoice software -
             the faster, smarter online invoice template.
           </p>
         </div>
-        <div className="mt-10 overflow-x-auto">
-          <table className="w-full min-w-[640px] border-collapse text-left">
-            <thead>
-              <tr>
-                <th className="rounded-tl-xl bg-[#1A2E5A] px-5 py-3.5 text-sm font-bold text-white">
-                  {columns[0]}
-                </th>
-                <th className="bg-[#0F6DFA] px-5 py-3.5 text-center text-sm font-bold text-white">
-                  {columns[1]}
-                </th>
-                <th className="bg-[#1A2E5A] px-5 py-3.5 text-center text-sm font-bold text-white">
-                  {columns[2]}
-                </th>
-                <th className="rounded-tr-xl bg-[#1A2E5A] px-5 py-3.5 text-center text-sm font-bold text-white">
-                  {columns[3]}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.feature} className="last:[&>th]:border-b-0 last:[&>td]:border-b-0">
-                  <th
-                    scope="row"
-                    className="border-b border-[#F1F3F5] px-5 py-3 text-left text-sm font-normal text-[#495057]"
-                  >
-                    {row.feature}
+        <div className="comparison-table-wrapper">
+          <div className="comparison-table comparison-table--framed">
+            <table>
+              <thead>
+                <tr className="logo-row">
+                  <th aria-hidden />
+                  <th>
+                    <img
+                      src={LOGO_SRC}
+                      alt="Sleek"
+                      className="header-logo"
+                      width={120}
+                      height={40}
+                    />
                   </th>
-                  <DataCell cell={row.sleek} highlight />
-                  <DataCell cell={row.excel} highlight={false} />
-                  <DataCell cell={row.other} highlight={false} />
+                  <th aria-hidden />
+                  <th aria-hidden />
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                <tr className="comparison-header-titles">
+                  <th scope="col">{columns[0]}</th>
+                  <th scope="col">{columns[1]}</th>
+                  <th scope="col">{columns[2]}</th>
+                  <th scope="col">{columns[3]}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr
+                    key={row.feature}
+                    className={
+                      i === rows.length - 1 ? 'last-row' : undefined
+                    }
+                  >
+                    <th scope="row" className="comparison-feature">
+                      <strong>{row.feature}</strong>
+                    </th>
+                    <ComparisonCell cell={row.sleek} highlight />
+                    <ComparisonCell cell={row.excel} highlight={false} />
+                    <ComparisonCell cell={row.other} highlight={false} />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>

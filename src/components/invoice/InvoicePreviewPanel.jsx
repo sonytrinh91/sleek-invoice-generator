@@ -10,7 +10,7 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
     <aside
       aria-label="Invoice preview"
       className={clsx(
-        'invoice-preview-panel flex min-h-0 min-w-0 flex-col overflow-y-auto bg-transparent px-0 py-4 sm:py-5 lg:pl-6',
+        'invoice-preview-panel flex min-h-0 min-w-0 flex-col overflow-y-auto bg-transparent px-0 pb-4 lg:pl-6',
         className,
       )}
     >
