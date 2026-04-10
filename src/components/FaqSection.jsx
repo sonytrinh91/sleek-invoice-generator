@@ -130,7 +130,7 @@ export function FaqSection() {
         <div className="flex flex-col gap-2.5">
           {faqsMain.map((item, index) => renderItem(item, index, 'main'))}
 
-          <p className="mb-3 mt-7 text-xs font-bold uppercase tracking-[0.06em] text-[#ADB5BD]">
+          <p className="mb-3 mt-7 text-sm font-semibold tracking-wide text-[#ADB5BD]">
             More about Sleek invoicing
           </p>
 

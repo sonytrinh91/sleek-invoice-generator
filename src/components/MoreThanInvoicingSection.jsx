@@ -46,7 +46,7 @@ export function MoreThanInvoicingSection() {
             href={ACCOUNTING_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex rounded-[10px] bg-white px-8 py-3.5 text-[0.9375rem] font-bold text-[#040015] shadow-sm transition hover:bg-neutral-100"
+            className="inline-flex rounded-[10px] bg-white px-8 py-3.5 text-xl font-semibold leading-snug text-[#040015] shadow-sm transition hover:bg-neutral-100"
           >
             View Sleek&apos;s Pricing Plans →
           </a>

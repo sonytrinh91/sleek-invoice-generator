@@ -70,9 +70,11 @@
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
+  font-family: inherit !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
+  font-size: 1.25rem !important;
+  line-height: 1.4 !important;
+  text-transform: none !important;
   border-radius: 0.5rem !important;
   text-decoration: none !important;
   transition:
@@ -213,11 +215,12 @@
 /* Size helper for marketing CTAs */
 #sleek-invoice-app a.sleek-ds-btn--comfortable,
 #sleek-invoice-app button.sleek-ds-btn--comfortable {
-  min-height: 2.75rem !important;
-  padding: 0.75rem 1.5rem !important;
+  min-height: 3rem !important;
+  padding: 0.875rem 1.5rem !important;
 }
 
 #sleek-invoice-app a.sleek-ds-btn--comfortable-lg,
 #sleek-invoice-app button.sleek-ds-btn--comfortable-lg {
-  padding: 0.875rem 1.5rem !important;
+  padding: 1rem 1.5rem !important;
+  min-height: 3rem !important;
 }

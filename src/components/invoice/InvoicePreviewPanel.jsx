@@ -15,8 +15,8 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
       )}
     >
       <div className="w-full">
-        <h2 className="mb-2 text-sm font-semibold text-gray-900">
-          Invoice Preview
+        <h2 className="mb-2 font-semibold text-[#040015]">
+          Invoice preview
         </h2>
         {/* Screen-only scale keeps the sheet readable without eating the viewport; print stays full size. */}
         <div className="flex justify-center print:block print:scale-100">

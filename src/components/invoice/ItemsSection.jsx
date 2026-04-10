@@ -29,7 +29,7 @@ export function ItemsSection() {
 
   return (
     <section className="border border-gray-100 bg-white p-6">
-      <h2 className="mb-3 text-base font-semibold text-gray-900">Items</h2>
+      <h2 className="mb-3 text-lg font-semibold text-[#040015]">Items</h2>
 
       <div className="sleek-items-stack flex flex-col gap-4">
         {fields.map((field, index) => (

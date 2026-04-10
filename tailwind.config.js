@@ -5,6 +5,12 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          'Montserrat',
+          'sans-serif',
+        ],
+      },
       /* Keep in sync with src/design-system.css (--ds-primary, --ds-highlight, …). */
       colors: {
         ds: {

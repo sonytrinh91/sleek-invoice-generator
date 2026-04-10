@@ -38,12 +38,12 @@ const cards = [
 export function WhySleekSection() {
   return (
     <section
-      className="sleek-why-sleek shrink-0 border-t border-[#E9ECEF] bg-[#F8F9FA] py-20 sm:py-20"
+      className="sleek-why-sleek shrink-0 bg-[#F8F9FA] py-20 sm:py-20"
       aria-labelledby="why-sleek-heading"
     >
       <div className="sleek-page-container text-center">
-        <p className="mb-4 inline-flex items-center rounded-full bg-[#EBF2FF] px-3 py-1 text-[0.6875rem] font-bold uppercase tracking-[0.04em] text-[#0F6DFA]">
-          Why sleek
+        <p className="mb-4 inline-flex items-center rounded-full bg-[#EBF2FF] px-3 py-1 text-sm font-semibold tracking-wide text-[#0F6DFA]">
+          Why Sleek
         </p>
         <h2
           id="why-sleek-heading"
@@ -52,26 +52,29 @@ export function WhySleekSection() {
           Why thousands of businesses use Sleek&apos;s free invoice generator
         </h2>
 
-        <div className="mt-10 grid gap-6 text-center sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {cards.map((card) => {
             const Icon = card.icon
             return (
               <article
                 key={card.key}
-                className="flex flex-col items-center rounded-2xl border border-[#E9ECEF] bg-white p-7 text-center shadow-[0_2px_12px_rgba(4,0,21,0.04)]"
+                className="flex h-full flex-col items-start rounded-2xl border border-[#E9ECEF] bg-white p-7 text-left shadow-[0_2px_12px_rgba(4,0,21,0.04)]"
               >
                 <div
-                  className={`mb-5 flex size-14 items-center justify-center rounded-2xl ${card.iconWrapClass}`}
+                  className={`mb-5 flex size-14 shrink-0 items-center justify-center rounded-2xl ${card.iconWrapClass}`}
                 >
                   <Icon className="size-7 shrink-0" strokeWidth={1.75} aria-hidden />
                 </div>
                 <p
-                  className={`mb-3 inline-flex rounded-full px-3 py-0.5 text-[0.6875rem] font-bold ${card.badgeClass}`}
+                  className={`mb-3 inline-flex shrink-0 rounded-full px-3 py-0.5 text-[0.6875rem] font-bold ${card.badgeClass}`}
                 >
                   {card.badge}
                 </p>
-                <h3 className="mb-2">{card.title}</h3>
-                <p className="flex-1 text-sm leading-relaxed text-[#6C757D]">
+                {/* Two-line min-height keeps description baselines aligned across cards */}
+                <h3 className="mb-3 min-h-14 max-w-full text-pretty">
+                  {card.title}
+                </h3>
+                <p className="max-w-full flex-1 text-sm font-normal leading-relaxed text-[#495057]">
                   {card.description}
                 </p>
               </article>

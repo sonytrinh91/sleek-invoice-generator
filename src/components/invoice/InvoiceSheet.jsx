@@ -34,8 +34,8 @@ export function InvoiceSheet({
   const cur = form.currency
 
   return (
-    <div className="text-[15px] leading-relaxed text-fg antialiased">
-      <h3 className="mb-10 text-[28px] font-bold leading-tight tracking-tight text-fg-strong">
+    <div className="text-base font-normal leading-normal text-fg antialiased">
+      <h3 className="mb-10 text-[1.375rem] font-semibold leading-snug tracking-tight text-fg-strong">
         Invoice
       </h3>
 
@@ -176,7 +176,7 @@ export function InvoiceSheet({
 
       {form.notes.trim() ? (
         <div className="mb-10">
-          <h4 className="mb-3 text-[15px] font-bold text-fg-strong">Notes</h4>
+          <h4 className="mb-3 text-[1.0625rem] font-semibold text-fg-strong">Notes</h4>
           <p className="whitespace-pre-line text-[14px] leading-relaxed text-fg-secondary">
             {form.notes}
           </p>
@@ -185,7 +185,7 @@ export function InvoiceSheet({
 
       {form.bankDetailsText.trim() ? (
         <div className="mt-2">
-          <h4 className="mb-3 text-[15px] font-bold text-fg-strong">
+          <h4 className="mb-3 text-[1.0625rem] font-semibold text-fg-strong">
             Bank details
           </h4>
           <div className="space-y-1.5 text-[14px] leading-relaxed text-fg-secondary">

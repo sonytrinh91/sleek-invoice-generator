@@ -16,7 +16,7 @@ export function AddressSection() {
 
   return (
     <Card>
-      <h2 className="mb-3 text-base font-semibold text-gray-900">
+      <h2 className="mb-3 text-lg font-semibold text-[#040015]">
         Address (optional)
       </h2>
 

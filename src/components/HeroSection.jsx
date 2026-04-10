@@ -7,8 +7,8 @@ export function HeroSection() {
       role="banner"
     >
       <div className="sleek-page-container space-y-3 sm:space-y-4">
-        <p className="inline-flex items-center rounded-full bg-[#EBF2FF] px-3.5 py-1 text-[0.75rem] font-bold uppercase tracking-[0.04em] text-[#0F6DFA]">
-          100% free - no account required to download
+        <p className="inline-flex items-center rounded-full bg-[#EBF2FF] px-3.5 py-1 text-sm font-semibold tracking-wide text-[#0F6DFA]">
+          100% free — no account required to download
         </p>
         <h1 className="text-balance text-[#040015] sm:max-w-none">
           Free Invoice Generator by Sleek
