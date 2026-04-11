@@ -39,12 +39,12 @@ export function ItemsSection() {
           >
             <OutlinedInput
               id={`item-desc-${field.id}`}
-              label="Product or service name"
+              label="Service name"
               className="min-w-[10rem] flex-1"
               error={itemErrors(index)?.description?.message}
               {...register(`items.${index}.description`)}
             />
-            <div className="w-16 shrink-0 sm:w-20">
+            <div className="w-16 shrink-0 sm:w-16">
               <OutlinedInput
                 id={`item-qty-${field.id}`}
                 label="Qty"
@@ -74,7 +74,7 @@ export function ItemsSection() {
                 {...register(`items.${index}.unitPrice`)}
               />
             </div>
-            <div className="min-w-[5.5rem] shrink-0 text-right">
+            <div className="min-w-[4rem] shrink-0 text-right">
               <span className="mb-1 block text-xs text-gray-500">Amount</span>
               <span className="flex min-h-9 items-center justify-end text-sm font-medium tabular-nums text-gray-900">
                 {formatMoney(lineAmounts[index] ?? 0, currency)}

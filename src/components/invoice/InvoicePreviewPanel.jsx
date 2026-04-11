@@ -23,7 +23,7 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
           <div className="origin-top print:scale-100">
             <div
               ref={ref}
-              className="sleek-invoice-print-root w-[min(100%,28rem)] rounded border border-neutral-200/90 bg-white p-5 shadow-sm print:w-auto print:border-0 print:p-8 print:shadow-none sm:p-6 md:p-7"
+              className="sleek-invoice-print-root rounded border border-neutral-200/90 bg-white p-5 shadow-sm print:w-auto print:border-0 print:p-8 print:shadow-none sm:p-6 md:p-7"
             >
               <InvoiceSheet
                 form={form}

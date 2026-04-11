@@ -92,7 +92,7 @@ function InvoiceWorkspace({ printRef }) {
       <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:items-stretch lg:gap-x-0 lg:gap-y-0">
         <section
           aria-label="Invoice form"
-          className="invoice-form-panel w-full border-gray-200 px-0 lg:col-span-7 lg:pr-4 pb-4"
+          className="invoice-form-panel w-full border-gray-200 px-0 lg:col-span-6 lg:pr-4 pb-4"
         >
           <form
             noValidate
@@ -130,7 +130,7 @@ function InvoiceWorkspace({ printRef }) {
           </form>
         </section>
 
-        <div className="flex w-full min-h-0 flex-col lg:col-span-5">
+        <div className="flex w-full min-h-0 flex-col lg:col-span-6">
           <div className="sleek-invoice-preview-sticky w-full">
             <InvoicePreviewPanel
               ref={printRef}
