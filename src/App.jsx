@@ -26,6 +26,7 @@ import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
+import { fireHostEvent } from './invoice/hostFireEvent.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
 import {
   computeDueDate,
@@ -113,8 +114,8 @@ function InvoiceWorkspace({ printRef }) {
                 type="button"
                 disabled={!canDownload}
                 onClick={() => {
-                  if (canDownload && typeof window.fireEvent === 'function') {
-                    window.fireEvent('SG_CTA_Tool_Invoice_Generator_Active_Download_1')
+                  if (canDownload) {
+                    fireHostEvent('SG_CTA_Tool_Invoice_Generator_Active_Download_1')
                   }
                   handlePrint()
                 }}
