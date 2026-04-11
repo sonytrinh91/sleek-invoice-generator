@@ -112,7 +112,12 @@ function InvoiceWorkspace({ printRef }) {
                 id='download-invoice-pdf-button'
                 type="button"
                 disabled={!canDownload}
-                onClick={() => handlePrint()}
+                onClick={() => {
+                  if (canDownload && typeof window.fireEvent === 'function') {
+                    window.fireEvent('SG_CTA_Tool_Invoice_Generator_Active_Download_1')
+                  }
+                  handlePrint()
+                }}
                 className={clsx(
                   'sleek-download-btn sleek-ds-btn sleek-ds-btn--primary w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition',
                   'disabled:cursor-not-allowed disabled:opacity-45',

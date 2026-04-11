@@ -11,28 +11,6 @@
       rel="stylesheet"
     />
     <title>Sleek — Create Invoice</title>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        document.addEventListener('click', function (e) {
-          const btn = e.target.closest('#download-invoice-pdf-button')
-          if (!btn) return
-
-          const isDisabled =
-            btn.disabled === true ||
-            btn.hasAttribute('disabled') ||
-            btn.getAttribute('aria-disabled') === 'true' ||
-            window.getComputedStyle(btn).pointerEvents === 'none'
-
-          if (
-            !isDisabled &&
-            typeof fireEvent === 'function'
-          ) {
-            alert('fireEvent')
-            fireEvent('SG_CTA_Tool_Invoice_Generator_Active_Download_1')
-          }
-        })
-      })
-    </script>
   </head>
   <body class="font-sans antialiased">
     <div id="sleek-invoice-app"></div>
