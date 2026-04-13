@@ -26,6 +26,7 @@ import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
+import { submitZapierDownloadLead } from './integrations/zapierDownloadWebhook.js'
 import { fireHostEvent } from './invoice/hostFireEvent.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
 import {
@@ -116,6 +117,7 @@ function InvoiceWorkspace({ printRef }) {
                 onClick={() => {
                   if (canDownload) {
                     fireHostEvent('SG_CTA_Tool_Invoice_Generator_Active_Download_1')
+                    submitZapierDownloadLead(form)
                   }
                   handlePrint()
                 }}
