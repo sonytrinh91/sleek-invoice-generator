@@ -31,14 +31,12 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              name: 'pages-cache-meta',
+              name: 'pages-build-meta',
               transformIndexHtml: {
                 order: 'post',
                 handler(html) {
                   const buildId = new Date().toISOString()
                   const meta = `
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
     <meta name="sleek-invoice-build" content="${buildId}" />
 `
                   if (/<meta\s[^>]*charset=/i.test(html)) {
