@@ -42,6 +42,7 @@
     iframe.src = src
     iframe.title =
       container.getAttribute('data-title') || 'Sleek invoice generator'
+    iframe.setAttribute('loading', 'lazy')
     iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin')
     iframe.style.width = '100%'
     iframe.style.border = '0'
