@@ -28,23 +28,25 @@ export function ItemsSection() {
   const itemErrors = (i) => errors.items?.[i]
 
   return (
-    <section className="border border-gray-100 bg-white p-6">
+    <section className="min-w-0 border border-gray-100 bg-white p-6">
       <h2 className="mb-3 text-lg font-semibold text-[#040015]">Items</h2>
 
-      <div className="sleek-items-stack flex flex-col gap-4">
+      <div className="sleek-items-stack flex min-w-0 flex-col gap-4">
         {fields.map((field, index) => (
           <div
             key={field._key}
-            className="flex min-w-0 flex-nowrap items-end gap-2 overflow-x-auto pb-0.5 sm:gap-3"
+            className="sleek-items-line grid min-w-0 grid-cols-2 gap-x-2 gap-y-3 border-b border-gray-100 pb-4 last:border-b-0 last:pb-0 sm:flex sm:flex-nowrap sm:items-end sm:gap-x-3 sm:border-0 sm:pb-0"
           >
-            <OutlinedInput
-              id={`item-desc-${field.id}`}
-              label="Service name"
-              className="min-w-[10rem] flex-1"
-              error={itemErrors(index)?.description?.message}
-              {...register(`items.${index}.description`)}
-            />
-            <div className="w-16 shrink-0 sm:w-16">
+            <div className="col-span-2 min-w-0 sm:min-w-40 sm:flex-1 sm:basis-0">
+              <OutlinedInput
+                id={`item-desc-${field.id}`}
+                label="Service name"
+                className="w-full min-w-0"
+                error={itemErrors(index)?.description?.message}
+                {...register(`items.${index}.description`)}
+              />
+            </div>
+            <div className="min-w-0 sm:w-16 sm:shrink-0">
               <OutlinedInput
                 id={`item-qty-${field.id}`}
                 label="Qty"
@@ -59,7 +61,7 @@ export function ItemsSection() {
                 {...register(`items.${index}.qty`)}
               />
             </div>
-            <div className="min-w-24 w-24 shrink-0 sm:min-w-28 sm:w-28">
+            <div className="min-w-0 sm:w-28 sm:shrink-0">
               <OutlinedInput
                 id={`item-price-${field.id}`}
                 label="Unit price"
@@ -74,13 +76,13 @@ export function ItemsSection() {
                 {...register(`items.${index}.unitPrice`)}
               />
             </div>
-            <div className="min-w-[4rem] shrink-0 text-right">
+            <div className="min-w-0 sm:min-w-18 sm:shrink-0 sm:text-right">
               <span className="mb-1 block text-xs text-gray-500">Amount</span>
-              <span className="flex min-h-9 items-center justify-end text-sm font-medium tabular-nums text-gray-900">
+              <span className="flex min-h-9 items-center text-sm font-medium tabular-nums text-gray-900 sm:justify-end">
                 {formatMoney(lineAmounts[index] ?? 0, currency)}
               </span>
             </div>
-            <div className="flex shrink-0 flex-col">
+            <div className="flex flex-col items-end justify-end self-end sm:self-end">
               <span
                 className="mb-1 block h-4 text-xs text-transparent select-none"
                 aria-hidden

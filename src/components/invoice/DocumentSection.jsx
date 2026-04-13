@@ -19,14 +19,14 @@ export function DocumentSection() {
   } = useFormContext()
 
   return (
-    <Card>
+    <Card className="min-w-0">
       <FieldLabel>Document</FieldLabel>
-      <div className="flex space-y-3 flex-row gap-3">
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start">
         <OutlinedInput
           id="document-number"
           label="# Number"
           type="text"
-          className="w-auto shrink-0"
+          className="w-full min-w-0 sm:w-auto sm:max-w-44 sm:shrink-0"
           error={errors.invoiceNumber?.message}
           {...register('invoiceNumber')}
         />
@@ -34,7 +34,7 @@ export function DocumentSection() {
           control={control}
           name="country"
           render={({ field }) => (
-            <div className="min-w-44 shrink-0 sm:min-w-0 sm:flex-1">
+            <div className="w-full min-w-0 sm:flex-1">
               <SearchableSelectCombobox
                 id="document-country"
                 label="Country"
@@ -50,12 +50,12 @@ export function DocumentSection() {
           )}
         />
       </div>
-      <div className="flex flex-row gap-3">
-      <Controller
+      <div className="mt-3 w-full min-w-0">
+        <Controller
           control={control}
           name="currency"
           render={({ field }) => (
-            <div className="w-full shrink-0">
+            <div className="min-w-0">
               <CurrencyCombobox
                 id="document-currency"
                 value={field.value}

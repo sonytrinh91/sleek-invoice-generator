@@ -572,6 +572,13 @@ body.sleek-wp-embed-body {
   gap: 1rem !important;
 }
 
+/* Line row: desktop uses flex + gap so space is even (incl. Service name ↔ Qty); WP sometimes strips grid gap. */
+@media (min-width: 640px) {
+  #sleek-invoice-app .sleek-items-line {
+    gap: 0.75rem !important;
+  }
+}
+
 /* Combobox listbox: WP themes often set ul { background: transparent } — solid surface for popovers */
 #sleek-invoice-app ul.sleek-listbox[role='listbox'] {
   background-color: #ffffff !important;
