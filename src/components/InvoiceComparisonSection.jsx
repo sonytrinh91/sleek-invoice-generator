@@ -90,7 +90,7 @@ export function InvoiceComparisonSection() {
           >
             Free invoice generator vs Excel vs Word
           </h2>
-          <p className="mt-2.5 text-pretty text-[0.9375rem] leading-relaxed text-gray-500">
+          <p className="mt-2.5 text-pretty text-[0.9375rem] leading-relaxed text-[#040015]">
             Why businesses switch from Excel and Word to Sleek&apos;s free invoice software -
             the faster, smarter online invoice template.
           </p>
