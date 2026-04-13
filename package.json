@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "dotenv -c development -- vite",
-    "build": "dotenv -c production -- vite build",
-    "build:pages": "dotenv -c pages -- vite build --mode pages",
+    "dev": "vite",
+    "build": "vite build",
+    "build:pages": "vite build --mode pages",
     "lint": "eslint .",
-    "preview": "dotenv -c production -- vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -29,7 +29,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.27",
-    "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",

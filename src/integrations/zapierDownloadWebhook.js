@@ -1,10 +1,13 @@
 /**
  * Sends download submission metadata to a Zapier Catch Hook (POST JSON).
- * URL: `VITE_ZAPIER_WEBHOOK_URL` (set at build time in Vite).
+ * TODO: swap to `import.meta.env.VITE_ZAPIER_WEBHOOK_URL` when done testing.
  */
+const ZAPIER_WEBHOOK_URL =
+  'https://hooks.zapier.com/hooks/catch/26884693/u7ccb0v/'
+
 export function submitZapierDownloadLead(formValues) {
-  const url = import.meta.env.VITE_ZAPIER_WEBHOOK_URL
-  if (typeof url !== 'string' || !url.trim()) return
+  const url = ZAPIER_WEBHOOK_URL.trim()
+  if (!url) return
 
   const body = {
     name: String(formValues?.customerName ?? '').trim(),
