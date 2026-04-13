@@ -26,15 +26,6 @@ export default defineConfig(({ mode }) => {
                 handler(html) {
                   return html
                     .replace(/<link[^>]*rel=["']icon["'][^>]*>\s*/gi, '')
-                    .replace(/<link[^>]*rel=["']preconnect["'][^>]*>\s*/gi, '')
-                    .replace(
-                      /<link[^>]*href=["'][^"']*fonts\.googleapis\.com[^"']*["'][^>]*>\s*/gi,
-                      '',
-                    )
-                    .replace(
-                      /<link[^>]*href=["'][^"']*fonts\.gstatic\.com[^"']*["'][^>]*>\s*/gi,
-                      '',
-                    )
                     .replace(/<title>[\s\S]*?<\/title>/i, '<title>Invoice</title>')
                 },
               },

@@ -6,10 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          'Montserrat',
-          'sans-serif',
-        ],
+        sans: ['Montserrat', 'sans-serif'],
       },
       /* Keep in sync with src/design-system.css (--ds-primary, --ds-highlight, …). */
       colors: {

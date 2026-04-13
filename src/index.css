@@ -2,6 +2,11 @@
 @config '../tailwind.config.js';
 @import './design-system.css';
 
+/* Same stack as WordPress host: Montserrat, sans-serif (Google Fonts in index.html). */
+:root {
+  --sleek-font-family: 'Montserrat', sans-serif;
+}
+
 /* Unified content width (marketing .container: 1120px + 24px horizontal padding). */
 #sleek-invoice-app .sleek-page-container {
   box-sizing: border-box !important;
@@ -62,9 +67,7 @@
   max-height: 100dvh;
   overflow: hidden;
   font-synthesis: none;
-  font-family:
-    'Montserrat',
-    sans-serif !important;
+  font-family: var(--sleek-font-family, 'Montserrat', sans-serif) !important;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
@@ -87,9 +90,7 @@
   --color-accent-active: #0242a2 !important;
   isolation: isolate;
   box-sizing: border-box;
-  font-family:
-    'Montserrat',
-    sans-serif !important;
+  font-family: var(--sleek-font-family, 'Montserrat', sans-serif) !important;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
@@ -99,12 +100,11 @@
 }
 
 /*
- * Host pages (e.g. WordPress) often set font-family on headings, p, .entry-content, etc.
- * Universal rule + !important so Montserrat wins; form controls keep font-family: inherit below.
+ * Host themes often set font-family on headings, etc. Keep Montserrat; form controls use inherit below.
  */
 #sleek-invoice-app *,
 .sleek-invoice-print-root * {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: var(--sleek-font-family, 'Montserrat', sans-serif) !important;
 }
 
 /* Inner scroll port — flex child with min-height:0 so the shell does not grow past 100dvh. */
@@ -674,13 +674,7 @@ body.sleek-wp-embed-body {
 }
 
 @theme {
-  /*
-   * Align with #sleek-invoice-app: Montserrat is primary (see index.html); system UI fonts
-   * first so embeds still render if the font request is blocked.
-   */
-  --font-sans:
-    'Montserrat',
-    sans-serif;
+  --font-sans: var(--sleek-font-family, 'Montserrat', sans-serif);
   --color-accent: #0f6dfa;
   --color-accent-hover: #0959d3;
   --color-accent-active: #0242a2;
