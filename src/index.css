@@ -11,6 +11,13 @@
   margin-right: auto !important;
 }
 
+@media (max-width: 1366px) {
+  #sleek-invoice-app .sleek-page-container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
 /* App shell: tokens + stacking context for embeds (e.g. WordPress theme CSS). */
 #sleek-invoice-app .text-accent {
   color: var(--ds-primary) !important;
@@ -89,6 +96,15 @@
   color: #040015;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+}
+
+/*
+ * Host pages (e.g. WordPress) often set font-family on headings, p, .entry-content, etc.
+ * Universal rule + !important so Montserrat wins; form controls keep font-family: inherit below.
+ */
+#sleek-invoice-app *,
+.sleek-invoice-print-root * {
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 /* Inner scroll port — flex child with min-height:0 so the shell does not grow past 100dvh. */
@@ -1049,6 +1065,11 @@ body {
     max-height: none !important;
     overflow: visible !important;
     overscroll-behavior: auto !important;
+  }
+
+  #sleek-invoice-app .sleek-page-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   #sleek-invoice-app > .sleek-app-scroll {

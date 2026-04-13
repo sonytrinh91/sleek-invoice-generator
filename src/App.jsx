@@ -110,7 +110,7 @@ function InvoiceWorkspace({ printRef }) {
               <SubtotalSection />
               <BankDetailsSection />
               <button
-                id='download-invoice-pdf-button'
+                id="download-invoice-pdf-button"
                 type="button"
                 disabled={!canDownload}
                 onClick={() => {
