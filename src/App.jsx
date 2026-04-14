@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
-import { useMemo, useRef } from 'react'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import { useEffect, useMemo, useRef } from 'react'
+import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useReactToPrint } from 'react-to-print'
 import { format, isValid } from 'date-fns'
@@ -27,6 +27,7 @@ import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
 import { submitZapierDownloadLead } from './integrations/zapierDownloadWebhook.js'
+import { syncCurrencyFromCountry } from './invoice/countryCurrency.js'
 import { fireHostEvent } from './invoice/hostFireEvent.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
 import {
@@ -37,7 +38,14 @@ import {
 } from './invoice/utils.js'
 
 function InvoiceWorkspace({ printRef }) {
+  const { setValue } = useFormContext()
   const form = useWatch()
+  const country = form?.country
+
+  useEffect(() => {
+    if (!country) return
+    syncCurrencyFromCountry(setValue, country, { shouldDirty: false })
+  }, [country, setValue])
 
   const issueDateParsed = useMemo(
     () => parseIssueDate(form.issueDate),
@@ -68,7 +76,7 @@ function InvoiceWorkspace({ printRef }) {
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: () => `Invoice-${form.invoiceNumber}`,
+    documentTitle: () => '',
     pageStyle: `
       @page { margin: 12mm; size: auto; }
       @media print {

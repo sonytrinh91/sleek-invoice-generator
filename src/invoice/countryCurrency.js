@@ -93,10 +93,16 @@ export function currencyCodeForCountry(countryCode) {
   return COUNTRY_TO_CURRENCY[c]
 }
 
-/** @param {function(string, unknown, object=): void} setValue react-hook-form setValue */
-export function syncCurrencyFromCountry(setValue, countryCode) {
+/**
+ * @param {function(string, unknown, object=): void} setValue react-hook-form setValue
+ * @param {{ shouldDirty?: boolean }} [opts] Pass `shouldDirty: false` when syncing from an effect so the initial load does not mark the form dirty.
+ */
+export function syncCurrencyFromCountry(setValue, countryCode, opts = {}) {
   const cur = currencyCodeForCountry(countryCode)
   if (cur) {
-    setValue('currency', cur, { shouldValidate: true, shouldDirty: true })
+    setValue('currency', cur, {
+      shouldValidate: true,
+      shouldDirty: opts.shouldDirty ?? true,
+    })
   }
 }

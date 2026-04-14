@@ -1,7 +1,12 @@
 import { useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { X } from 'lucide-react'
-import { Card, FieldLabel, OutlinedTextarea } from './FormPrimitives.jsx'
+import {
+  Card,
+  FieldLabel,
+  fieldInlineErrorClass,
+  OutlinedTextarea,
+} from './FormPrimitives.jsx'
 
 const MAX_LOGO_BYTES = 5 * 1024 * 1024
 
@@ -90,7 +95,7 @@ export function CompanySection() {
             ) : null}
           </div>
           {errors.logoDataUrl?.message ? (
-            <p className="max-w-[12rem] text-xs text-red-800" role="alert">
+            <p className={fieldInlineErrorClass} role="alert">
               {errors.logoDataUrl.message}
             </p>
           ) : null}

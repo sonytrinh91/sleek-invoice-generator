@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { X } from 'lucide-react'
 import { formatMoney, lineAmount, newLineItem } from '../../invoice/utils.js'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
-import { OutlinedInput } from './FormPrimitives.jsx'
+import { fieldInlineErrorClass, OutlinedInput } from './FormPrimitives.jsx'
 
 export function ItemsSection() {
   const {
@@ -112,7 +112,7 @@ export function ItemsSection() {
         </AddOutlineButton>
 
         {typeof errors.items?.message === 'string' ? (
-          <p className="text-xs text-red-800" role="alert">
+          <p className={fieldInlineErrorClass} role="alert">
             {errors.items.message}
           </p>
         ) : null}

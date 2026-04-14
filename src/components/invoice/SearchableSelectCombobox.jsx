@@ -5,6 +5,7 @@ import {
   DROPDOWN_FIELD_SHELL,
   DROPDOWN_FIELD_SHELL_ERROR,
   DropdownChevronRail,
+  fieldInlineErrorClass,
 } from './FormPrimitives.jsx'
 
 const inputClassBase =
@@ -231,11 +232,7 @@ export function SearchableSelectCombobox({
           </DropdownChevronRail>
         </div>
         {hasError ? (
-          <div
-            id={errId}
-            role="alert"
-            className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
-          >
+          <div id={errId} role="alert" className={fieldInlineErrorClass}>
             {error}
           </div>
         ) : null}

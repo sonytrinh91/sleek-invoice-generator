@@ -1,6 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { PAYMENT_OPTIONS } from '../../invoice/constants.js'
-import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
+import {
+  Card,
+  FieldLabel,
+  fieldInlineErrorClass,
+  OutlinedInput,
+} from './FormPrimitives.jsx'
 import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
 
 export function InvoicePaymentSection() {
@@ -49,7 +54,7 @@ export function InvoicePaymentSection() {
           </div>
         </div>
         {errors.paymentTerms?.message ? (
-          <p className="text-xs text-red-800" role="alert">
+          <p className={fieldInlineErrorClass} role="alert">
             {errors.paymentTerms.message}
           </p>
         ) : null}

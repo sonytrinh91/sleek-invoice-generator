@@ -24,6 +24,10 @@ export const DROPDOWN_FIELD_SHELL =
 export const DROPDOWN_FIELD_SHELL_ERROR =
   'sleek-field-shell overflow-hidden rounded border border-red-700 bg-white transition-colors focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
 
+/** Compact validation text under inputs (aligned with field, no full-width bar). */
+export const fieldInlineErrorClass =
+  'mt-1.5 block w-full max-w-full pl-0.5 text-left text-[13px] font-normal leading-snug text-red-800'
+
 /** Right column: divider + chevron (shared by combobox and {@link OutlinedSelect}). */
 export function DropdownChevronRail({ children, className, ...props }) {
   return (
@@ -151,11 +155,7 @@ export const OutlinedInput = forwardRef(function OutlinedInput(
         )}
       </div>
       {hasError ? (
-        <div
-          id={errId}
-          role="alert"
-          className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
-        >
+        <div id={errId} role="alert" className={fieldInlineErrorClass}>
           {error}
         </div>
       ) : null}
@@ -218,11 +218,7 @@ export const OutlinedTextarea = forwardRef(function OutlinedTextarea(
         </label>
       </div>
       {hasError ? (
-        <div
-          id={errId}
-          role="alert"
-          className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
-        >
+        <div id={errId} role="alert" className={fieldInlineErrorClass}>
           {error}
         </div>
       ) : null}
@@ -313,11 +309,7 @@ export function OutlinedSelect({
           </DropdownChevronRail>
         </div>
         {hasError ? (
-          <div
-            id={errId}
-            role="alert"
-            className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs font-normal leading-snug text-red-800"
-          >
+          <div id={errId} role="alert" className={fieldInlineErrorClass}>
             {error}
           </div>
         ) : null}
@@ -408,10 +400,7 @@ export const FloatingField = forwardRef(function FloatingField(
         </>
       )}
       {hasError ? (
-        <div
-          role="alert"
-          className="border-t border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800"
-        >
+        <div role="alert" className={fieldInlineErrorClass}>
           {error}
         </div>
       ) : null}

@@ -1,7 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { COUNTRIES } from '../../invoice/constants.js'
-import { syncCurrencyFromCountry } from '../../invoice/countryCurrency.js'
-import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
+import { Card, FieldLabel, OutlinedInput, fieldInlineErrorClass } from './FormPrimitives.jsx'
 import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
 import { CurrencyCombobox } from './CurrencyCombobox.jsx'
 
@@ -14,7 +13,6 @@ export function DocumentSection() {
   const {
     register,
     control,
-    setValue,
     formState: { errors },
   } = useFormContext()
 
@@ -42,7 +40,6 @@ export function DocumentSection() {
                 value={field.value}
                 onValueChange={(v) => {
                   field.onChange(v)
-                  syncCurrencyFromCountry(setValue, v)
                 }}
                 toggleAriaLabel="Toggle country list"
               />
@@ -66,7 +63,7 @@ export function DocumentSection() {
         />
       </div>
       {errors.currency?.message ? (
-        <p className="mt-2 text-xs text-red-800" role="alert">
+        <p className={fieldInlineErrorClass} role="alert">
           {errors.currency.message}
         </p>
       ) : null}
