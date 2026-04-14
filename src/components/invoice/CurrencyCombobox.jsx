@@ -6,7 +6,7 @@ const currencyOptions = CURRENCIES.map((c) => ({
   label: c.label,
 }))
 
-export function CurrencyCombobox({ id, value, onChange }) {
+export function CurrencyCombobox({ id, value, onChange, error }) {
   return (
     <SearchableSelectCombobox
       id={id}
@@ -15,6 +15,7 @@ export function CurrencyCombobox({ id, value, onChange }) {
       value={value}
       onValueChange={(v) => onChange({ currency: v })}
       toggleAriaLabel="Toggle currency list"
+      error={error}
     />
   )
 }

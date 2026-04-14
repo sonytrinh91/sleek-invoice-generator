@@ -1,6 +1,12 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { COUNTRIES } from '../../invoice/constants.js'
-import { Card, FieldLabel, OutlinedInput, fieldInlineErrorClass } from './FormPrimitives.jsx'
+import { sectionErrorLine } from '../../invoice/sectionErrors.js'
+import {
+  Card,
+  FieldLabel,
+  OutlinedInput,
+  sectionFooterErrorClass,
+} from './FormPrimitives.jsx'
 import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
 import { CurrencyCombobox } from './CurrencyCombobox.jsx'
 
@@ -15,6 +21,12 @@ export function DocumentSection() {
     control,
     formState: { errors },
   } = useFormContext()
+
+  const documentErrorLine = sectionErrorLine(errors, [
+    'invoiceNumber',
+    'country',
+    'currency',
+  ])
 
   return (
     <Card className="min-w-0">
@@ -42,6 +54,7 @@ export function DocumentSection() {
                   field.onChange(v)
                 }}
                 toggleAriaLabel="Toggle country list"
+                error={errors.country?.message}
               />
             </div>
           )}
@@ -57,14 +70,15 @@ export function DocumentSection() {
                 id="document-currency"
                 value={field.value}
                 onChange={(patch) => field.onChange(patch.currency)}
+                error={errors.currency?.message}
               />
             </div>
           )}
         />
       </div>
-      {errors.currency?.message ? (
-        <p className={fieldInlineErrorClass} role="alert">
-          {errors.currency.message}
+      {documentErrorLine ? (
+        <p className={sectionFooterErrorClass} role="alert">
+          {documentErrorLine}
         </p>
       ) : null}
     </Card>

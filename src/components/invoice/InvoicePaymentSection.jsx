@@ -1,10 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import { PAYMENT_OPTIONS } from '../../invoice/constants.js'
+import { sectionErrorLine } from '../../invoice/sectionErrors.js'
 import {
   Card,
   FieldLabel,
-  fieldInlineErrorClass,
   OutlinedInput,
+  sectionFooterErrorClass,
 } from './FormPrimitives.jsx'
 import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
 
@@ -13,6 +14,11 @@ export function InvoicePaymentSection() {
     control,
     formState: { errors },
   } = useFormContext()
+
+  const invoicePaymentErrorLine = sectionErrorLine(errors, [
+    'issueDate',
+    'paymentTerms',
+  ])
 
   return (
     <Card>
@@ -48,14 +54,15 @@ export function InvoicePaymentSection() {
                   value={field.value}
                   onValueChange={field.onChange}
                   toggleAriaLabel="Toggle payment terms list"
+                  error={errors.paymentTerms?.message}
                 />
               )}
             />
           </div>
         </div>
-        {errors.paymentTerms?.message ? (
-          <p className={fieldInlineErrorClass} role="alert">
-            {errors.paymentTerms.message}
+        {invoicePaymentErrorLine ? (
+          <p className={sectionFooterErrorClass} role="alert">
+            {invoicePaymentErrorLine}
           </p>
         ) : null}
       </div>

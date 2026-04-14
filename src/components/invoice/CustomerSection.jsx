@@ -1,11 +1,22 @@
 import { useFormContext } from 'react-hook-form'
-import { Card, FieldLabel, OutlinedInput } from './FormPrimitives.jsx'
+import { sectionErrorLine } from '../../invoice/sectionErrors.js'
+import {
+  Card,
+  FieldLabel,
+  OutlinedInput,
+  sectionFooterErrorClass,
+} from './FormPrimitives.jsx'
 
 export function CustomerSection() {
   const {
     register,
     formState: { errors },
   } = useFormContext()
+
+  const customerErrorLine = sectionErrorLine(errors, [
+    'customerName',
+    'customerEmail',
+  ])
 
   return (
     <Card>
@@ -33,6 +44,11 @@ export function CustomerSection() {
           />
         </div>
       </div>
+      {customerErrorLine ? (
+        <p className={sectionFooterErrorClass} role="alert">
+          {customerErrorLine}
+        </p>
+      ) : null}
     </Card>
   )
 }

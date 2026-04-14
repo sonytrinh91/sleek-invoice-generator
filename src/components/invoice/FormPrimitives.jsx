@@ -24,9 +24,9 @@ export const DROPDOWN_FIELD_SHELL =
 export const DROPDOWN_FIELD_SHELL_ERROR =
   'sleek-field-shell overflow-hidden rounded border border-red-700 bg-white transition-colors focus-within:border-red-700 focus-within:ring-1 focus-within:ring-red-700/25'
 
-/** Compact validation text under inputs (aligned with field, no full-width bar). */
-export const fieldInlineErrorClass =
-  'mt-1.5 block w-full max-w-full pl-0.5 text-left text-[13px] font-normal leading-snug text-red-800'
+/** Validation copy at the bottom of a card/section (outline stays on fields). Wraps; multiple messages use line breaks. */
+export const sectionFooterErrorClass =
+  'mt-3 block w-full max-w-full pl-0.5 text-left text-xs font-normal leading-snug text-red-800 whitespace-pre-line break-words'
 
 /** Right column: divider + chevron (shared by combobox and {@link OutlinedSelect}). */
 export function DropdownChevronRail({ children, className, ...props }) {
@@ -80,7 +80,6 @@ export const OutlinedInput = forwardRef(function OutlinedInput(
   forwardedRef,
 ) {
   const hasError = Boolean(error)
-  const errId = descriptionId ?? (hasError ? `${id}-error` : undefined)
   const isDate = type === 'date'
   const [focused, setFocused] = useState(false)
   const {
@@ -113,7 +112,7 @@ export const OutlinedInput = forwardRef(function OutlinedInput(
               ref={setInputRef}
               type="date"
               aria-invalid={hasError}
-              aria-describedby={errId}
+              aria-describedby={descriptionId}
               {...restInputProps}
               {...(controlled ? { value: inputValue } : {})}
               onFocus={(e) => {
@@ -140,7 +139,7 @@ export const OutlinedInput = forwardRef(function OutlinedInput(
               ref={setInputRef}
               type={type ?? 'text'}
               aria-invalid={hasError}
-              aria-describedby={errId}
+              aria-describedby={descriptionId}
               placeholder=" "
               {...restInputProps}
               {...(controlled ? { value: inputValue } : {})}
@@ -154,11 +153,6 @@ export const OutlinedInput = forwardRef(function OutlinedInput(
           </>
         )}
       </div>
-      {hasError ? (
-        <div id={errId} role="alert" className={fieldInlineErrorClass}>
-          {error}
-        </div>
-      ) : null}
     </div>
   )
 })
@@ -177,7 +171,6 @@ export const OutlinedTextarea = forwardRef(function OutlinedTextarea(
   forwardedRef,
 ) {
   const hasError = Boolean(error)
-  const errId = descriptionId ?? (hasError ? `${id}-error` : undefined)
   const {
     className: textareaInnerClass,
     value: textareaValue,
@@ -202,7 +195,7 @@ export const OutlinedTextarea = forwardRef(function OutlinedTextarea(
           ref={setTextareaRef}
           rows={rows}
           aria-invalid={hasError}
-          aria-describedby={errId}
+          aria-describedby={descriptionId}
           placeholder=" "
           {...restTextareaProps}
           {...(controlled ? { value: textareaValue } : {})}
@@ -217,11 +210,6 @@ export const OutlinedTextarea = forwardRef(function OutlinedTextarea(
           {label}
         </label>
       </div>
-      {hasError ? (
-        <div id={errId} role="alert" className={fieldInlineErrorClass}>
-          {error}
-        </div>
-      ) : null}
     </div>
   )
 })
@@ -239,7 +227,6 @@ export function OutlinedSelect({
   ...selectProps
 }) {
   const hasError = Boolean(error)
-  const errId = descriptionId ?? (hasError ? `${id}-error` : undefined)
   const [focused, setFocused] = useState(false)
   const floated =
     focused || (value !== undefined && value !== null && String(value) !== '')
@@ -263,7 +250,7 @@ export function OutlinedSelect({
             <select
               id={id}
               aria-invalid={hasError}
-              aria-describedby={errId}
+              aria-describedby={descriptionId}
               {...restSelectProps}
               value={value}
               onFocus={(e) => {
@@ -308,11 +295,6 @@ export function OutlinedSelect({
             </span>
           </DropdownChevronRail>
         </div>
-        {hasError ? (
-          <div id={errId} role="alert" className={fieldInlineErrorClass}>
-            {error}
-          </div>
-        ) : null}
       </div>
     </div>
   )
@@ -362,6 +344,7 @@ export const FloatingField = forwardRef(function FloatingField(
             id={id}
             ref={setInputRef}
             type="date"
+            aria-invalid={hasError}
             {...restInputProps}
             {...(controlled ? { value: inputValue } : {})}
             onFocus={(e) => {
@@ -388,6 +371,7 @@ export const FloatingField = forwardRef(function FloatingField(
             ref={setInputRef}
             type={type}
             placeholder=" "
+            aria-invalid={hasError}
             {...restInputProps}
             {...(controlled ? { value: inputValue } : {})}
             onFocus={inputOnFocus}
@@ -399,11 +383,6 @@ export const FloatingField = forwardRef(function FloatingField(
           </label>
         </>
       )}
-      {hasError ? (
-        <div role="alert" className={fieldInlineErrorClass}>
-          {error}
-        </div>
-      ) : null}
     </div>
   )
 })

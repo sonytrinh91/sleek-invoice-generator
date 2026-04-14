@@ -5,7 +5,6 @@ import {
   DROPDOWN_FIELD_SHELL,
   DROPDOWN_FIELD_SHELL_ERROR,
   DropdownChevronRail,
-  fieldInlineErrorClass,
 } from './FormPrimitives.jsx'
 
 const inputClassBase =
@@ -41,7 +40,6 @@ export function SearchableSelectCombobox({
   const [highlight, setHighlight] = useState(0)
 
   const hasError = Boolean(error)
-  const errId = hasError ? `${id}-error` : undefined
 
   const selected = useMemo(
     () => options.find((o) => o.value === value),
@@ -159,7 +157,6 @@ export function SearchableSelectCombobox({
               aria-controls={listboxId}
               aria-autocomplete={searchable ? 'list' : 'none'}
               aria-invalid={hasError}
-              aria-describedby={errId}
               autoComplete="off"
               spellCheck={false}
               readOnly={!searchable}
@@ -231,11 +228,6 @@ export function SearchableSelectCombobox({
             </button>
           </DropdownChevronRail>
         </div>
-        {hasError ? (
-          <div id={errId} role="alert" className={fieldInlineErrorClass}>
-            {error}
-          </div>
-        ) : null}
       </div>
 
       {open ? (

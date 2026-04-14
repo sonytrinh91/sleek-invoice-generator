@@ -1,11 +1,12 @@
 import { useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { X } from 'lucide-react'
+import { sectionErrorLine } from '../../invoice/sectionErrors.js'
 import {
   Card,
   FieldLabel,
-  fieldInlineErrorClass,
   OutlinedTextarea,
+  sectionFooterErrorClass,
 } from './FormPrimitives.jsx'
 
 const MAX_LOGO_BYTES = 5 * 1024 * 1024
@@ -21,6 +22,11 @@ export function CompanySection() {
   } = useFormContext()
   const fileInputRef = useRef(null)
   const logoDataUrl = watch('logoDataUrl')
+
+  const companyErrorLine = sectionErrorLine(errors, [
+    'companyName',
+    'logoDataUrl',
+  ])
 
   return (
     <Card>
@@ -94,11 +100,6 @@ export function CompanySection() {
               </button>
             ) : null}
           </div>
-          {errors.logoDataUrl?.message ? (
-            <p className={fieldInlineErrorClass} role="alert">
-              {errors.logoDataUrl.message}
-            </p>
-          ) : null}
         </div>
         <div className="min-w-0 flex-1">
           <OutlinedTextarea
@@ -111,6 +112,11 @@ export function CompanySection() {
           />
         </div>
       </div>
+      {companyErrorLine ? (
+        <p className={sectionFooterErrorClass} role="alert">
+          {companyErrorLine}
+        </p>
+      ) : null}
     </Card>
   )
 }

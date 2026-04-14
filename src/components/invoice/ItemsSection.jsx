@@ -1,31 +1,34 @@
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
-import { X } from 'lucide-react'
-import { formatMoney, lineAmount, newLineItem } from '../../invoice/utils.js'
-import { AddOutlineButton } from './AddOutlineButton.jsx'
-import { fieldInlineErrorClass, OutlinedInput } from './FormPrimitives.jsx'
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { X } from "lucide-react";
+import { itemsSectionErrorLine } from "../../invoice/sectionErrors.js";
+import { formatMoney, lineAmount, newLineItem } from "../../invoice/utils.js";
+import { AddOutlineButton } from "./AddOutlineButton.jsx";
+import { OutlinedInput, sectionFooterErrorClass } from "./FormPrimitives.jsx";
 
 export function ItemsSection() {
   const {
     control,
     register,
     formState: { errors },
-  } = useFormContext()
+  } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'items',
-    keyName: '_key',
-  })
+    name: "items",
+    keyName: "_key",
+  });
 
-  const currency = useWatch({ control, name: 'currency' })
-  const items = useWatch({ control, name: 'items' })
+  const currency = useWatch({ control, name: "currency" });
+  const items = useWatch({ control, name: "items" });
 
   const lineAmounts = (items ?? []).map((it) =>
     lineAmount(it.qty, it.unitPrice),
-  )
-  const subtotal = lineAmounts.reduce((a, b) => a + b, 0)
+  );
+  const subtotal = lineAmounts.reduce((a, b) => a + b, 0);
 
-  const itemErrors = (i) => errors.items?.[i]
+  const itemErrors = (i) => errors.items?.[i];
+
+  const itemsErrorLine = itemsSectionErrorLine(errors);
 
   return (
     <section className="min-w-0 border border-gray-100 bg-white p-6">
@@ -92,8 +95,8 @@ export function ItemsSection() {
               <button
                 type="button"
                 onClick={() => {
-                  if (fields.length <= 1) return
-                  remove(index)
+                  if (fields.length <= 1) return;
+                  remove(index);
                 }}
                 className="flex size-9 cursor-pointer items-center justify-center rounded text-red-500 transition hover:bg-red-50"
                 aria-label="Remove line item"
@@ -103,19 +106,17 @@ export function ItemsSection() {
             </div>
           </div>
         ))}
-
+        {itemsErrorLine ? (
+          <p className={sectionFooterErrorClass} role="alert">
+            {itemsErrorLine}
+          </p>
+        ) : null}
         <AddOutlineButton
           type="button"
           onClick={() => append(newLineItem(), { shouldFocus: false })}
         >
           Add line item
         </AddOutlineButton>
-
-        {typeof errors.items?.message === 'string' ? (
-          <p className={fieldInlineErrorClass} role="alert">
-            {errors.items.message}
-          </p>
-        ) : null}
 
         <div className="sleek-items-subtotal border-t border-gray-200 pt-4 text-sm">
           <div className="flex items-center justify-between text-gray-600">
@@ -133,5 +134,5 @@ export function ItemsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,9 +1,9 @@
 import { User } from 'lucide-react'
 import { formatInvoiceAddress, formatMoney } from '../../invoice/utils.js'
 
-const labelClass = 'text-[13px] font-normal leading-tight text-fg-muted'
+const labelClass = 'text-xs font-semibold leading-tight text-fg-muted'
 const valueClass =
-  'mt-1.5 text-[15px] font-normal leading-snug text-fg'
+  'mt-1.5 text-sm font-normal leading-snug text-fg'
 
 function MetaBlock({ label, children }) {
   return (
@@ -93,16 +93,16 @@ export function InvoiceSheet({
           <table className="sleek-invoice-sheet-table w-full border-collapse text-[14px]">
             <thead>
               <tr className="bg-neutral-100">
-                <th className="px-4 py-3 text-left text-[13px] font-bold text-fg-strong">
+                <th className="px-4 py-3 text-left text-xs font-bold text-fg-strong">
                   Description
                 </th>
-                <th className="w-[4.5rem] px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
+                <th className="w-[4.5rem] px-4 py-3 text-right text-xs font-bold text-fg-strong">
                   Qty
                 </th>
-                <th className="px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
+                <th className="px-4 py-3 text-right text-xs font-bold text-fg-strong">
                   Unit price
                 </th>
-                <th className="px-4 py-3 text-right text-[13px] font-bold text-fg-strong">
+                <th className="px-4 py-3 text-right text-xs font-bold text-fg-strong">
                   Amount
                 </th>
               </tr>
@@ -130,47 +130,47 @@ export function InvoiceSheet({
         {/* No border-t here: last table row already has a bottom rule; avoids a doubled line with themes. */}
         <div className="invoice-sheet__totals space-y-1 bg-white px-4 py-3.5 text-[14px]">
           <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-            <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+            <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
               Subtotal
             </span>
-            <span className="tabular-nums text-fg-body">
+            <span className="tabular-nums font-medium text-fg-body">
               {formatMoney(t.itemsSubtotal, cur)}
             </span>
           </div>
           {form.taxEnabled ? (
             <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-              <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+              <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
                 GST
               </span>
-              <span className="tabular-nums text-fg-body">
+              <span className="tabular-nums font-medium text-fg-body">
                 {formatMoney(t.taxAmount, cur)}
               </span>
             </div>
           ) : null}
           {t.discountAmount > 1e-9 ? (
             <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-              <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+              <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
                 Discount
               </span>
-              <span className="tabular-nums text-fg-body">
+              <span className="tabular-nums font-medium text-fg-body">
                 {formatMoney(-t.discountAmount, cur)}
               </span>
             </div>
           ) : null}
           {t.shippingAmount > 1e-9 ? (
             <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-              <span className="text-[13px] font-normal uppercase tracking-wide text-fg-muted">
+              <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
                 Shipping
               </span>
-              <span className="tabular-nums text-fg-body">
+              <span className="tabular-nums font-medium text-fg-body">
                 {formatMoney(t.shippingAmount, cur)}
               </span>
             </div>
           ) : null}
           <div className="my-2 border-t border-neutral-200/90" />
           <div className="invoice-sheet__total-row invoice-sheet__total-row--grand flex items-center justify-between gap-4 pt-0.5">
-            <span className="text-[15px] font-bold text-fg-strong">Total</span>
-            <span className="text-[15px] font-bold tabular-nums text-accent">
+            <span className="text-sm font-bold text-fg-strong">Total</span>
+            <span className="text-sm font-bold tabular-nums text-accent">
               {formatMoney(t.grandTotal, cur)}
             </span>
           </div>
@@ -179,7 +179,7 @@ export function InvoiceSheet({
 
       {form.notes.trim() ? (
         <div className="mb-10">
-          <h4 className="mb-3 text-[1.0625rem] font-semibold text-fg-strong">Notes</h4>
+          <h4 className="mb-3 text-xs font-semibold text-fg-strong">Notes</h4>
           <p className="whitespace-pre-line text-[14px] leading-relaxed text-fg-secondary">
             {form.notes}
           </p>
@@ -188,10 +188,10 @@ export function InvoiceSheet({
 
       {form.bankDetailsText.trim() ? (
         <div className="mt-2">
-          <h4 className="mb-3 text-[1.0625rem] font-semibold text-fg-strong">
+          <h4 className="mb-3 text-xs font-semibold text-fg-strong">
             Bank details
           </h4>
-          <div className="space-y-1.5 text-[14px] leading-relaxed text-fg-secondary">
+          <div className="space-y-1.5 text-sm leading-relaxed text-fg-secondary">
             {form.bankDetailsText.split('\n').map((line, idx) => (
               <p key={idx}>{line || '\u00a0'}</p>
             ))}
