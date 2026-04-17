@@ -83,11 +83,20 @@ export default defineConfig(({ mode }) => {
                 )
                 const buildId = buildMatch?.[1] ?? 'unknown'
 
+                const STATIC_START = '<!--sleek-app-static:start-->'
+                const STATIC_END = '<!--sleek-app-static:end-->'
+                let staticInner = ''
+                const si = full.indexOf(STATIC_START)
+                const ei = full.indexOf(STATIC_END)
+                if (si !== -1 && ei !== -1 && ei > si) {
+                  staticInner = full.slice(si + STATIC_START.length, ei).trim()
+                }
+
                 writeFileSync(
                   join(outDir, 'embed.html'),
                   `<!-- Sleek invoice inline fragment (optional). Build: ${buildId} -->
 ${styleHtml}
-<div id="sleek-invoice-app" class="sleek-wp-embed"></div>
+<div id="sleek-invoice-app" class="sleek-wp-embed">${staticInner ? `\n${staticInner}\n` : ''}</div>
 ${scriptHtml}
 `,
                   'utf8',

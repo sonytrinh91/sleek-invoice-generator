@@ -171,29 +171,29 @@ export default function App() {
   return (
     <FormProvider {...methods}>
       <div className="flex w-full flex-col bg-white font-sans text-neutral-800">
-        <HeroSection />
+        {/* <HeroSection /> */}
         <div className="flex w-full flex-col bg-white">
-          <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
+          {/* <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
             <h2>Create an Invoice Online in Seconds</h2>
             <p className="mb-7 mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed ">
               Fill in the form below and get a professional online invoice template ready to
               download as PDF instantly - free, no account needed.
             </p>
-          </div>
+          </div> */}
           <div className="flex min-h-[min(750px,80dvh)] w-full flex-col">
             <div className="sleek-page-container">
               <InvoiceWorkspace printRef={printRef} />
             </div>
           </div>
         </div>
-        <WhySleekSection />
+        {/* <WhySleekSection />
         <TrustedBySection />
         <SimplicitySection />
         <HowToCreateSection />
         <InvoiceComparisonSection />
         <MoreThanInvoicingSection />
         <FaqSection />
-        <ReadyToGoSection />
+        <ReadyToGoSection /> */}
       </div>
     </FormProvider>
   )
