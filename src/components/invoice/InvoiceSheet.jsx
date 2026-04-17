@@ -28,7 +28,6 @@ export function InvoiceSheet({
     itemsSubtotal: subtotal,
     taxAmount: 0,
     discountAmount: 0,
-    shippingAmount: 0,
     grandTotal: subtotal,
   }
   const cur = form.currency
@@ -154,16 +153,6 @@ export function InvoiceSheet({
               </span>
               <span className="tabular-nums font-medium text-fg-body">
                 {formatMoney(-t.discountAmount, cur)}
-              </span>
-            </div>
-          ) : null}
-          {t.shippingAmount > 1e-9 ? (
-            <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-              <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
-                Shipping
-              </span>
-              <span className="tabular-nums font-medium text-fg-body">
-                {formatMoney(t.shippingAmount, cur)}
               </span>
             </div>
           ) : null}

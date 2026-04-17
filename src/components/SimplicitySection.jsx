@@ -18,7 +18,7 @@ const items = [
   {
     key: 'worldwide',
     title: 'Built for businesses worldwide',
-    body: 'Supports Singapore invoice requirements (UEN, GST), Australia (ABN, GST), UK (VAT), US, Hong Kong, and more. Tax fields auto-adjust based on your country - so every invoice is locally compliant without any manual setup.',
+    body: 'Supports Singapore invoice requirements (UEN, GST), Australia (ABN, GST), UK (VAT), US, Hong Kong, and more. Tax fields auto-adjust to your settings so every invoice is locally compliant without extra setup.',
     stripe: false,
   },
   {

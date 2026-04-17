@@ -1,7 +1,7 @@
 const steps = [
   {
     title: 'Enter your business details',
-    body: 'Add your company name, address, and business registration number. Upload your logo to make the invoice look professional. Select your country and currency - Sleek adjusts the tax fields automatically.',
+    body: 'Add your company name, address, and business registration number. Upload your logo to make the invoice look professional. Choose your currency — Sleek adjusts the tax fields automatically.',
   },
   {
     title: "Add your client's information",

@@ -86,7 +86,6 @@ export function SubtotalSection() {
 
   const currency = form.currency ?? 'SGD'
   const discountExpanded = form.discountExpanded
-  const shippingExpanded = form.shippingExpanded
   const taxEnabled = form.taxEnabled
 
   return (
@@ -163,17 +162,6 @@ export function SubtotalSection() {
           >
             {discountExpanded ? '− Discount' : '+ Discount'}
           </button>
-          <button
-            type="button"
-            className="sleek-ds-btn-text"
-            onClick={() =>
-              setValue('shippingExpanded', !shippingExpanded, {
-                shouldDirty: true,
-              })
-            }
-          >
-            {shippingExpanded ? '− Shipping' : '+ Shipping'}
-          </button>
         </div>
 
         {discountExpanded ? (
@@ -200,34 +188,6 @@ export function SubtotalSection() {
             />
             <span className="ml-auto min-w-[5rem] text-right tabular-nums font-medium text-input-value">
               {formatMoney(-totals.discountAmount, currency)}
-            </span>
-          </div>
-        ) : null}
-
-        {shippingExpanded ? (
-          <div className="flex flex-wrap items-center gap-2 border-t border-gray-100 pt-4">
-            <span className="min-w-[4.5rem] text-xs font-medium uppercase tracking-wide text-gray-500">
-              Shipping
-            </span>
-            <input
-              type="text"
-              inputMode="decimal"
-              aria-label="Shipping amount or percent"
-              className={clsx(compactInput, 'w-24')}
-              {...register('shippingValue')}
-            />
-            <Controller
-              control={control}
-              name="shippingIsPercent"
-              render={({ field }) => (
-                <PercentDollarToggle
-                  isPercent={field.value}
-                  onChange={field.onChange}
-                />
-              )}
-            />
-            <span className="ml-auto min-w-[5rem] text-right tabular-nums font-medium text-input-value">
-              {formatMoney(totals.shippingAmount, currency)}
             </span>
           </div>
         ) : null}

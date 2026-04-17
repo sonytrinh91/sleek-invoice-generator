@@ -22,20 +22,13 @@ export function computeInvoiceTotals(form, itemsSubtotal) {
     const tr = parseAmountInput(form.taxRate)
     taxAmount = form.taxIsPercent ? afterDiscount * (tr / 100) : tr
   }
-
-  const shipVal = parseAmountInput(form.shippingValue)
-  const shippingAmount = form.shippingIsPercent
-    ? S * (shipVal / 100)
-    : shipVal
-
-  const grandTotal = afterDiscount + taxAmount + shippingAmount
+  const grandTotal = afterDiscount + taxAmount
 
   return {
     itemsSubtotal: S,
     discountAmount,
     afterDiscount,
     taxAmount,
-    shippingAmount,
     grandTotal,
   }
 }

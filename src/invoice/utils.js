@@ -1,5 +1,5 @@
 import { addDays, format, isValid, parse } from 'date-fns'
-import { BANK_ACCOUNTS, COUNTRIES } from './constants.js'
+import { BANK_ACCOUNTS } from './constants.js'
 
 export function bankDetailsFor(id) {
   return BANK_ACCOUNTS.find((b) => b.id === id)?.details ?? ''
@@ -45,8 +45,7 @@ export function initialForm() {
     addressLine1: '',
     addressLine2: '',
     postalCode: '',
-    country: 'SG',
-    invoiceNumber: '1',
+    invoiceNumber: 'DEMO - TEST - 001',
     issueDate: format(new Date(), 'yyyy-MM-dd'),
     currency: 'SGD',
     items: [newLineItem()],
@@ -55,11 +54,8 @@ export function initialForm() {
     taxRate: '9',
     taxIsPercent: true,
     discountExpanded: false,
-    shippingExpanded: false,
     discountValue: '0',
     discountIsPercent: true,
-    shippingValue: '0',
-    shippingIsPercent: false,
     bankDetailsText: bankDetailsFor(BANK_ACCOUNTS[0].id),
     paymentTerms: '30',
     companyName: 'COMPANY NAME PTE. LTD.',
@@ -73,18 +69,11 @@ export function lineAmount(qtyStr, priceStr) {
   return q * p
 }
 
-export function countryNameFor(code) {
-  if (!code) return ''
-  return COUNTRIES.find((c) => c.code === code)?.name ?? code
-}
-
 /** Multi-line block for invoice preview (Bill to) */
 export function formatInvoiceAddress(form) {
   if (!form.addressVisible) return ''
   const line1 = form.addressLine1?.trim() ?? ''
   const line2 = form.addressLine2?.trim() ?? ''
   const postal = form.postalCode?.trim() ?? ''
-  const country = countryNameFor(form.country)
-  const cityLine = [postal, country].filter(Boolean).join(' ')
-  return [line1, line2, cityLine].filter(Boolean).join('\n')
+  return [line1, line2, postal].filter(Boolean).join('\n')
 }

@@ -841,7 +841,7 @@ body {
 
 /* Floating-label field geometry (themes often set input padding / min-height with !important). */
 #sleek-invoice-app .sleek-field-shell input.peer.pt-5 {
-  padding-top: 1.25rem !important;
+  padding-top: 1.35rem !important;
   padding-bottom: 0.25rem !important;
   padding-left: 0.75rem !important;
   padding-right: 0.75rem !important;
@@ -865,7 +865,7 @@ body {
 }
 
 #sleek-invoice-app .sleek-field-shell input.date-field-floating {
-  padding-top: 1.25rem !important;
+  padding-top: 1.35rem !important;
   padding-bottom: 0.25rem !important;
   padding-left: 0.75rem !important;
   padding-right: 2.5rem !important;
@@ -877,7 +877,7 @@ body {
 }
 
 #sleek-invoice-app .sleek-field-shell select {
-  padding-top: 1.25rem !important;
+  padding-top: 1.35rem !important;
   padding-bottom: 0.25rem !important;
   padding-left: 0.75rem !important;
   padding-right: 0.75rem !important;

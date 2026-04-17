@@ -11,9 +11,6 @@ export const PAYMENT_OPTIONS = [
   { value: '10', label: 'Due in 10 days' },
 ]
 
-/** Full ISO 3166-1 list for address country (see `countries.generated.js`). */
-export { COUNTRIES } from './countries.generated.js'
-
 export const BANK_ACCOUNTS = [
   {
     id: 'wise',

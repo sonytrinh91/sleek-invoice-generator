@@ -40,7 +40,6 @@ export const invoiceFormSchema = z.object({
   addressLine1: z.string(),
   addressLine2: z.string(),
   postalCode: z.string(),
-  country: z.string(),
   invoiceNumber: z.string().trim().min(1, 'Invoice number is required'),
   issueDate: z
     .string()
@@ -53,11 +52,8 @@ export const invoiceFormSchema = z.object({
   taxRate: z.string(),
   taxIsPercent: z.boolean(),
   discountExpanded: z.boolean(),
-  shippingExpanded: z.boolean(),
   discountValue: z.string(),
   discountIsPercent: z.boolean(),
-  shippingValue: z.string(),
-  shippingIsPercent: z.boolean(),
   bankDetailsText: z
     .string()
     .trim()

@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
-import { useEffect, useMemo, useRef } from 'react'
-import { FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form'
+import { useMemo, useRef } from 'react'
+import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useReactToPrint } from 'react-to-print'
 import { format, isValid } from 'date-fns'
@@ -13,21 +13,20 @@ import { InvoicePaymentSection } from './components/invoice/InvoicePaymentSectio
 import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.jsx'
 import { ItemsSection } from './components/invoice/ItemsSection.jsx'
 import { NotesSection } from './components/invoice/NotesSection.jsx'
-import { HeroSection } from './components/HeroSection.jsx'
-import { FaqSection } from './components/FaqSection.jsx'
-import { ReadyToGoSection } from './components/ReadyToGoSection.jsx'
-import { MoreThanInvoicingSection } from './components/MoreThanInvoicingSection.jsx'
-import { TrustedBySection } from './components/TrustedBySection.jsx'
-import { WhySleekSection } from './components/WhySleekSection.jsx'
-import { SimplicitySection } from './components/SimplicitySection.jsx'
-import { HowToCreateSection } from './components/HowToCreateSection.jsx'
-import { InvoiceComparisonSection } from './components/InvoiceComparisonSection.jsx'
+// import { HeroSection } from './components/HeroSection.jsx'
+// import { FaqSection } from './components/FaqSection.jsx'
+// import { ReadyToGoSection } from './components/ReadyToGoSection.jsx'
+// import { MoreThanInvoicingSection } from './components/MoreThanInvoicingSection.jsx'
+// import { TrustedBySection } from './components/TrustedBySection.jsx'
+// import { WhySleekSection } from './components/WhySleekSection.jsx'
+// import { SimplicitySection } from './components/SimplicitySection.jsx'
+// import { HowToCreateSection } from './components/HowToCreateSection.jsx'
+// import { InvoiceComparisonSection } from './components/InvoiceComparisonSection.jsx'
 import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
 import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
 import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
 import { invoiceFormSchema } from './invoice/invoiceSchema.js'
 import { submitZapierDownloadLead } from './integrations/zapierDownloadWebhook.js'
-import { syncCurrencyFromCountry } from './invoice/countryCurrency.js'
 import { fireHostEvent } from './invoice/hostFireEvent.js'
 import { isInvoiceDownloadReady } from './invoice/validation.js'
 import {
@@ -38,14 +37,7 @@ import {
 } from './invoice/utils.js'
 
 function InvoiceWorkspace({ printRef }) {
-  const { setValue } = useFormContext()
   const form = useWatch()
-  const country = form?.country
-
-  useEffect(() => {
-    if (!country) return
-    syncCurrencyFromCountry(setValue, country, { shouldDirty: false })
-  }, [country, setValue])
 
   const issueDateParsed = useMemo(
     () => parseIssueDate(form.issueDate),

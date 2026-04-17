@@ -1,16 +1,9 @@
-import { Controller, useFormContext } from 'react-hook-form'
-import { COUNTRIES } from '../../invoice/constants.js'
+import { useFormContext } from 'react-hook-form'
 import { AddOutlineButton } from './AddOutlineButton.jsx'
 import { Card, FloatingField } from './FormPrimitives.jsx'
-import { SearchableSelectCombobox } from './SearchableSelectCombobox.jsx'
-
-const COUNTRY_OPTIONS = COUNTRIES.map((c) => ({
-  value: c.code,
-  label: c.name,
-}))
 
 export function AddressSection() {
-  const { register, watch, control, setValue } = useFormContext()
+  const { register, watch, setValue } = useFormContext()
   const addressVisible = watch('addressVisible')
 
   return (
@@ -33,34 +26,13 @@ export function AddressSection() {
             autoComplete="address-line2"
             {...register('addressLine2')}
           />
-          <div className="flex items-end gap-2 sm:gap-3">
-            <FloatingField
-              id="address-postal"
-              label="Postal code"
-              autoComplete="postal-code"
-              title="Postal / ZIP code"
-              narrow
-              {...register('postalCode')}
-            />
-            <div className="min-w-0 flex-1">
-              <Controller
-                control={control}
-                name="country"
-                render={({ field }) => (
-                  <SearchableSelectCombobox
-                    id="address-country"
-                    label="Country"
-                    options={COUNTRY_OPTIONS}
-                    value={field.value}
-                    onValueChange={(v) => {
-                      field.onChange(v)
-                    }}
-                    toggleAriaLabel="Toggle country list"
-                  />
-                )}
-              />
-            </div>
-          </div>
+          <FloatingField
+            id="address-postal"
+            label="Postal code"
+            autoComplete="postal-code"
+            title="Postal / ZIP code"
+            {...register('postalCode')}
+          />
         </div>
       ) : (
         <AddOutlineButton
