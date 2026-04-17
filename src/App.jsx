@@ -141,7 +141,7 @@ function InvoiceWorkspace({ printRef }) {
         </section>
 
         <div className="flex w-full min-h-0 flex-col lg:col-span-6">
-          <div className="sleek-invoice-preview-sticky w-full">
+          <div className="w-full">
             <InvoicePreviewPanel
               ref={printRef}
               form={form}
@@ -170,7 +170,7 @@ export default function App() {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex w-full flex-col bg-white font-sans text-neutral-800">
+      <div className="flex w-full flex-col bg-white font-sans text-neutral-800 py-5">
         {/* <HeroSection /> */}
         <div className="flex w-full flex-col bg-white">
           {/* <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
@@ -180,7 +180,7 @@ export default function App() {
               download as PDF instantly - free, no account needed.
             </p>
           </div> */}
-          <div className="flex min-h-[min(750px,80dvh)] w-full flex-col">
+          <div className="flex w-full flex-col">
             <div className="sleek-page-container">
               <InvoiceWorkspace printRef={printRef} />
             </div>

@@ -56,8 +56,8 @@
   --color-accent-active: #0242a2 !important;
   isolation: isolate;
   /*
-   * Outer shell: flex + overflow hidden. Scrolling is on > .sleek-app-scroll so position:sticky works
-   * (flex + overflow-y on the same node breaks sticky in WebKit and many embeds).
+   * Outer shell: flex + overflow hidden. Scrolling is on > .sleek-app-scroll
+   * (flex + overflow-y on the same node breaks nested layout in WebKit and many embeds).
    */
   box-sizing: border-box;
   display: flex;
@@ -121,25 +121,30 @@
 }
 
 /*
- * WordPress / iframe shell (pages build): fill the iframe; scroll is on > .sleek-app-scroll (same as standalone).
- * wpEmbed postMessages viewport height so the iframe matches the embed area and sticky preview works.
+ * WordPress / iframe shell (pages build): document grows with content; wpEmbed postMessages content height.
  */
 html.sleek-wp-embed-root,
 body.sleek-wp-embed-body {
   box-sizing: border-box !important;
-  height: 100% !important;
+  height: auto !important;
   min-height: 100% !important;
   max-height: none !important;
   margin: 0 !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 #sleek-invoice-app.sleek-wp-embed {
   box-sizing: border-box !important;
   min-height: 0 !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  overflow: hidden !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#sleek-invoice-app.sleek-wp-embed > .sleek-app-scroll {
+  flex: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
 }
 
 /*
@@ -1022,8 +1027,7 @@ body {
   background-color: #f9fafb !important;
 }
 
-/* Two-column layout: stack on small screens; lg stretch so the preview column matches form row height
-   (required for position:sticky until the form ends). */
+/* Two-column layout: stack on small screens; lg stretch so the preview column matches form row height. */
 #sleek-invoice-app .sleek-workspace-columns {
   display: grid !important;
   align-items: start !important;
@@ -1032,15 +1036,6 @@ body {
 @media (min-width: 1024px) {
   #sleek-invoice-app .sleek-workspace-columns {
     align-items: stretch !important;
-  }
-}
-
-/* WP themes often reset nested divs; keep preview pinned on large screens. */
-@media (min-width: 1024px) {
-  #sleek-invoice-app .sleek-invoice-preview-sticky {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 10 !important;
   }
 }
 
@@ -1086,12 +1081,6 @@ body {
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
-  }
-
-  #sleek-invoice-app .sleek-invoice-preview-sticky {
-    position: static !important;
-    top: auto !important;
-    z-index: auto !important;
   }
 
   #sleek-invoice-app .invoice-form-panel,

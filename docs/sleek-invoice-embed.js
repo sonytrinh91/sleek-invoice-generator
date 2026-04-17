@@ -2,7 +2,7 @@
  * Sleek Invoice — iframe embed loader (HubSpot-style container + script).
  * Place a div with data-src pointing at docs/index.html (after `npm run build:pages`), then load this file once per page.
  *
- * Resize iframe to the embed viewport via postMessage (inner app scrolls; invoice preview can use sticky).
+ * Resize iframe to document content height via postMessage (full embed height, no inner scroll trap).
  * To keep the host container’s max-height (no unlock), set data-sleek-invoice-constrain="1".
  */
 ;(function () {

@@ -1,19 +1,17 @@
 /**
- * Iframe / parent page: set the host iframe height to the embed viewport (postMessage + frameElement).
- * Scrolling stays inside `.sleek-app-scroll` so `position:sticky` on the invoice preview works.
- * (Sizing the iframe to full document height moves scroll to the parent and breaks sticky.)
+ * Iframe / parent page: set the host iframe height to match app content (postMessage + frameElement).
  */
 export function initWordPressEmbed(rootEl) {
   if (!rootEl) return
 
-  const measureFrameHeight = () => {
-    const vv = window.visualViewport
-    const h = vv?.height ?? window.innerHeight
-    return Math.ceil(Math.max(1, h))
+  const measureContentHeight = () => {
+    const scroll = rootEl.querySelector('.sleek-app-scroll')
+    const el = scroll ?? rootEl
+    return Math.ceil(Math.max(1, el.scrollHeight))
   }
 
   const sync = () => {
-    const h = measureFrameHeight()
+    const h = measureContentHeight()
     if (h <= 0) return
 
     try {
