@@ -4,10 +4,8 @@ import { join } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { viteSingleFile } from 'vite-plugin-singlefile'
-
 // `vite build` → `dist/` (split assets, local preview).
-// `vite build --mode pages` → `docs/` (single-file app + embed helper for GitHub Pages / iframes).
+// `vite build --mode pages` → `docs/` (split JS/CSS for cacheable loads; embed helper for GitHub Pages / iframes).
 export default defineConfig(({ mode }) => {
   const pages = mode === 'pages'
 
@@ -51,7 +49,6 @@ export default defineConfig(({ mode }) => {
                 },
               },
             },
-            viteSingleFile(),
             {
               name: 'pages-docs-artifacts',
               closeBundle() {
@@ -62,21 +59,6 @@ export default defineConfig(({ mode }) => {
                 } catch {
                   return
                 }
-                const scriptStart = full.indexOf('<script type="module"')
-                if (scriptStart === -1) return
-                const scriptClose = full.indexOf('</script>', scriptStart)
-                if (scriptClose === -1) return
-                const scriptHtml = full
-                  .slice(scriptStart, scriptClose + '</script>'.length)
-                  .trim()
-
-                const styleStart = full.indexOf('<style', scriptClose)
-                if (styleStart === -1) return
-                const styleClose = full.indexOf('</style>', styleStart)
-                if (styleClose === -1) return
-                const styleHtml = full
-                  .slice(styleStart, styleClose + '</style>'.length)
-                  .trim()
 
                 const buildMatch = full.match(
                   /name="sleek-invoice-build"\s+content="([^"]+)"/,
@@ -92,9 +74,48 @@ export default defineConfig(({ mode }) => {
                   staticInner = full.slice(si + STATIC_START.length, ei).trim()
                 }
 
+                /** External assets from split build (parallel load + long-term cache). */
+                const linkTags = []
+                const linkRe =
+                  /<link\b[^>]*\brel=["']stylesheet["'][^>]*>/gi
+                let lm
+                while ((lm = linkRe.exec(full)) !== null) linkTags.push(lm[0])
+
+                const scriptTags = []
+                const scriptRe =
+                  /<script\b[^>]*\btype=["']module["'][^>]*>\s*<\/script>/gi
+                let sm
+                while ((sm = scriptRe.exec(full)) !== null) {
+                  scriptTags.push(sm[0])
+                }
+
+                let styleHtml = ''
+                let scriptHtml = ''
+                if (linkTags.length > 0 || scriptTags.length > 0) {
+                  styleHtml = linkTags.join('\n')
+                  scriptHtml = scriptTags.join('\n')
+                } else {
+                  /* Fallback: legacy single-file inline style + module script */
+                  const scriptStart = full.indexOf('<script type="module"')
+                  if (scriptStart === -1) return
+                  const scriptClose = full.indexOf('</script>', scriptStart)
+                  if (scriptClose === -1) return
+                  scriptHtml = full
+                    .slice(scriptStart, scriptClose + '</script>'.length)
+                    .trim()
+
+                  const styleStart = full.indexOf('<style', scriptClose)
+                  if (styleStart === -1) return
+                  const styleClose = full.indexOf('</style>', styleStart)
+                  if (styleClose === -1) return
+                  styleHtml = full
+                    .slice(styleStart, styleClose + '</style>'.length)
+                    .trim()
+                }
+
                 writeFileSync(
                   join(outDir, 'embed.html'),
-                  `<!-- Sleek invoice inline fragment (optional). Build: ${buildId} -->
+                  `<!-- Sleek invoice fragment (optional). Build: ${buildId} -->
 ${styleHtml}
 <div id="sleek-invoice-app" class="sleek-wp-embed">${staticInner ? `\n${staticInner}\n` : ''}</div>
 ${scriptHtml}
