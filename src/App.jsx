@@ -1,18 +1,18 @@
-import { clsx } from 'clsx'
-import { useMemo, useRef } from 'react'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useReactToPrint } from 'react-to-print'
-import { format, isValid } from 'date-fns'
-import { AddressSection } from './components/invoice/AddressSection.jsx'
-import { CompanySection } from './components/invoice/CompanySection.jsx'
-import { BankDetailsSection } from './components/invoice/BankDetailsSection.jsx'
-import { CustomerSection } from './components/invoice/CustomerSection.jsx'
-import { DocumentSection } from './components/invoice/DocumentSection.jsx'
-import { InvoicePaymentSection } from './components/invoice/InvoicePaymentSection.jsx'
-import { InvoicePreviewPanel } from './components/invoice/InvoicePreviewPanel.jsx'
-import { ItemsSection } from './components/invoice/ItemsSection.jsx'
-import { NotesSection } from './components/invoice/NotesSection.jsx'
+import { clsx } from "clsx";
+import { useMemo, useRef } from "react";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useReactToPrint } from "react-to-print";
+import { format, isValid } from "date-fns";
+import { AddressSection } from "./components/invoice/AddressSection.jsx";
+import { CompanySection } from "./components/invoice/CompanySection.jsx";
+import { BankDetailsSection } from "./components/invoice/BankDetailsSection.jsx";
+import { CustomerSection } from "./components/invoice/CustomerSection.jsx";
+import { DocumentSection } from "./components/invoice/DocumentSection.jsx";
+import { InvoicePaymentSection } from "./components/invoice/InvoicePaymentSection.jsx";
+import { InvoicePreviewPanel } from "./components/invoice/InvoicePreviewPanel.jsx";
+import { ItemsSection } from "./components/invoice/ItemsSection.jsx";
+import { NotesSection } from "./components/invoice/NotesSection.jsx";
 // import { HeroSection } from './components/HeroSection.jsx'
 // import { FaqSection } from './components/FaqSection.jsx'
 // import { ReadyToGoSection } from './components/ReadyToGoSection.jsx'
@@ -22,75 +22,69 @@ import { NotesSection } from './components/invoice/NotesSection.jsx'
 // import { SimplicitySection } from './components/SimplicitySection.jsx'
 // import { HowToCreateSection } from './components/HowToCreateSection.jsx'
 // import { InvoiceComparisonSection } from './components/InvoiceComparisonSection.jsx'
-import { SubtotalSection } from './components/invoice/SubtotalSection.jsx'
-import { DISPLAY_DATE_FORMAT } from './invoice/constants.js'
-import { computeInvoiceTotals } from './invoice/invoiceTotals.js'
-import { invoiceFormSchema } from './invoice/invoiceSchema.js'
-import { submitZapierDownloadLead } from './integrations/zapierDownloadWebhook.js'
-import { fireHostEvent } from './invoice/hostFireEvent.js'
-import { isInvoiceDownloadReady } from './invoice/validation.js'
+import { SubtotalSection } from "./components/invoice/SubtotalSection.jsx";
+import { DISPLAY_DATE_FORMAT } from "./invoice/constants.js";
+import { computeInvoiceTotals } from "./invoice/invoiceTotals.js";
+import { invoiceFormSchema } from "./invoice/invoiceSchema.js";
+import { submitZapierDownloadLead } from "./integrations/zapierDownloadWebhook.js";
+import { isInvoiceDownloadReady } from "./invoice/validation.js";
 import {
   computeDueDate,
   initialForm,
   lineAmount,
   parseIssueDate,
-} from './invoice/utils.js'
+} from "./invoice/utils.js";
 
 function InvoiceWorkspace({ printRef }) {
-  const form = useWatch()
+  const form = useWatch();
 
   const issueDateParsed = useMemo(
     () => parseIssueDate(form.issueDate),
     [form.issueDate],
-  )
+  );
   const dueDate = useMemo(
     () =>
       isValid(issueDateParsed)
         ? computeDueDate(form.issueDate, form.paymentTerms)
         : null,
     [form.issueDate, form.paymentTerms, issueDateParsed],
-  )
+  );
 
   const lineAmounts = (form.items ?? []).map((it) =>
     lineAmount(it.qty, it.unitPrice),
-  )
-  const subtotal = lineAmounts.reduce((a, b) => a + b, 0)
+  );
+  const subtotal = lineAmounts.reduce((a, b) => a + b, 0);
 
   const totals = useMemo(
     () => computeInvoiceTotals(form, subtotal),
     [form, subtotal],
-  )
+  );
 
-  const canDownload = useMemo(
-    () => isInvoiceDownloadReady(form),
-    [form],
-  )
+  const canDownload = useMemo(() => isInvoiceDownloadReady(form), [form]);
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: () => '',
+    documentTitle: () => "",
     pageStyle: `
       @page { margin: 12mm; size: auto; }
       @media print {
         body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       }
     `,
-  })
+  });
 
   const issueDisplay = isValid(issueDateParsed)
     ? format(issueDateParsed, DISPLAY_DATE_FORMAT)
-    : '—'
-  const dueDisplay = dueDate
-    ? format(dueDate, DISPLAY_DATE_FORMAT)
-    : '—'
+    : "—";
+  const dueDisplay = dueDate ? format(dueDate, DISPLAY_DATE_FORMAT) : "—";
 
   const billTo =
-    [form.customerName, form.customerEmail].filter(Boolean).join(', ') ||
-    'Customer Name, customer@email.com'
+    [form.customerName, form.customerEmail].filter(Boolean).join(", ") ||
+    "Customer Name, customer@email.com";
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:items-stretch lg:gap-x-0 lg:gap-y-0">
+    <div className="flex w-full flex-col relative">
+      <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:items-start lg:gap-x-0 lg:gap-y-0">
         <section
           aria-label="Invoice form"
           className="invoice-form-panel w-full border-gray-200 px-0 lg:col-span-6 lg:pr-4 pb-4"
@@ -116,14 +110,13 @@ function InvoiceWorkspace({ printRef }) {
                 disabled={!canDownload}
                 onClick={() => {
                   if (canDownload) {
-                    fireHostEvent('SG_CTA_Tool_Invoice_Generator_Active_Download_1')
-                    submitZapierDownloadLead(form)
+                    submitZapierDownloadLead(form);
                   }
-                  handlePrint()
+                  handlePrint();
                 }}
                 className={clsx(
-                  'sleek-download-btn sleek-ds-btn sleek-ds-btn--primary w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition',
-                  'disabled:cursor-not-allowed disabled:opacity-45',
+                  "sleek-download-btn sleek-ds-btn sleek-ds-btn--primary w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition",
+                  "disabled:cursor-not-allowed disabled:opacity-45",
                 )}
               >
                 Download
@@ -132,61 +125,37 @@ function InvoiceWorkspace({ printRef }) {
           </form>
         </section>
 
-        <div className="flex w-full min-h-0 flex-col lg:col-span-6">
-          <div className="w-full">
-            <InvoicePreviewPanel
-              ref={printRef}
-              form={form}
-              billTo={billTo}
-              issueDisplay={issueDisplay}
-              dueDisplay={dueDisplay}
-              lineAmounts={lineAmounts}
-              subtotal={subtotal}
-              totals={totals}
-            />
-          </div>
+        <div className="w-full lg:col-span-6 lg:sticky lg:top-4 self-start overflow-y-auto hidden-scrollbar">
+          <InvoicePreviewPanel
+            ref={printRef}
+            form={form}
+            billTo={billTo}
+            issueDisplay={issueDisplay}
+            dueDisplay={dueDisplay}
+            lineAmounts={lineAmounts}
+            subtotal={subtotal}
+            totals={totals}
+          />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function App() {
-  const printRef = useRef(null)
+  const printRef = useRef(null);
   const methods = useForm({
     resolver: zodResolver(invoiceFormSchema),
     defaultValues: initialForm(),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-  })
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
 
   return (
     <FormProvider {...methods}>
       <div className="flex w-full flex-col bg-white font-sans text-neutral-800 py-5">
-        {/* <HeroSection /> */}
-        <div className="flex w-full flex-col bg-white">
-          {/* <div className="sleek-tool-intro sleek-page-container pb-2 pt-11">
-            <h2>Create an Invoice Online in Seconds</h2>
-            <p className="mb-7 mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed ">
-              Fill in the form below and get a professional online invoice template ready to
-              download as PDF instantly - free, no account needed.
-            </p>
-          </div> */}
-          <div className="flex w-full flex-col">
-            <div className="sleek-page-container">
-              <InvoiceWorkspace printRef={printRef} />
-            </div>
-          </div>
-        </div>
-        {/* <WhySleekSection />
-        <TrustedBySection />
-        <SimplicitySection />
-        <HowToCreateSection />
-        <InvoiceComparisonSection />
-        <MoreThanInvoicingSection />
-        <FaqSection />
-        <ReadyToGoSection /> */}
+        <InvoiceWorkspace printRef={printRef} />
       </div>
     </FormProvider>
-  )
+  );
 }
