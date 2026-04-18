@@ -153,7 +153,7 @@ export default function App() {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex w-full flex-col bg-white font-sans text-neutral-800 py-5">
+      <div className="flex w-full flex-col bg-white font-sans">
         <InvoiceWorkspace printRef={printRef} />
       </div>
     </FormProvider>

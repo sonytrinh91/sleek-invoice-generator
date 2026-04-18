@@ -36,7 +36,7 @@ export function DocumentSection() {
           control={control}
           name="currency"
           render={({ field }) => (
-            <div className="min-w-0">
+            <div className="min-w-0 w-full">
               <CurrencyCombobox
                 id="document-currency"
                 value={field.value}
