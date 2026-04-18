@@ -83,7 +83,7 @@ function InvoiceWorkspace({ printRef }) {
     "Customer Name, customer@email.com";
 
   return (
-    <div className="flex w-full flex-col relative">
+    <div className="flex w-full flex-col relative p-4">
       <div className="sleek-workspace-columns grid w-full grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:items-start lg:gap-x-0 lg:gap-y-0">
         <section
           aria-label="Invoice form"
