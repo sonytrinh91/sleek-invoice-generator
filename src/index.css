@@ -78,6 +78,8 @@
  * Mirror tokens + font so Tailwind (:is important) and fg-* utilities resolve in print preview.
  */
 .sleek-invoice-print-root {
+  width: 100%;
+  max-width: 100%;
   --input-value-text: #363636;
   --text-fg: #040015;
   --text-fg-strong: #040015;

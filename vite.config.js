@@ -4,18 +4,23 @@ import { join } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { viteSingleFile } from 'vite-plugin-singlefile'
+
 // `vite build` → `dist/` (split assets, local preview).
-// `vite build --mode pages` → `docs/` (split JS/CSS for cacheable loads; embed helper for GitHub Pages / iframes).
+// `vite build --mode pages` → `docs/` (split JS/CSS; GitHub Pages / iframe embeds).
+// `vite build --mode single` → `dist-single/index.html` (vite-plugin-singlefile: one inlined HTML file).
 export default defineConfig(({ mode }) => {
   const pages = mode === 'pages'
+  const single = mode === 'single'
+  const pagesLike = pages || single
 
   return {
     base: './',
-    publicDir: pages ? false : 'public',
+    publicDir: pagesLike ? false : 'public',
     plugins: [
       react(),
       tailwindcss(),
-      ...(pages
+      ...(pagesLike
         ? [
             {
               name: 'pages-strip-head',
@@ -49,6 +54,17 @@ export default defineConfig(({ mode }) => {
                 },
               },
             },
+          ]
+        : []),
+      ...(single
+        ? [
+            viteSingleFile({
+              removeViteModuleLoader: true,
+            }),
+          ]
+        : []),
+      ...(pages
+        ? [
             /** `publicDir` is off in pages mode — copy WordPress / iframe helper into `docs/`. */
             {
               name: 'pages-copy-embed-helper',
@@ -73,7 +89,7 @@ export default defineConfig(({ mode }) => {
         : []),
     ],
     build: {
-      outDir: pages ? 'docs' : 'dist',
+      outDir: single ? 'dist-single' : pages ? 'docs' : 'dist',
       emptyOutDir: true,
     },
   }

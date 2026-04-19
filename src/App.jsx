@@ -13,17 +13,12 @@ import { InvoicePaymentSection } from "./components/invoice/InvoicePaymentSectio
 import { InvoicePreviewPanel } from "./components/invoice/InvoicePreviewPanel.jsx";
 import { ItemsSection } from "./components/invoice/ItemsSection.jsx";
 import { NotesSection } from "./components/invoice/NotesSection.jsx";
-// import { HeroSection } from './components/HeroSection.jsx'
-// import { FaqSection } from './components/FaqSection.jsx'
-// import { ReadyToGoSection } from './components/ReadyToGoSection.jsx'
-// import { MoreThanInvoicingSection } from './components/MoreThanInvoicingSection.jsx'
-// import { TrustedBySection } from './components/TrustedBySection.jsx'
-// import { WhySleekSection } from './components/WhySleekSection.jsx'
-// import { SimplicitySection } from './components/SimplicitySection.jsx'
-// import { HowToCreateSection } from './components/HowToCreateSection.jsx'
-// import { InvoiceComparisonSection } from './components/InvoiceComparisonSection.jsx'
 import { SubtotalSection } from "./components/invoice/SubtotalSection.jsx";
-import { DISPLAY_DATE_FORMAT } from "./invoice/constants.js";
+import {
+  DEMO_CUSTOMER_EMAIL,
+  DEMO_CUSTOMER_NAME,
+  DISPLAY_DATE_FORMAT,
+} from "./invoice/constants.js";
 import { computeInvoiceTotals } from "./invoice/invoiceTotals.js";
 import { invoiceFormSchema } from "./invoice/invoiceSchema.js";
 import { submitZapierDownloadLead } from "./integrations/zapierDownloadWebhook.js";
@@ -78,9 +73,11 @@ function InvoiceWorkspace({ printRef }) {
     : "—";
   const dueDisplay = dueDate ? format(dueDate, DISPLAY_DATE_FORMAT) : "—";
 
-  const billTo =
-    [form.customerName, form.customerEmail].filter(Boolean).join(", ") ||
-    "Customer Name, customer@email.com";
+  /** Invoice preview only: demo placeholders when fields empty (not form defaults). */
+  const billTo = [
+    form.customerName?.trim() || DEMO_CUSTOMER_NAME,
+    form.customerEmail?.trim() || DEMO_CUSTOMER_EMAIL,
+  ].join("\n");
 
   return (
     <div className="flex w-full flex-col relative p-4">

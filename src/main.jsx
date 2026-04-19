@@ -13,7 +13,10 @@ function isEmbeddedFullDocumentShell() {
   return kids.length === 1 && kids[0] === rootEl
 }
 
-if (import.meta.env.MODE === 'pages') {
+const isPagesShell =
+  import.meta.env.MODE === 'pages' || import.meta.env.MODE === 'single'
+
+if (isPagesShell) {
   rootEl?.classList.add('sleek-wp-embed')
   if (isEmbeddedFullDocumentShell()) {
     document.documentElement.classList.add('sleek-wp-embed-root')
@@ -23,16 +26,10 @@ if (import.meta.env.MODE === 'pages') {
 
 createRoot(rootEl).render(
   <StrictMode>
-    {/*
-      Scroll on .sleek-app-scroll (not on #sleek-invoice-app) for a bounded flex shell in WebKit.
-      Pages embed: wpEmbed sizes the iframe to content height; inner overflow is overridden in CSS.
-    */}
-    <div className="sleek-app-scroll min-h-0 w-full min-w-0 flex-1 overflow-x-clip overflow-y-auto overscroll-contain">
       <App />
-    </div>
   </StrictMode>,
 )
 
-if (import.meta.env.MODE === 'pages' && rootEl) {
+if (isPagesShell && rootEl) {
   queueMicrotask(() => initWordPressEmbed(rootEl))
 }

@@ -1,5 +1,9 @@
 export const ACCENT = '#0F6DFA'
 
+/** Preview / demo placeholders when a field is still empty */
+export const DEMO_CUSTOMER_NAME = 'Customer Name'
+export const DEMO_CUSTOMER_EMAIL = 'customer@email.com'
+
 /** date-fns pattern for issue/due dates on the invoice preview */
 export const DISPLAY_DATE_FORMAT = 'dd-MM-yyyy'
 
