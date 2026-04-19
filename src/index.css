@@ -679,6 +679,13 @@ body.sleek-wp-embed-body {
 
 :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__meta {
   display: grid !important;
+  align-items: start !important;
+}
+
+@media (min-width: 640px) {
+  :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__meta {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) !important;
+  }
 }
 
 :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__logo {

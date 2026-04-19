@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import { User } from 'lucide-react'
 import { formatInvoiceAddress, formatMoney } from '../../invoice/utils.js'
 
@@ -5,11 +6,11 @@ const labelClass = 'text-xs font-semibold leading-tight text-fg-muted'
 const valueClass =
   'mt-1.5 text-sm font-normal leading-snug text-fg'
 
-function MetaBlock({ label, children }) {
+function MetaBlock({ label, children, valueClassName }) {
   return (
-    <div>
+    <div className="min-w-0 self-start">
       <div className={labelClass}>{label}</div>
-      <div className={valueClass}>{children}</div>
+      <div className={clsx(valueClass, valueClassName)}>{children}</div>
     </div>
   )
 }
@@ -58,33 +59,30 @@ export function InvoiceSheet({
         {logoBlock}
       </div>
 
-      <div className="invoice-sheet__meta mb-12 grid grid-cols-1 items-start gap-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-x-10 sm:gap-y-0">
-        <div className="flex flex-col gap-7">
-          <MetaBlock label="Number">
-            {form.invoiceNumber || '—'}
+      {/*
+        Row-wise 2-column grid so each row aligns at the top (Number|Bill to, Issue|From, Due|Address).
+        Avoids independent flex columns drifting when Bill to is taller than Number.
+      */}
+      <div className="invoice-sheet__meta mb-12 grid grid-cols-1 items-start gap-x-10 gap-y-7 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+        <MetaBlock label="Number">{form.invoiceNumber || '—'}</MetaBlock>
+        <MetaBlock label="Bill to">
+          <span className="whitespace-pre-line">{billTo}</span>
+        </MetaBlock>
+        <MetaBlock label="Issue date">{issueDisplay}</MetaBlock>
+        <MetaBlock label="From">
+          <span className="whitespace-pre-line">
+            {form.companyName?.trim() || '—'}
+          </span>
+        </MetaBlock>
+        <MetaBlock label="Due date">{dueDisplay}</MetaBlock>
+        {addressBlock ? (
+          <MetaBlock
+            label="Address"
+            valueClassName="whitespace-pre-line text-fg-secondary"
+          >
+            {addressBlock}
           </MetaBlock>
-          <MetaBlock label="Issue date">{issueDisplay}</MetaBlock>
-          <MetaBlock label="Due date">{dueDisplay}</MetaBlock>
-        </div>
-
-        <div className="flex flex-col gap-7">
-          <MetaBlock label="Bill to">
-            <span className="whitespace-pre-line">{billTo}</span>
-          </MetaBlock>
-          <MetaBlock label="From">
-            <span className="whitespace-pre-line">
-              {form.companyName?.trim() || '—'}
-            </span>
-          </MetaBlock>
-          {addressBlock ? (
-            <div>
-              <div className={labelClass}>Address</div>
-              <div className={`${valueClass} whitespace-pre-line text-fg-secondary`}>
-                {addressBlock}
-              </div>
-            </div>
-          ) : null}
-        </div>
+        ) : null}
       </div>
 
       <div className="invoice-sheet__table-card mb-10 overflow-hidden rounded-lg border border-neutral-200 bg-white">
@@ -177,10 +175,10 @@ export function InvoiceSheet({
 
       {form.bankDetailsText.trim() ? (
         <div className="mt-2">
-          <h4 className="mb-3 text-xs! font-semibold text-fg-strong">
+          <span className="text-xs! font-semibold text-fg-strong">
             Bank details
-          </h4>
-          <div className="space-y-1.5 text-[14px] leading-relaxed text-fg-secondary">
+          </span>
+          <div className="space-y-1.5 mt-1.5 text-[14px] leading-relaxed text-fg-secondary">
             {form.bankDetailsText.split('\n').map((line, idx) => (
               <p key={idx}>{line || '\u00a0'}</p>
             ))}
