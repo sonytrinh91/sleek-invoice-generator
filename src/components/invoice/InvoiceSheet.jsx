@@ -52,9 +52,9 @@ export function InvoiceSheet({
   return (
     <div className="invoice-sheet text-base font-normal leading-normal text-fg antialiased">
       <div className="invoice-sheet__header mb-10 flex items-start justify-between gap-4">
-        <h3 className="min-w-0 flex-1 text-[1.375rem] font-semibold leading-snug tracking-tight text-fg-strong">
+        <h4 className="min-w-0 flex-1 text-[1.375rem] font-semibold leading-snug tracking-tight text-fg-strong">
           Invoice
-        </h3>
+        </h4>
         {logoBlock}
       </div>
 
@@ -92,33 +92,33 @@ export function InvoiceSheet({
           <table className="sleek-invoice-sheet-table w-full border-collapse text-[14px]">
             <thead>
               <tr className="bg-neutral-100">
-                <th className="px-4 py-3 text-left text-xs font-bold text-fg-strong">
+                <th className="px-4 py-3 text-left text-xs! font-bold text-fg-strong">
                   Description
                 </th>
-                <th className="w-[4.5rem] px-4 py-3 text-right text-xs font-bold text-fg-strong">
+                <th className="w-[4.5rem] px-4 py-3 text-right text-xs! font-bold text-fg-strong">
                   Qty
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-bold text-fg-strong">
+                <th className="px-4 py-3 text-right text-xs! font-bold text-fg-strong">
                   Unit price
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-bold text-fg-strong">
+                <th className="px-4 py-3 text-right text-xs! font-bold text-fg-strong">
                   Amount
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white">
               {form.items.map((item, i) => (
-                <tr key={item.id}>
-                  <td className="px-4 py-3.5 text-fg-body">
+                <tr key={item.id} className="bg-white">
+                  <td className="bg-white px-4 py-3.5 text-xs! text-fg-body">
                     {item.description.trim() || 'Item description'}
                   </td>
-                  <td className="px-4 py-3.5 text-right tabular-nums text-fg-body">
+                  <td className="bg-white px-4 py-3.5 text-right text-xs! text-fg-body">
                     {item.qty || '0'}
                   </td>
-                  <td className="px-4 py-3.5 text-right tabular-nums text-fg-body">
+                  <td className="bg-white px-4 py-3.5 text-right text-xs! text-fg-body">
                     {formatMoney(parseFloat(item.unitPrice) || 0, cur)}
                   </td>
-                  <td className="px-4 py-3.5 text-right tabular-nums text-fg-body">
+                  <td className="bg-white px-4 py-3.5 text-right text-xs! text-fg-body">
                     {formatMoney(lineAmounts[i], cur)}
                   </td>
                 </tr>
@@ -129,29 +129,29 @@ export function InvoiceSheet({
         {/* No border-t here: last table row already has a bottom rule; avoids a doubled line with themes. */}
         <div className="invoice-sheet__totals space-y-1 bg-white px-4 py-3.5 text-[14px]">
           <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-            <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
+            <span className="text-xs! font-medium tracking-wide text-fg-muted">
               Subtotal
             </span>
-            <span className="tabular-nums font-medium text-fg-body">
+            <span className="font-medium text-fg-body">
               {formatMoney(t.itemsSubtotal, cur)}
             </span>
           </div>
           {form.taxEnabled ? (
             <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-              <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
+              <span className="text-xs! font-medium uppercase tracking-wide text-fg-muted">
                 GST
               </span>
-              <span className="tabular-nums font-medium text-fg-body">
+              <span className="font-medium text-fg-body">
                 {formatMoney(t.taxAmount, cur)}
               </span>
             </div>
           ) : null}
           {t.discountAmount > 1e-9 ? (
             <div className="invoice-sheet__total-row flex items-center justify-between gap-4">
-              <span className="text-xs font-medium uppercase tracking-wide text-fg-muted">
+              <span className="text-xs! font-medium uppercase tracking-wide text-fg-muted">
                 Discount
               </span>
-              <span className="tabular-nums font-medium text-fg-body">
+              <span className="font-medium text-fg-body">
                 {formatMoney(-t.discountAmount, cur)}
               </span>
             </div>
@@ -159,7 +159,7 @@ export function InvoiceSheet({
           <div className="my-2 border-t border-neutral-200/90" />
           <div className="invoice-sheet__total-row invoice-sheet__total-row--grand flex items-center justify-between gap-4 pt-0.5">
             <span className="text-sm font-bold text-fg-strong">Total</span>
-            <span className="text-sm font-bold tabular-nums text-accent">
+            <span className="text-sm font-bold text-accent">
               {formatMoney(t.grandTotal, cur)}
             </span>
           </div>
@@ -168,8 +168,8 @@ export function InvoiceSheet({
 
       {form.notes.trim() ? (
         <div className="mb-10">
-          <h4 className="mb-3 text-xs font-semibold text-fg-strong">Notes</h4>
-          <p className="whitespace-pre-line text-[14px] leading-relaxed text-fg-secondary">
+          <h4 className="mb-3 text-xs! font-semibold text-fg-strong">Notes</h4>
+          <p className="whitespace-pre-line text-xs! leading-relaxed text-fg-secondary">
             {form.notes}
           </p>
         </div>
@@ -177,10 +177,10 @@ export function InvoiceSheet({
 
       {form.bankDetailsText.trim() ? (
         <div className="mt-2">
-          <h4 className="mb-3 text-xs font-semibold text-fg-strong">
+          <h4 className="mb-3 text-xs! font-semibold text-fg-strong">
             Bank details
           </h4>
-          <div className="space-y-1.5 text-sm leading-relaxed text-fg-secondary">
+          <div className="space-y-1.5 text-[14px] leading-relaxed text-fg-secondary">
             {form.bankDetailsText.split('\n').map((line, idx) => (
               <p key={idx}>{line || '\u00a0'}</p>
             ))}

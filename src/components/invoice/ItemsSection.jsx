@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { itemsSectionErrorLine } from "../../invoice/sectionErrors.js";
 import { formatMoney, lineAmount, newLineItem } from "../../invoice/utils.js";
 import { AddOutlineButton } from "./AddOutlineButton.jsx";
-import { OutlinedInput, sectionFooterErrorClass } from "./FormPrimitives.jsx";
+import { OutlinedInput, sectionFooterErrorClass, FieldLabel } from "./FormPrimitives.jsx";
 
 export function ItemsSection() {
   const {
@@ -32,7 +32,7 @@ export function ItemsSection() {
 
   return (
     <section className="min-w-0 border border-gray-100 bg-white p-6">
-      <h2 className="mb-3 text-lg font-semibold text-[#040015]">Items</h2>
+      <FieldLabel>Items</FieldLabel>
 
       <div className="sleek-items-stack flex min-w-0 flex-col gap-4">
         {fields.map((field, index) => (

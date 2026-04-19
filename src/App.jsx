@@ -122,7 +122,7 @@ function InvoiceWorkspace({ printRef }) {
           </form>
         </section>
 
-        <div className="w-full lg:col-span-6 lg:sticky lg:top-4 self-start overflow-y-auto hidden-scrollbar">
+        <div className="w-full lg:col-span-6 lg:sticky lg:top-10 self-start overflow-y-auto hidden-scrollbar">
           <InvoicePreviewPanel
             ref={printRef}
             form={form}

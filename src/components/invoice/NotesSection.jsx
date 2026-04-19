@@ -1,13 +1,13 @@
 import { useFormContext } from 'react-hook-form'
 import { Bot } from 'lucide-react'
-import { Card } from './FormPrimitives.jsx'
+import { Card, FieldLabel } from './FormPrimitives.jsx'
 
 export function NotesSection() {
   const { register } = useFormContext()
 
   return (
     <Card>
-      <h2 className="mb-3 text-lg font-semibold text-[#040015]">Notes</h2>
+      <FieldLabel>Notes</FieldLabel>
       <div className="sleek-field-shell relative rounded border border-gray-200 bg-white transition-colors focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/25">
         <label
           htmlFor="invoice-notes"

@@ -459,7 +459,7 @@ export const FloatingSelect = forwardRef(function FloatingSelect(
 
 export function FieldLabel({ children }) {
   return (
-    <h2 className="mb-3 text-lg font-semibold text-[#040015]">{children}</h2>
+    <h4 className="mb-3 text-sm! font-semibold text-[#040015]">{children}</h4>
   )
 }
 

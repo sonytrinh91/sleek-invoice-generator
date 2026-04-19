@@ -648,10 +648,21 @@ body.sleek-wp-embed-body {
 
 :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table tbody {
   display: table-row-group !important;
+  background-color: #ffffff !important;
 }
 
-:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table tr {
+/* Host themes (e.g. WP) often stripe tbody rows gray — force data rows white under our sheet. */
+:is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table tbody tr {
   display: table-row !important;
+  background-color: #ffffff !important;
+}
+
+:is(#sleek-invoice-app, .sleek-invoice-print-root)
+  .invoice-sheet
+  table.sleek-invoice-sheet-table
+  tbody
+  td {
+  background-color: #ffffff !important;
 }
 
 :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table th,
