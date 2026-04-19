@@ -60,7 +60,9 @@ function InvoiceWorkspace({ printRef }) {
   const handlePrint = useReactToPrint({
     contentRef: printRef,
     documentTitle: () => "",
+    /** Injected into the print iframe <head> (along with cloned app styles). Fonts + color accuracy. */
     pageStyle: `
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
       @page { margin: 12mm; size: auto; }
       @media print {
         body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }

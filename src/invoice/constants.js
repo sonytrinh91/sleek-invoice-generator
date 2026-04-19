@@ -20,7 +20,7 @@ export const BANK_ACCOUNTS = [
     id: 'wise',
     label: 'Wise - Multi currency',
     details:
-      'Pay via bank transfer - \nBank Name - \nAccount Number -',
+      'Pay via bank transfer - \nBank Name - \nAccount Number - ',
   },
   {
     id: 'dbs',

@@ -20,19 +20,24 @@ export const InvoicePreviewPanel = forwardRef(function InvoicePreviewPanel(
         </h2>
         <div className="w-full print:block print:scale-100">
           <div className="w-full min-w-0 origin-top print:scale-100">
-            <div
-              ref={ref}
-              className="sleek-invoice-print-root w-full max-w-none rounded border border-neutral-200/90 bg-white p-5 shadow-sm print:w-full print:border-0 print:p-8 print:shadow-none sm:p-6 md:p-7"
-            >
-              <InvoiceSheet
-                form={form}
-                billTo={billTo}
-                issueDisplay={issueDisplay}
-                dueDisplay={dueDisplay}
-                lineAmounts={lineAmounts}
-                subtotal={subtotal}
-                totals={totals}
-              />
+            {/*
+              Outer node: tokens only (.sleek-invoice-print-root). Tailwind important() generates
+              :is(#sleek-invoice-app,.sleek-invoice-print-root) .foo — .foo must be a *descendant*,
+              not the same element as .sleek-invoice-print-root, or print/PDF preview loses all
+              utilities when #sleek-invoice-app is absent (react-to-print iframe).
+            */}
+            <div ref={ref} className="sleek-invoice-print-root">
+              <div className="invoice-print-surface w-full max-w-none rounded border border-neutral-200/90 bg-white p-5 shadow-sm print:w-full print:border-0 print:p-8 print:shadow-none sm:p-6 md:p-7">
+                <InvoiceSheet
+                  form={form}
+                  billTo={billTo}
+                  issueDisplay={issueDisplay}
+                  dueDisplay={dueDisplay}
+                  lineAmounts={lineAmounts}
+                  subtotal={subtotal}
+                  totals={totals}
+                />
+              </div>
             </div>
           </div>
         </div>

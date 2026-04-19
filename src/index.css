@@ -74,8 +74,10 @@
 }
 
 /*
- * react-to-print clones only this subtree into a new document — no #sleek-invoice-app ancestor.
- * Mirror tokens + font so Tailwind (:is important) and fg-* utilities resolve in print preview.
+ * react-to-print clones only this subtree — no #sleek-invoice-app. Keep tokens here only;
+ * do not put Tailwind utilities on this same node: important() scopes utilities as
+ * :is(#sleek-invoice-app,.sleek-invoice-print-root) .foo, which requires .foo to be a *descendant*,
+ * not this element. Visual/layout classes live on .invoice-print-surface inside InvoicePreviewPanel.
  */
 .sleek-invoice-print-root {
   width: 100%;
@@ -92,7 +94,8 @@
   isolation: isolate;
   box-sizing: border-box;
   font-family: var(--sleek-font-family, 'Montserrat', sans-serif) !important;
-  font-size: 16px;
+  /* Match invoice sheet body copy (PDF/print preview vs on-screen preview). */
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
   color: #040015;
@@ -632,6 +635,22 @@ body.sleek-wp-embed-body {
   border-bottom-color: #e5e7eb !important;
 }
 
+/* Header row fill: themes/print often strip table backgrounds; match Tailwind bg-neutral-100. */
+:is(#sleek-invoice-app, .sleek-invoice-print-root)
+  .invoice-sheet
+  table.sleek-invoice-sheet-table
+  thead
+  tr,
+:is(#sleek-invoice-app, .sleek-invoice-print-root)
+  .invoice-sheet
+  table.sleek-invoice-sheet-table
+  thead
+  th {
+  background-color: #f5f5f5 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
 /*
  * Invoice sheet preview: themes (esp. WordPress) often use table { display: block } or strip
  * grid/flex, which collapses columns into one run-on line. Force native table + layout models.
@@ -669,6 +688,8 @@ body.sleek-wp-embed-body {
 :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet table.sleek-invoice-sheet-table td {
   display: table-cell !important;
   vertical-align: top !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
 
 :is(#sleek-invoice-app, .sleek-invoice-print-root) .invoice-sheet__header {
