@@ -30,7 +30,7 @@ export function CompanySection() {
 
   return (
     <Card>
-      <FieldLabel>Company</FieldLabel>
+      <FieldLabel>Your company</FieldLabel>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-[6rem_minmax(0,1fr)] sm:items-stretch">
         <div className="flex flex-col gap-2 sm:h-full sm:min-h-0">
           <input
@@ -79,7 +79,7 @@ export function CompanySection() {
                   className="max-h-full max-w-full object-contain"
                 />
               ) : (
-                <span className="whitespace-nowrap px-2">Add logo</span>
+                <span className="whitespace-wrap px-2">Add your logo</span>
               )}
             </button>
             {logoDataUrl ? (

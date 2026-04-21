@@ -37,7 +37,21 @@ export function newLineItem() {
   }
 }
 
+/** First URL path segment → default invoice currency (e.g. host `/sg/...` → SGD). */
+export function defaultCurrencyForPathname(pathname) {
+  const segment = pathname.split('/').filter(Boolean)[0]?.toLowerCase() ?? ''
+  const byRegion = {
+    sg: 'SGD',
+    au: 'AUD',
+    hk: 'HKD',
+    uk: 'GBP',
+  }
+  return byRegion[segment] ?? 'SGD'
+}
+
 export function initialForm() {
+  const pathname =
+    typeof window !== 'undefined' ? window.location.pathname : '/'
   return {
     customerName: '',
     customerEmail: '',
@@ -47,7 +61,7 @@ export function initialForm() {
     postalCode: '',
     invoiceNumber: 'DEMO - TEST - 001',
     issueDate: format(new Date(), 'yyyy-MM-dd'),
-    currency: 'SGD',
+    currency: defaultCurrencyForPathname(pathname),
     items: [newLineItem()],
     notes: '',
     taxEnabled: false,
