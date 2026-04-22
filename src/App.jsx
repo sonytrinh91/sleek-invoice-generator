@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
-import { useMemo, useRef } from "react";
+import { Loader2 } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useReactToPrint } from "react-to-print";
@@ -22,6 +23,8 @@ import {
 import { computeInvoiceTotals } from "./invoice/invoiceTotals.js";
 import { invoiceFormSchema } from "./invoice/invoiceSchema.js";
 import { submitZapierDownloadLead } from "./integrations/zapierDownloadWebhook.js";
+import { submitInvoiceEmailToZapier } from "./integrations/zapierInvoiceEmailWebhook.js";
+import { buildInvoiceZapierEmailPayload } from "./invoice/invoiceNotificationEmail.js";
 import { isInvoiceDownloadReady } from "./invoice/validation.js";
 import {
   computeDueDate,
@@ -32,6 +35,7 @@ import {
 
 function InvoiceWorkspace({ printRef }) {
   const form = useWatch();
+  const [emailSending, setEmailSending] = useState(false);
 
   const issueDateParsed = useMemo(
     () => parseIssueDate(form.issueDate),
@@ -74,12 +78,36 @@ function InvoiceWorkspace({ printRef }) {
     ? format(issueDateParsed, DISPLAY_DATE_FORMAT)
     : "—";
   const dueDisplay = dueDate ? format(dueDate, DISPLAY_DATE_FORMAT) : "—";
+  const dueDisplayLong = dueDate ? format(dueDate, "MMMM d, yyyy") : "—";
 
   /** Invoice preview only: demo placeholders when fields empty (not form defaults). */
   const billTo = [
     form.customerName?.trim() || DEMO_CUSTOMER_NAME,
     form.customerEmail?.trim() || DEMO_CUSTOMER_EMAIL,
   ].join("\n");
+
+  async function handleSendInvoiceEmailClick() {
+    if (!canDownload) return;
+    setEmailSending(true);
+    try {
+      const base = buildInvoiceZapierEmailPayload(
+        form,
+        lineAmounts,
+        totals,
+        dueDisplayLong,
+      );
+      const res = await submitInvoiceEmailToZapier(base);
+      if (res && !res.ok) {
+        throw new Error(`Webhook HTTP ${res.status}`);
+      }
+    } catch (err) {
+      if (import.meta.env.DEV) {
+        console.error("Send invoice email failed:", err);
+      }
+    } finally {
+      setEmailSending(false);
+    }
+  }
 
   return (
     <div className="flex w-full flex-col relative p-4">
@@ -103,23 +131,47 @@ function InvoiceWorkspace({ printRef }) {
               <NotesSection />
               <SubtotalSection />
               <BankDetailsSection />
-              <button
-                id="download-invoice-pdf-button"
-                type="button"
-                disabled={!canDownload}
-                onClick={() => {
-                  if (canDownload) {
-                    submitZapierDownloadLead(form);
-                  }
-                  handlePrint();
-                }}
-                className={clsx(
-                  "sleek-download-btn sleek-ds-btn sleek-ds-btn--primary w-full max-w-full cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition",
-                  "disabled:cursor-not-allowed disabled:opacity-45",
-                )}
-              >
-                Download
-              </button>
+              <div className="flex w-full max-w-full flex-col gap-3 sm:flex-row sm:items-stretch">
+                <button
+                  id="send-invoice-email-button"
+                  type="button"
+                  disabled={!canDownload || emailSending}
+                  aria-busy={emailSending}
+                  aria-label={emailSending ? "Sending email" : undefined}
+                  onClick={() => void handleSendInvoiceEmailClick()}
+                  className={clsx(
+                    "sleek-ds-btn sleek-ds-btn--outline w-full min-w-0 flex-1 cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition",
+                    "inline-flex min-h-11 items-center justify-center gap-2",
+                    "disabled:cursor-not-allowed disabled:opacity-45",
+                  )}
+                >
+                  {emailSending ? (
+                    <Loader2
+                      className="size-5 shrink-0 animate-spin text-current"
+                      aria-hidden
+                    />
+                  ) : (
+                    "Send email"
+                  )}
+                </button>
+                <button
+                  id="download-invoice-pdf-button"
+                  type="button"
+                  disabled={!canDownload}
+                  onClick={() => {
+                    if (canDownload) {
+                      submitZapierDownloadLead(form);
+                    }
+                    handlePrint();
+                  }}
+                  className={clsx(
+                    "sleek-download-btn sleek-ds-btn sleek-ds-btn--primary w-full min-w-0 flex-1 cursor-pointer rounded-md px-5 py-3 text-sm font-medium transition",
+                    "disabled:cursor-not-allowed disabled:opacity-45",
+                  )}
+                >
+                  Download
+                </button>
+              </div>
             </div>
           </form>
         </section>
