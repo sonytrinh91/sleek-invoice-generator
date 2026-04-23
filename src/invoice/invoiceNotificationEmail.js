@@ -345,7 +345,7 @@ export function buildSenderConfirmationZapierEmailPayload(form, totals) {
                     </tr>
                   </table>
                   <p style="margin:14px 0 0">
-                    <a href="https://sleek.com/sg/accounting" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:${ACCENT};color:#ffffff;font-weight:700;font-size:13px;padding:10px 16px;border-radius:6px;text-decoration:none">Upgrade to Sleek Accounting &rarr;</a>
+                    <a href="https://sleek.com/sg/accounting-services-singapore" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:${ACCENT};color:#ffffff;font-weight:700;font-size:13px;padding:10px 16px;border-radius:6px;text-decoration:none">Upgrade to Sleek Accounting &rarr;</a>
                   </p>
                 </td>
               </tr>
