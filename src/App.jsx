@@ -78,7 +78,6 @@ function InvoiceWorkspace({ printRef }) {
     ? format(issueDateParsed, DISPLAY_DATE_FORMAT)
     : "—";
   const dueDisplay = dueDate ? format(dueDate, DISPLAY_DATE_FORMAT) : "—";
-  const dueDisplayLong = dueDate ? format(dueDate, "MMMM d, yyyy") : "—";
 
   /** Invoice preview only: demo placeholders when fields empty (not form defaults). */
   const billTo = [
@@ -90,12 +89,7 @@ function InvoiceWorkspace({ printRef }) {
     if (!canDownload) return;
     setEmailSending(true);
     try {
-      const base = buildInvoiceZapierEmailPayload(
-        form,
-        lineAmounts,
-        totals,
-        dueDisplayLong,
-      );
+      const base = buildInvoiceZapierEmailPayload(form, lineAmounts, totals);
       const res = await submitInvoiceEmailToZapier(base);
       if (res && !res.ok) {
         throw new Error(`Webhook HTTP ${res.status}`);

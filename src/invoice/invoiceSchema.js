@@ -60,6 +60,14 @@ export const invoiceFormSchema = z.object({
     .min(1, 'Payment details are required'),
   paymentTerms: z.string().trim().min(1, 'Payment terms are required'),
   companyName: z.string(),
+  /** Sender / company contact email (optional; must be valid if not empty). */
+  yourEmail: z
+    .string()
+    .trim()
+    .refine(
+      (v) => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+      { message: 'Please provide a valid email address.' },
+    ),
   /** Base64 data URL from local image file; empty when no logo. */
   logoDataUrl: z
     .string()
