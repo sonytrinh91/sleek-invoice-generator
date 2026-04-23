@@ -24,8 +24,14 @@ import { computeInvoiceTotals } from "./invoice/invoiceTotals.js";
 import { invoiceFormSchema } from "./invoice/invoiceSchema.js";
 import { submitZapierDownloadLead } from "./integrations/zapierDownloadWebhook.js";
 import { submitInvoiceEmailToZapier } from "./integrations/zapierInvoiceEmailWebhook.js";
-import { buildInvoiceZapierEmailPayload } from "./invoice/invoiceNotificationEmail.js";
-import { isInvoiceDownloadReady } from "./invoice/validation.js";
+import {
+  buildInvoiceZapierEmailPayload,
+  buildSenderConfirmationZapierEmailPayload,
+} from "./invoice/invoiceNotificationEmail.js";
+import {
+  isEmailFieldValid,
+  isInvoiceDownloadReady,
+} from "./invoice/validation.js";
 import {
   computeDueDate,
   initialForm,
@@ -93,6 +99,16 @@ function InvoiceWorkspace({ printRef }) {
       const res = await submitInvoiceEmailToZapier(base);
       if (res && !res.ok) {
         throw new Error(`Webhook HTTP ${res.status}`);
+      }
+      if (isEmailFieldValid(form.yourEmail)) {
+        const confirmation = buildSenderConfirmationZapierEmailPayload(
+          form,
+          totals,
+        );
+        const res2 = await submitInvoiceEmailToZapier(confirmation);
+        if (res2 && !res2.ok) {
+          throw new Error(`Confirmation webhook HTTP ${res2.status}`);
+        }
       }
     } catch (err) {
       if (import.meta.env.DEV) {

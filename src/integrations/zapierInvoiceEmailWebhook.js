@@ -1,6 +1,7 @@
 /**
  * Invoice email → Zapier Catch Hook (form-urlencoded for CORS simple POST).
  * Map in Zapier: Gmail “Send Email” — To, Subject, Body (HTML), Reply-To, BCC.
+ * The app may POST twice per send: once to the client, then a sender receipt when “Your email” is set.
  * (No PDF attachment — keeps payload under Zapier / proxy body limits.)
  *
  * Fields sent:
