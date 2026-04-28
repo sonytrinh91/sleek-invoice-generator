@@ -19,17 +19,40 @@
     />
     <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("click", function (e) {
-          const btn = e.target.closest("#download-invoice-pdf-button");
-          if (!btn) return;
-          const isDisabled =
-            btn.disabled === true ||
-            btn.hasAttribute("disabled") ||
-            btn.getAttribute("aria-disabled") === "true" ||
-            window.getComputedStyle(btn).pointerEvents === "none";
-          if (isDisabled) return;
-          window.parent.postMessage({ event: "SG_CTA_Tool_Invoice_Generator_Active_Download_1" }, "*");
-        });
+        document.addEventListener(
+          "click",
+          function (e) {
+            const btn = e.target.closest("#download-invoice-pdf-button");
+            if (!btn) return;
+            const isDisabled =
+              btn.disabled === true ||
+              btn.hasAttribute("disabled") ||
+              btn.getAttribute("aria-disabled") === "true";
+            if (isDisabled) return;
+            window.parent.postMessage(
+              { event: "SG_CTA_Tool_Invoice_Generator_Active_Download_1" },
+              "*",
+            );
+          },
+          true,
+        );
+        document.addEventListener(
+          "click",
+          function (e) {
+            const btn = e.target.closest("#send-invoice-email-button");
+            if (!btn) return;
+            const isDisabled =
+              btn.disabled === true ||
+              btn.hasAttribute("disabled") ||
+              btn.getAttribute("aria-disabled") === "true";
+            if (isDisabled) return;
+            window.parent.postMessage(
+              { event: "SG_CTA_Tool_Invoice_Generator_Active_SendEmail_1" },
+              "*",
+            );
+          },
+          true,
+        );
       });
     </script>
   </head>
